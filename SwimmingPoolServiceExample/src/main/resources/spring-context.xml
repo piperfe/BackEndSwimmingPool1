@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+         
+    <bean id="sessionFactory"
+              class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref ="dataSource"></property>
+        <property name="packagesToScan" value="com.inbadevs.swimmingpoolserviceexample.entities" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.auto_close_session">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+    <bean id="transactionManager"
+              class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+              destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/" />
+        <property name="user" value="root" />
+        <property name="password" value="piperfe" />
+        
+        <!--                
+         <property name="initialPoolSize">
+                <value>3</value>
+        </property>
+        <property name="minPoolSize">
+                <value>3</value>
+        </property>
+        <property name="maxPoolSize">
+                <value>50</value>
+        </property>
+         <property name="timeout"><value>0</value></property>     0 means: no timeout 
+        <property name="idleConnectionTestPeriod">
+                <value>200</value>
+        </property>
+        <property name="acquireIncrement">
+                <value>1</value>
+        </property>
+        <property name="maxStatements">
+                <value>0</value>
+        </property>   0 means: statement caching is turned off. 
+        <property name="numHelperThreads">
+                <value>3</value>
+        </property>   3 is default -->
+    </bean>
+
+    <context:component-scan base-package="com.inbadevs.swimmingpoolserviceexample" />	
+
+</beans>
+
