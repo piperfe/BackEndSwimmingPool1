@@ -11,7 +11,7 @@
 
          
     <bean id="sessionFactory"
-              class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+      class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref ="dataSource"></property>
         <property name="packagesToScan" value="com.inbadevs.swimmingpoolserviceexample.entities" />
         <property name="hibernateProperties">
@@ -21,8 +21,7 @@
             </props>
         </property>
     </bean>
-    
-    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+	
     <bean id="transactionManager"
               class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
@@ -33,8 +32,7 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/" />
         <property name="user" value="root" />
-        <property name="password" value="piperfe" />
-        
+        <property name="password" value="" />
         <!--                
          <property name="initialPoolSize">
                 <value>3</value>

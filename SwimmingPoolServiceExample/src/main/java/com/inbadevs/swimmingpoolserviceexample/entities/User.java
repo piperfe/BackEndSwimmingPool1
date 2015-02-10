@@ -1,5 +1,6 @@
 package com.inbadevs.swimmingpoolserviceexample.entities;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,66 +8,54 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-/**
- * DictionaryWord Clase que representa palabras de diccionario
- * 
- * @author RedTeam
- * 
- */
+@XmlRootElement
 @Entity
 @Table(name = "user", schema = "test")
-@XmlRootElement()
-public class User {
+public class User implements Serializable {
 
-	@Id
-	@Column(name = "id_user")
-	private String idUser;
+    @Id
+    @Column(name = "user_id")
+    private String idUser;
 
-	@Column(name = "user_name")
-	private String user_name;
-        
-        @Column(name = "password")
-	private String password;
+    @Column(name = "username")
+    private String userName;
 
-    /**
-     * @return the idUser
-     */
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "email")
+    private String email;
+
     public String getIdUser() {
         return idUser;
     }
 
-    /**
-     * @param idUser the idUser to set
-     */
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
-    /**
-     * @return the user_name
-     */
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    /**
-     * @param user_name the user_name to set
-     */
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    /**
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * @param password the password to set
-     */
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }
