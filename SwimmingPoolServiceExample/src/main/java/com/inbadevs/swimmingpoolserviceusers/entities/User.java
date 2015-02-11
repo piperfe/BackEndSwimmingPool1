@@ -1,4 +1,4 @@
-package com.inbadevs.swimmingpoolserviceexample.entities;
+package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
 
 @XmlRootElement
 @Entity

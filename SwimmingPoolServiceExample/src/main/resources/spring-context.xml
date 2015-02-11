@@ -13,7 +13,7 @@
     <bean id="sessionFactory"
       class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref ="dataSource"></property>
-        <property name="packagesToScan" value="com.inbadevs.swimmingpoolserviceexample.entities" />
+        <property name="packagesToScan" value="com.inbadevs.swimmingpoolserviceusers.entities" />
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
@@ -58,7 +58,7 @@
         </property>   3 is default -->
     </bean>
 
-    <context:component-scan base-package="com.inbadevs.swimmingpoolserviceexample" />	
+    <context:component-scan base-package="com.inbadevs.swimmingpoolserviceusers" />	
 
 </beans>
 
