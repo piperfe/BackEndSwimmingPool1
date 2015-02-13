@@ -44,6 +44,7 @@ public class UserDao extends BaseAbstractDAO<User, Integer> {
         query.setParameter(1, user.getPassword());
         query.setParameter(2, user.getEmail());
         query.addEntity(User.class);
+        query.executeUpdate();
     }
 
 }

@@ -24,7 +24,7 @@ public class BuisnessLayer {
         try {
             return this.userDao.getAllUsers();
         } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness method=getAllUsers message=user not found");
+            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getAllUsers message=user not found");
             //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -35,7 +35,7 @@ public class BuisnessLayer {
         try {
             this.userDao.addUser(user);
         } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness method=getAllUsers message=user didn't add");
+            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=addUser message=user didn't add");
             //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

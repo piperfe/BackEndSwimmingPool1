@@ -8,7 +8,7 @@
   <util:map id="users" key-type="java.lang.String" value-type="java.lang.String" >
   <entry key="getAllUsers" 
     	value="SELECT user_id, username, password, email FROM test.user"/>
-  <entry key="addUser" 
+  <entry key="insertUser" 
         value="INSERT INTO test.user (username, password, email) VALUES (?,?,?)"/>
   </util:map>
   
