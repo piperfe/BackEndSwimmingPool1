@@ -5,9 +5,11 @@ import com.inbadevs.swimmingpoolserviceusers.buisness.BuisnessLayer;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,19 @@ public class ServiceRestUsers {
 		this.buissnesLayer.addUser(user);
 	}
         
+        @DELETE
+        @Path("/deleteUser/{id}")
+	public void DeleteUser(@PathParam("id") int idUser) throws BuisnessLayerException {
+		this.buissnesLayer.deleteUser(idUser);
+	}
+        
+        @PUT
+        @Produces(MediaType.APPLICATION_JSON)
+        @Consumes(MediaType.APPLICATION_JSON)
+	@Path("/modifyUser")
+	public void ModifyUser(User user) throws BuisnessLayerException {
+		this.buissnesLayer.modifyUser(user);
+	}
 
  
 }

@@ -40,4 +40,24 @@ public class BuisnessLayer {
         }
     }
 
+    public void deleteUser(int idUser) throws BuisnessLayerException{
+        
+        try {
+            this.userDao.deleteUser(idUser);
+        } catch (ExceptionQueryNotFound ex) {
+            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=deleteUser message=user didn't delete");
+            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void modifyUser(User user) throws BuisnessLayerException{
+        
+        try {
+            this.userDao.modifyUser(user);
+        } catch (ExceptionQueryNotFound ex) {
+            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=modifyUser message=user didn't modify");
+            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
