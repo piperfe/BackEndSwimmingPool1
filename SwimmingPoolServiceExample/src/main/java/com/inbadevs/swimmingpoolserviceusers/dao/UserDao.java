@@ -54,13 +54,41 @@ public class UserDao extends BaseAbstractDAO<User, Integer> {
         query.executeUpdate();
     }
     
-    public void deleteUser(int idUder) throws ExceptionQueryNotFound {
+    public void addUserPiscina(User user) throws ExceptionQueryNotFound {
+        SQLQuery query = createSqlQuery("insertUserPiscina");
+        query.setParameter(0, user.getIdUser());
+        query.setParameter(1, user.getCertificadoMedico());
+        query.setParameter(2, user.getEnfermedades());
+        query.setParameter(3, user.getObservaciones());
+        query.addEntity(User.class);
+        query.executeUpdate();
+    }
+    
+    
+    public void addUserAdmin(User user) throws ExceptionQueryNotFound {
+        SQLQuery query = createSqlQuery("insertUserAdmin");
+        query.setParameter(0, user.getIdUser());
+        query.setParameter(1, user.getCertificadoMedico());
+        query.setParameter(2, user.getEnfermedades());
+        query.setParameter(3, user.getObservaciones());
+        query.addEntity(User.class);
+        query.executeUpdate();
+    }
+    
+    public void deleteUser(String idUser) throws ExceptionQueryNotFound {
         SQLQuery query = createSqlQuery("deleteUser");
-        query.setParameter(0, idUder);
+        query.setParameter(0, idUser);
         query.addEntity(User.class);
         query.executeUpdate();
     }
 
+    public void deleteUserPiscina(String idUser) throws ExceptionQueryNotFound {
+        SQLQuery query = createSqlQuery("deleteUserPiscina");
+        query.setParameter(0, idUser);
+        query.addEntity(User.class);
+        query.executeUpdate();
+    }
+    
     public void modifyUser(User user) throws ExceptionQueryNotFound {
         SQLQuery query = createSqlQuery("modifyUser");
         query.setParameter(0, user.getUserNames());
@@ -75,5 +103,29 @@ public class UserDao extends BaseAbstractDAO<User, Integer> {
         query.setParameter(9, user.getIdUser());
         query.addEntity(User.class);
         query.executeUpdate();
+    }
+    
+    public List<User> getUser(User user) throws ExceptionQueryNotFound {
+        SQLQuery query = createSqlQuery("getUser");
+        query.setParameter(0, user.getIdUser());
+        query.setParameter(1, user.getClave());
+        
+        query.addEntity(User.class);
+        return query.list();
+    }
+        
+    public List<User> userExist(User user) throws ExceptionQueryNotFound {
+        SQLQuery query = createSqlQuery("userExist");
+        query.setParameter(0, user.getIdUser());
+        query.addEntity(User.class);
+        return query.list();
+    }
+        
+    public List<User> searchUsers(String varSearch) throws ExceptionQueryNotFound {
+        SQLQuery query = createSqlQuery("searchUsers");
+        query.setParameter(0,"%"+varSearch+"%");
+        query.setParameter(1,"%"+varSearch+"%");
+        query.addEntity(User.class);
+        return query.list();
     }
 }

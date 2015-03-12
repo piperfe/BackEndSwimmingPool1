@@ -5,13 +5,14 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
-@Table(name = "user", schema = "Piscina")
+@Table(name = "usuario", schema = "Piscina")
 public class User implements Serializable {
 
     @Id
@@ -40,11 +41,48 @@ public class User implements Serializable {
     @Column(name = "clave")
     private String clave;
     
+   
     @Column(name = "correo")
     private String correo;
     
     @Column(name = "telefono")
     private String telefono;
+    
+    @Column(name = "certificado_medico")
+    private String certificadoMedico;
+    
+    @Column(name = "enfermedades")
+    private String enfermedades;
+    
+    @Column(name = "observaciones")
+    private String observaciones;
+
+    
+    
+    public String getCertificadoMedico() {
+        return certificadoMedico;
+    }
+
+    public void setCertificadoMedico(String certificadoMedico) {
+        this.certificadoMedico = certificadoMedico;
+    }
+
+    public String getEnfermedades() {
+        return enfermedades;
+    }
+
+    public void setEnfermedades(String enfermedades) {
+        this.enfermedades = enfermedades;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+    
     
     
     public String getIdUser() {
@@ -126,6 +164,4 @@ public class User implements Serializable {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-
 }
