@@ -5,11 +5,56 @@
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
-  <util:map id="users" key-type="java.lang.String" value-type="java.lang.String" >
-  <entry key="getAllUsers" 
-    	value="SELECT user_id, username, password, email FROM test.user"/>
-  <entry key="insertUser" 
-        value="INSERT INTO test.user (username, password, email) VALUES (?,?,?)"/>
-  </util:map>
   
+  <!-- Query Usuario -->  
+  <util:map id="users" key-type="java.lang.String" value-type="java.lang.String" >
+  
+      
+  <entry key="getAllUsers" 
+    	value="SELECT rut, nombres, apellido_paterno,apellido_materno, fecha_nacimiento, direccion,comuna,clave, correo, telefono, certificado_medico, enfermedades, observaciones 
+                FROM Piscina.usuario AS user
+                INNER JOIN Piscina.usuario_piscina AS userpiscina on userpiscina.rut_usuario=user.rut;"/>
+  
+        
+  <entry key="insertUser" 
+        value="INSERT INTO Piscina.usuario (rut, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, direccion, comuna, clave, correo, telefono) VALUES (?,?,?,?,?,?,?,?,?,?)"/>
+        
+  <entry key="insertUserPiscina" 
+        value="INSERT INTO Piscina.usuario_piscina (rut_usuario, certificado_medico, enfermedades, observaciones) VALUES (?,?,?,?)"/>
+  
+        
+  <entry key="deleteUser" 
+        value="DELETE FROM Piscina.usuario WHERE rut=?"/>
+  
+  <entry key="deleteUserPiscina" 
+        value="DELETE FROM Piscina.usuario_piscina WHERE rut_usuario=?"/>
+        
+  <entry key="modifyUser" 
+        value="Update Piscina.usuario SET nombres=?, apellido_paterno=?, apellido_materno=?, fecha_nacimiento=?, direccion=?, comuna=?, clave=?, correo=?, telefono=? WHERE rut=?"/>
+  
+  <entry key="getUser" 
+    	value="SELECT admin.rut as rut, nombres, apellido_paterno,apellido_materno, fecha_nacimiento, direccion,comuna,clave, correo, telefono, certificado_medico, enfermedades, observaciones
+                FROM Piscina.usuario AS user, Piscina.usuario_piscina, Piscina.administrador_sistema AS admin 
+                WHERE user.rut=? AND user.clave=? AND admin.rut=user.rut;"/>
+
+  <entry key="searchUsers" 
+        value="SELECT rut_usuario as rut, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, direccion,comuna,clave, correo, telefono, certificado_medico, enfermedades, observaciones  
+                FROM Piscina.usuario, Piscina.usuario_piscina
+                WHERE rut_usuario=Piscina.usuario.rut AND 
+                    (Piscina.usuario.rut LIKE ? OR
+                    apellido_paterno LIKE ?);"/>
+   
+  
+  <entry key="userExist" 
+    	value="SELECT rut_usuario as rut , nombres, apellido_paterno, apellido_materno, fecha_nacimiento, direccion,comuna,clave, correo, telefono, certificado_medico, enfermedades, observaciones   
+            FROM Piscina.usuario_piscina, Piscina.usuario 
+            WHERE rut=rut_usuario AND
+                  rut_usuario=?"/>
+
+  </util:map>
+  <!-- FIN Query Usuario -->
+  
+  <util:map id="SwimingPoolUsers" key-type="java.lang.String" value-type="java.lang.String" >
+  
+  </util:map>
 </beans>
