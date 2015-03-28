@@ -1,3 +1,5 @@
-/SwimmingPoolServiceExample/target/
-.DS*
+SwimmingPoolServiceExample/target/
+.DS_*
 *.idea*
+*.iml
+*.gitignore
