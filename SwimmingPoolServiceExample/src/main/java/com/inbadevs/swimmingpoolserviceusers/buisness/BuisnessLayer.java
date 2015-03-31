@@ -5,19 +5,16 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.buisness;
 
-import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import com.inbadevs.swimmingpoolserviceusers.exceptions.ExceptionQueryNotFound;
 import com.inbadevs.swimmingpoolserviceusers.dao.UserDao;
-import com.inbadevs.swimmingpoolserviceusers.dao.ScheduleDao;
+import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
+import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
-import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
-import com.inbadevs.swimmingpoolserviceusers.entities.SwimingPoolUser;
+import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.GenericResponse;
-
-import java.util.List;
-import static javassist.CtMethod.ConstParameter.string;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class BuisnessLayer {
@@ -25,69 +22,38 @@ public class BuisnessLayer {
     
     @Autowired
     UserDao userDao;
-    
 
-    //
-    //********* USER ***********
-    //
-    public List<User> getAllUsers() throws BuisnessLayerException {
-
-        try {
-            return this.userDao.getAllUsers();
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getAllUsers message=user not found");
-            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    //funcion que inserta usuarios piscina
-    public void addUserPiscina(User user) throws BuisnessLayerException{
-        
-        try {
-            this.userDao.addUser(user);
-            this.userDao.addUserPiscina(user);
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=addUser message=user didn't add");
-            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public List<SwimmingPoolUser> getAllSwimmingPoolUsers() {
+        return this.userDao.all();
     }
 
-    //funcion que inserta usuarios administradores
-    public void addUserAdmin(User user) throws BuisnessLayerException{
-        
-        try {
-            this.userDao.addUser(user);
-            this.userDao.addUserAdmin(user);
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=addUser message=user didn't add");
-            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }        
-    
+
+    public void addUserPiscina(SwimmingPoolUser user) {
+            this.userDao.save(user);
+    }
+
+    public void addUserAdmin(AdminUser user) {
+            this.userDao.save(user);
+    }
+
     public void deleteUser(String idUser) throws BuisnessLayerException{
         
-        try {
-            this.userDao.deleteUserPiscina(idUser);
-            this.userDao.deleteUser(idUser);
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=deleteUser message=user didn't delete");
-            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.userDao.delete(idUser);
     }
-    
+
     public void modifyUser(User user) throws BuisnessLayerException{
         
-        try {
-            this.userDao.modifyUser(user);
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=modifyUser message=user didn't modify");
+       // try {
+           // this.userDao.modifyUser(user);
+        //} catch (ExceptionQueryNotFound ex) {
+        //    throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=modifyUser message=user didn't modify");
             //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       // }
     }
     
     public GenericResponse getUser(User user) throws BuisnessLayerException {
 
-        try {
+      /*  try {
             GenericResponse genericResponse = new GenericResponse();
             User userReturn;
              
@@ -106,13 +72,14 @@ public class BuisnessLayer {
             }
         } catch (ExceptionQueryNotFound ex) {
             throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
-        }
+        }*/
+        return null;
     }
     
     
     public String userExist(User user) throws BuisnessLayerException {
 
-        try {
+        /*try {
             List<User> userReturn = userDao.userExist(user);
             if(userReturn.size()>0)
                 return "EXIST";
@@ -120,84 +87,30 @@ public class BuisnessLayer {
                 return "NOT EXIST";
         } catch (ExceptionQueryNotFound ex) {
             throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
-        }
+        }*/
+        return null;
     }
     
     
     public User searchById(User user) throws BuisnessLayerException {
 
-        try {
+        return null;
+       /* try {
             return userDao.userExist(user).get(0);
         } catch (ExceptionQueryNotFound ex) {
             throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
-        }
+        }*/
     }
     
     public List<User> searchUsers(String varSearch) throws BuisnessLayerException {
 
-        try {
+        return null;
+    /*    try {
             return this.userDao.searchUsers(varSearch);
         } catch (ExceptionQueryNotFound ex) {
             throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getAllUsers message=user not found");
             //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
-    //
-    //********* FIN USER ***********
-    //
-    
-    
-    //
-    // ********* Usuario_Piscina
-    //
-    
-    
-    
-    //
-    //********* HORARIO ***********
-    //
-//    public List<User> getAllSchedule() throws BuisnessLayerException {
-//
-//        try {
-//            return this.scheduleDao.getAllSchedule();
-//        } catch (ExceptionQueryNotFound ex) {
-//            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getAllUsers message=user not found");
-//            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-    
-    
-//    public void addSchedule(Schedule schedule) throws BuisnessLayerException{
-//        
-//        try {
-//            this.scheduleDao.addSchedule(schedule);
-//        } catch (ExceptionQueryNotFound ex) {
-//            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=addUser message=user didn't add");
-//            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    public void deleteSchedule(int idScheduler) throws BuisnessLayerException{
-//        
-//        try {
-//            this.scheduleDao.deleteSchedule(idScheduler);
-//        } catch (ExceptionQueryNotFound ex) {
-//            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=deleteUser message=user didn't delete");
-//            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-//    public void modifySchedule(Schedule schedule) throws BuisnessLayerException{
-//        
-//        try {
-//            this.scheduleDao.modifySchedule(schedule);
-//        } catch (ExceptionQueryNotFound ex) {
-//            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=modifyUser message=user didn't modify");
-//            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-    //
-    //********* FIN HORARIO ***********
-    //
+
 }
