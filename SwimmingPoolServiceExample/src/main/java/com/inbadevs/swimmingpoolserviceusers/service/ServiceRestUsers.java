@@ -1,6 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
-import com.inbadevs.swimmingpoolserviceusers.buisness.BuisnessUsersLayer;
+import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerUsers;
 import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
@@ -19,46 +19,55 @@ import java.util.List;
 public class ServiceRestUsers {
 
     @Autowired
-    BuisnessUsersLayer buissnesLayer;
+    ManagerUsers usersManager;
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("swimmingPoolUsers/getAll")
+    @Path("swimmingPool/getAll")
     public List<SwimmingPoolUser> getAllSwimmingPoolUsers() throws BuisnessLayerException {
-        List<SwimmingPoolUser> users = this.buissnesLayer.getAllSwimmingPoolUsers();
+        List<SwimmingPoolUser> users = this.usersManager.getAllSwimmingPoolUsers();
         return users;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("swimmingPoolUsers/add")
+    @Path("swimmingPool/add")
     public Response addSwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
-        this.buissnesLayer.addUser(user);
+        this.usersManager.addUser(user);
         return Response.ok().build();
     }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/swimmingPool/modify")
+    public void modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
+        this.usersManager.modifySwimmingPoolUser(user);
+    }
+
+    @DELETE
+    @Path("swimmingPool/delete/{id}")
+    public Response deleteSwimmingPoolUser(@PathParam("id") String idUser) throws BuisnessLayerException {
+        this.usersManager.deleteSwimmingPoolUser(idUser);
+        return Response.ok().build();
+
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("swimmingPool/searchUsers/{pattern}")
+    public List<SwimmingPoolUser> searchUsers(@PathParam("pattern") String pattern) throws BuisnessLayerException {
+        List<SwimmingPoolUser> users = this.usersManager.searchUsers(pattern);
+        return users;
+    }
+
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/addAdminUser")
     public Response addAdminUser(AdminUser user) throws BuisnessLayerException {
-        this.buissnesLayer.addUser(user);
+        this.usersManager.addUser(user);
         return Response.ok().build();
-    }
-
-    @DELETE
-    @Path("swimmingPoolUsers/delete/{id}")
-    public Response deleteSwimmingPoolUser(@PathParam("id") String idUser) throws BuisnessLayerException {
-        this.buissnesLayer.deleteSwimmingPoolUser(idUser);
-        return Response.ok().build();
-
-    }
-
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/modifySwimmingPoolUser")
-    public void modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
-        this.buissnesLayer.modifySwimmingPoolUser(user);
     }
 
     @GET
@@ -70,10 +79,11 @@ public class ServiceRestUsers {
         //    user.setIdUser(idUser);
         //   user.setClave(password);
 
-        GenericResponse genericResponse = this.buissnesLayer.getUser(user);
+        GenericResponse genericResponse = this.usersManager.getUser(user);
 
         return genericResponse;
     }
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -83,7 +93,7 @@ public class ServiceRestUsers {
         User user = new User();
         // user.setIdUser(idUser);
 
-        String status = this.buissnesLayer.userExist(user);
+        String status = this.usersManager.userExist(user);
 
         GenericResponse genericResponse = new GenericResponse();
         genericResponse.setStatus(status);
@@ -91,24 +101,14 @@ public class ServiceRestUsers {
         return genericResponse;
     }
 
-
     //Funcion search, esta retorna una lista con las posibles coincidencias a partir del valor que ingrese
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/searchUsers/{var_buscar}")
-    public List<User> searchUsers(@PathParam("var_buscar") String varSearch) throws BuisnessLayerException {
-        List<User> users = this.buissnesLayer.searchUsers(varSearch);
-        return users;
-    }
-
-    //Funcion search, esta retorna una lista con las posibles coincidencias a partir del valor que ingrese
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/searchById/{id}")
+    @Path("swimmingPool/searchById/{id}")
     public User searchById(@PathParam("id") String idUser) throws BuisnessLayerException {
         User user = new User();
         //user.setIdUser(idUser);
-        return this.buissnesLayer.searchById(user);
+        return this.usersManager.searchById(user);
 
     }
 

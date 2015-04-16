@@ -11,6 +11,7 @@ import java.util.List;
 public class BaseGenericDAO<E> {
 
     private Class<E> entityClass;
+
     private SessionFactory sessionFactory;
 
     public BaseGenericDAO(Class<E> entityClass, SessionFactory em) {

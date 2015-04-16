@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BuisnessUsersLayer {
+public class ManagerUsers {
 
 
     @Autowired
@@ -43,16 +43,21 @@ public class BuisnessUsersLayer {
         this.swimmingPoolUserDao.update(user);
     }
 
+    public List<SwimmingPoolUser> searchUsers(String pattern) throws BuisnessLayerException {
+        return this.swimmingPoolUserDao.search(pattern);
+    }
+
     public void addUser(AdminUser user) {
         this.adminUserDao.save(user);
     }
+
 
     public GenericResponse getUser(User user) throws BuisnessLayerException {
 
       /*  try {
             GenericResponse genericResponse = new GenericResponse();
             User userReturn;
-             
+
             if(userDao.getUser(user).size() >0)
             {
                 userReturn = userDao.getUser(user).get(0);
@@ -87,7 +92,6 @@ public class BuisnessUsersLayer {
         return null;
     }
 
-
     public User searchById(User user) throws BuisnessLayerException {
 
         return null;
@@ -95,17 +99,6 @@ public class BuisnessUsersLayer {
             return userDao.userExist(user).get(0);
         } catch (ExceptionQueryNotFound ex) {
             throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
-        }*/
-    }
-
-    public List<User> searchUsers(String varSearch) throws BuisnessLayerException {
-
-        return null;
-    /*    try {
-            return this.userDao.searchUsers(varSearch);
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getAllUsers message=user not found");
-            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
         }*/
     }
 
