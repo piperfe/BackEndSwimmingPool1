@@ -17,6 +17,7 @@ public class MyApplication extends ResourceConfig {
     public MyApplication(){
         register(RequestContextFilter.class);
         register(ServiceRestUsers.class);
+        //register(ServiceRestPlan.class);
         register(JacksonFeature.class);        
     }
 }
