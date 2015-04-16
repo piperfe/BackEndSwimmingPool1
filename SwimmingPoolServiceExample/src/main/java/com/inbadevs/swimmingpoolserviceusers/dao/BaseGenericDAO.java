@@ -7,15 +7,15 @@ import org.hibernate.criterion.Order;
 
 import java.util.List;
 
-public class BaseAbstractDAO<E> {
+
+public class BaseGenericDAO<E> {
 
     private Class<E> entityClass;
-
     private SessionFactory sessionFactory;
 
-    public BaseAbstractDAO(Class<E> entityClass, SessionFactory sessionFactory) {
+    public BaseGenericDAO(Class<E> entityClass, SessionFactory em) {
         this.entityClass = entityClass;
-        this.sessionFactory = sessionFactory;
+        this.sessionFactory = em;
     }
 
     public void save(E entity){
@@ -24,6 +24,10 @@ public class BaseAbstractDAO<E> {
 
     public void delete(String id) {
         this.getCurrentSession().delete(this.getCurrentSession().get(entityClass, id));
+    }
+
+    public void update(E entity){
+        this.getCurrentSession().update(entity);
     }
 
     public List<E> all() {

@@ -25,11 +25,9 @@
         </tx:attributes>
     </tx:advice>
 
-
     <aop:config>
         <aop:pointcut id="pcCentralRepositoryBd"
                       expression="execution(* com.inbadevs.swimmingpoolserviceusers.buisness.*.*(..))" />
-
         <aop:advisor advice-ref="transactionAdviceBd"
                      pointcut-ref="pcCentralRepositoryBd" />
     </aop:config>

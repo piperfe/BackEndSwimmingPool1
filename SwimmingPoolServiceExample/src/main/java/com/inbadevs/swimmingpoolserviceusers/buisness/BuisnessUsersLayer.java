@@ -5,7 +5,8 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.buisness;
 
-import com.inbadevs.swimmingpoolserviceusers.dao.UserDao;
+import com.inbadevs.swimmingpoolserviceusers.dao.AdminUserDao;
+import com.inbadevs.swimmingpoolserviceusers.dao.SwimmingPoolUserDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
@@ -17,40 +18,35 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BuisnessLayer {
+public class BuisnessUsersLayer {
 
-    
+
     @Autowired
-    UserDao userDao;
+    AdminUserDao adminUserDao;
+
+    @Autowired
+    SwimmingPoolUserDao swimmingPoolUserDao;
 
     public List<SwimmingPoolUser> getAllSwimmingPoolUsers() {
-        return this.userDao.all();
+        return this.swimmingPoolUserDao.all();
     }
 
-
-    public void addUserPiscina(SwimmingPoolUser user) {
-            this.userDao.save(user);
+    public void addUser(SwimmingPoolUser user) {
+        this.swimmingPoolUserDao.save(user);
     }
 
-    public void addUserAdmin(AdminUser user) {
-            this.userDao.save(user);
+    public void deleteSwimmingPoolUser(String idUser) throws BuisnessLayerException {
+        this.swimmingPoolUserDao.delete(idUser);
     }
 
-    public void deleteUser(String idUser) throws BuisnessLayerException{
-        
-        this.userDao.delete(idUser);
+    public void modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
+        this.swimmingPoolUserDao.update(user);
     }
 
-    public void modifyUser(User user) throws BuisnessLayerException{
-        
-       // try {
-           // this.userDao.modifyUser(user);
-        //} catch (ExceptionQueryNotFound ex) {
-        //    throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=modifyUser message=user didn't modify");
-            //Logger.getLogger(Buisness.class.getName()).log(Level.SEVERE, null, ex);
-       // }
+    public void addUser(AdminUser user) {
+        this.adminUserDao.save(user);
     }
-    
+
     public GenericResponse getUser(User user) throws BuisnessLayerException {
 
       /*  try {
@@ -75,8 +71,8 @@ public class BuisnessLayer {
         }*/
         return null;
     }
-    
-    
+
+
     public String userExist(User user) throws BuisnessLayerException {
 
         /*try {
@@ -90,8 +86,8 @@ public class BuisnessLayer {
         }*/
         return null;
     }
-    
-    
+
+
     public User searchById(User user) throws BuisnessLayerException {
 
         return null;
@@ -101,7 +97,7 @@ public class BuisnessLayer {
             throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
         }*/
     }
-    
+
     public List<User> searchUsers(String varSearch) throws BuisnessLayerException {
 
         return null;
