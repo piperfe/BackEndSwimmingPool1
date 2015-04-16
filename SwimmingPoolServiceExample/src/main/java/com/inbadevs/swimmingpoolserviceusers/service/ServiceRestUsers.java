@@ -1,6 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
-import com.inbadevs.swimmingpoolserviceusers.buisness.BuisnessLayer;
+import com.inbadevs.swimmingpoolserviceusers.buisness.BuisnessUsersLayer;
 import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
@@ -19,12 +19,12 @@ import java.util.List;
 public class ServiceRestUsers {
 
     @Autowired
-    BuisnessLayer buissnesLayer;
+    BuisnessUsersLayer buissnesLayer;
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/getAllSwimmingPoolUsers")
+    @Path("swimmingPoolUsers/getAll")
     public List<SwimmingPoolUser> getAllSwimmingPoolUsers() throws BuisnessLayerException {
         List<SwimmingPoolUser> users = this.buissnesLayer.getAllSwimmingPoolUsers();
         return users;
@@ -32,9 +32,9 @@ public class ServiceRestUsers {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/addSwimmingPoolUser")
-    public Response AddSwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
-        this.buissnesLayer.addUserPiscina(user);
+    @Path("swimmingPoolUsers/add")
+    public Response addSwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
+        this.buissnesLayer.addUser(user);
         return Response.ok().build();
     }
 
@@ -42,24 +42,23 @@ public class ServiceRestUsers {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/addAdminUser")
     public Response addAdminUser(AdminUser user) throws BuisnessLayerException {
-        this.buissnesLayer.addUserAdmin(user);
+        this.buissnesLayer.addUser(user);
         return Response.ok().build();
     }
 
     @DELETE
-    @Path("/deleteUser/{id}")
-    public Response DeleteUser(@PathParam("id") String idUser) throws BuisnessLayerException {
-        this.buissnesLayer.deleteUser(idUser);
+    @Path("swimmingPoolUsers/delete/{id}")
+    public Response deleteSwimmingPoolUser(@PathParam("id") String idUser) throws BuisnessLayerException {
+        this.buissnesLayer.deleteSwimmingPoolUser(idUser);
         return Response.ok().build();
 
     }
 
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/modifyUser")
-    public void ModifyUser(User user) throws BuisnessLayerException {
-        this.buissnesLayer.modifyUser(user);
+    @Path("/modifySwimmingPoolUser")
+    public void modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
+        this.buissnesLayer.modifySwimmingPoolUser(user);
     }
 
     @GET

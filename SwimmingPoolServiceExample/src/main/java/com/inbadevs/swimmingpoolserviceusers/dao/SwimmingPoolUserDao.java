@@ -1,6 +1,5 @@
 package com.inbadevs.swimmingpoolserviceusers.dao;
 
-import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 //@EnableTransactionManagement
 //@Transactional("transactionManager")
-public class UserDao extends BaseAbstractDAO<SwimmingPoolUser> {
+public class SwimmingPoolUserDao extends BaseGenericDAO<SwimmingPoolUser> {
 
     @Autowired
-    protected UserDao(
+    protected SwimmingPoolUserDao(
             @Qualifier("sessionFactory") SessionFactory em) {
         super(SwimmingPoolUser.class, em);
-    }
-
-    public void save(SwimmingPoolUser swimmingPoolUser){
-        this.getCurrentSession().save(swimmingPoolUser);
-    }
-
-    public void save(AdminUser adminUser){
-        this.getCurrentSession().save(adminUser);
     }
 
   /*  public List<User> getAllUsers() throws ExceptionQueryNotFound {
