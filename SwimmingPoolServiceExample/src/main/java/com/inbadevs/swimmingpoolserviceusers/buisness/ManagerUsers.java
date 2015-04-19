@@ -1,105 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.inbadevs.swimmingpoolserviceusers.buisness;
 
-import com.inbadevs.swimmingpoolserviceusers.dao.AdminUserDao;
-import com.inbadevs.swimmingpoolserviceusers.dao.SwimmingPoolUserDao;
-import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
-import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
+import com.inbadevs.swimmingpoolserviceusers.dao.UserDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.GenericResponse;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
+/**
+ * Created by macbook on 4/17/15.
+ */
 @Component
 public class ManagerUsers {
 
-
     @Autowired
-    AdminUserDao adminUserDao;
+    UserDao userDao;
 
-    @Autowired
-    SwimmingPoolUserDao swimmingPoolUserDao;
-
-    public List<SwimmingPoolUser> getAllSwimmingPoolUsers() {
-        return this.swimmingPoolUserDao.all();
+    public Boolean loginUser(String idUser, String password) {
+        User user = this.userDao.login(idUser, password);
+        if(user != null){
+            return true;
+        }
+        return false;
     }
 
-    public void addUser(SwimmingPoolUser user) {
-        this.swimmingPoolUserDao.save(user);
+    public Boolean isUserExist(String idUser) throws NotFoundException {
+        User user = this.userDao.find(idUser);
+        if(user != null){
+            return true;
+        }
+        return false;
     }
 
-    public void deleteSwimmingPoolUser(String idUser) throws BuisnessLayerException {
-        this.swimmingPoolUserDao.delete(idUser);
+    public void deleteUser(String idUser) throws BuisnessLayerException {
+        this.userDao.delete(idUser);
     }
-
-    public void modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
-        this.swimmingPoolUserDao.update(user);
-    }
-
-    public List<SwimmingPoolUser> searchUsers(String pattern) throws BuisnessLayerException {
-        return this.swimmingPoolUserDao.search(pattern);
-    }
-
-    public void addUser(AdminUser user) {
-        this.adminUserDao.save(user);
-    }
-
-
-    public GenericResponse getUser(User user) throws BuisnessLayerException {
-
-      /*  try {
-            GenericResponse genericResponse = new GenericResponse();
-            User userReturn;
-
-            if(userDao.getUser(user).size() >0)
-            {
-                userReturn = userDao.getUser(user).get(0);
-                genericResponse.setStatus("SUCCESSFUL");
-                genericResponse.setIdUser(userReturn.getUserNames());
-                return genericResponse;
-            }
-            else
-            {
-                genericResponse.setStatus("FAIL");
-                genericResponse.setIdUser(null);
-                return genericResponse;
-            }
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
-        }*/
-        return null;
-    }
-
-
-    public String userExist(User user) throws BuisnessLayerException {
-
-        /*try {
-            List<User> userReturn = userDao.userExist(user);
-            if(userReturn.size()>0)
-                return "EXIST";
-            else
-                return "NOT EXIST";
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
-        }*/
-        return null;
-    }
-
-    public User searchById(User user) throws BuisnessLayerException {
-
-        return null;
-       /* try {
-            return userDao.userExist(user).get(0);
-        } catch (ExceptionQueryNotFound ex) {
-            throw new BuisnessLayerException("class=com.inba.devs.swimmingpoolserviceusers.buisness.BuisnessLayer method=getUser message=user not found");
-        }*/
-    }
-
 }
