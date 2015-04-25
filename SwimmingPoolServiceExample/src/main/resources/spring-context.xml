@@ -13,53 +13,53 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <context:component-scan base-package="com.inbadevs.swimmingpoolserviceusers" />
+    <context:component-scan base-package="com.inbadevs.swimmingpoolserviceusers"/>
 
-   <!-- AOP -->
-    <aop:aspectj-autoproxy />
+    <!-- AOP -->
+    <aop:aspectj-autoproxy/>
 
     <tx:advice id="transactionAdviceBd"
                transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="*" rollback-for="Exception" />
+            <tx:method name="*" rollback-for="Exception"/>
         </tx:attributes>
     </tx:advice>
 
     <aop:config>
         <aop:pointcut id="pcCentralRepositoryBd"
-                      expression="execution(* com.inbadevs.swimmingpoolserviceusers.buisness.*.*(..))" />
+                      expression="execution(* com.inbadevs.swimmingpoolserviceusers.buisness.*.*(..))"/>
         <aop:advisor advice-ref="transactionAdviceBd"
-                     pointcut-ref="pcCentralRepositoryBd" />
+                     pointcut-ref="pcCentralRepositoryBd"/>
     </aop:config>
 
     <bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
 
-    <util:properties id="hibernateProperties" >
+    <util:properties id="hibernateProperties">
         <prop key="hibernate.show_sql">true</prop>
         <prop key="hibernate.auto_close_session">true</prop>
         <prop key="hibernate.default_schema">swimmingpool</prop>
-        <prop key="hibernate.hbm2ddl.auto">create</prop>
+        <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
     </util:properties>
 
     <bean id="sessionFactory"
-      class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref ="dataSource"></property>
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
         <property name="packagesToScan" value="com.inbadevs.swimmingpoolserviceusers.entities"/>
-        <property name="namingStrategy" ref="namingStrategy" />
+        <property name="namingStrategy" ref="namingStrategy"/>
         <property name="hibernateProperties" ref="hibernateProperties"/>
     </bean>
 
     <bean id="transactionManager"
-              class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-              destroy-method="close">
-        <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/" />
-        <property name="user" value="root" />
-        <property name="password" value="" />
+          destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/"/>
+        <property name="user" value="root"/>
+        <property name="password" value=""/>
     </bean>
 
 </beans>

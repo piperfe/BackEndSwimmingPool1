@@ -5,7 +5,7 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.service;
 
-import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerUser;
+import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerUsers;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPlan;
 import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;

@@ -1,5 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.dao;
 
+import javassist.NotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,6 +12,7 @@ import java.util.List;
 public class BaseGenericDAO<E> {
 
     private Class<E> entityClass;
+
     private SessionFactory sessionFactory;
 
     public BaseGenericDAO(Class<E> entityClass, SessionFactory em) {
@@ -37,6 +39,14 @@ public class BaseGenericDAO<E> {
     public List<E> all() {
         Criteria criteria = getCurrentSession().createCriteria(entityClass).addOrder(Order.asc("id"));
         return criteria.list();
+    }
+
+    public E find(String id) throws NotFoundException {
+        E result = (E) this.getCurrentSession().get(entityClass, id);
+        if (result == null) {
+            throw new NotFoundException("not found result in dataBase");
+        }
+        return result;
     }
 
     protected Session getCurrentSession() {
