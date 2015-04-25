@@ -12,10 +12,8 @@ package com.inbadevs.swimmingpoolserviceusers.entities;
 import lombok.Getter;
 
 import javax.persistence.Entity;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-@XmlRootElement
 @Entity
 @Getter
 public class SwimmingPoolUser extends User implements Serializable{

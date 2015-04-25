@@ -3,11 +3,9 @@ package com.inbadevs.swimmingpoolserviceusers.entities;
 import lombok.Getter;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
-@XmlRootElement
 @Entity
 @Getter
 @Inheritance(strategy = InheritanceType.JOINED)

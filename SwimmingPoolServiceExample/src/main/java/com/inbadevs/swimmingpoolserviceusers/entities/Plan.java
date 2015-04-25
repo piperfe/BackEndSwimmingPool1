@@ -6,11 +6,13 @@
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 /**
@@ -18,14 +20,16 @@ import lombok.Getter;
  * @author gabriellopezsalinas
  */
 
-@XmlRootElement
 @Entity
 @Getter
 
 public class Plan implements Serializable {
    
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @NotNull
+    private Integer id;
     
     private String name;
     
@@ -33,19 +37,6 @@ public class Plan implements Serializable {
     
     @ManyToOne
     private Schedule schedule;
+
    
 }
-
-
-
-/*
-CREATE TABLE `plan` (
-  `id` int(11) NOT NULL,
-  `id_schedule` int(11) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `description` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_schedule_idx` (`id_schedule`),
-  CONSTRAINT `id_schedule` FOREIGN KEY (`id_schedule`) REFERENCES `schedule` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-*/

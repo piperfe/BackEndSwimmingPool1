@@ -1,6 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
-import com.inbadevs.swimmingpoolserviceusers.buisness.BuisnessUsersLayer;
+import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
@@ -19,12 +19,12 @@ import java.util.List;
 public class ServiceRestUsers {
 
     @Autowired
-    BuisnessUsersLayer buissnesLayer;
+    ManagerUser buissnesLayer;
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("swimmingPoolUsers/getAll")
+    @Path("/swimmingPoolUsers/getAll")
     public List<SwimmingPoolUser> getAllSwimmingPoolUsers() throws BuisnessLayerException {
         List<SwimmingPoolUser> users = this.buissnesLayer.getAllSwimmingPoolUsers();
         return users;
@@ -32,7 +32,7 @@ public class ServiceRestUsers {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("swimmingPoolUsers/add")
+    @Path("/swimmingPoolUsers/add")
     public Response addSwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
         this.buissnesLayer.addUser(user);
         return Response.ok().build();
@@ -47,7 +47,7 @@ public class ServiceRestUsers {
     }
 
     @DELETE
-    @Path("swimmingPoolUsers/delete/{id}")
+    @Path("/swimmingPoolUsers/delete/{id}")
     public Response deleteSwimmingPoolUser(@PathParam("id") String idUser) throws BuisnessLayerException {
         this.buissnesLayer.deleteSwimmingPoolUser(idUser);
         return Response.ok().build();

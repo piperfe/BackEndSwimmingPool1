@@ -6,16 +6,24 @@
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 
 /**
  *
  * @author gabriellopezsalinas
  */
-@Entity
+@Embeddable
 @Getter
-public class Teacher extends User implements Serializable{
+public class DaySectionPK implements Serializable{
     
-    private String comments;
+  
+   @ManyToOne
+   Section section;
+   
+ 
+   @ManyToOne
+   Day day;
+
 }

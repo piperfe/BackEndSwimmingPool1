@@ -6,14 +6,16 @@
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  *
@@ -22,18 +24,26 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Schedule implements Serializable {
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+public class Assistance implements Serializable  {
+
+    public Assistance() {
+        this.enter = new Date();
+    }
+
     
     @Id
-    @GeneratedValue
     @NotNull
+    @GeneratedValue
     private Integer id;
     
-    private String name;
+    @ManyToOne
+    private User user;
     
-    private String description;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date enter;
     
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<DaySection> daysection;
+    private String comment;
+    
     
 }

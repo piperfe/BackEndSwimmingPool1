@@ -6,12 +6,10 @@
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.sql.Time;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
@@ -22,18 +20,16 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Schedule implements Serializable {
+public class Section implements Serializable{
     
     @Id
     @GeneratedValue
     @NotNull
-    private Integer id;
+    private int id;
     
-    private String name;
+    private Time start;
     
-    private String description;
+    private Time end;
     
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<DaySection> daysection;
     
 }
