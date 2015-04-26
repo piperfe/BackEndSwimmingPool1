@@ -41,6 +41,10 @@
         <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
     </util:properties>
 
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:data.sql" />
+    </jdbc:initialize-database>
+
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
