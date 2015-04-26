@@ -6,28 +6,47 @@
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
+import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 /**
  *
  * @author gabriellopezsalinas
- */
+ *
+ * */
 
 @Entity
 @Getter
-public class Profile implements Serializable{
-
+public class Payment implements Serializable {
+    
     @Id
     @GeneratedValue
     @NotNull
-    private Integer id;
+    private Long id;
     
-    private String description;
+    @ManyToOne
+    private SwimmingPoolUser swimmingpooluser;
     
+    @ManyToOne
+    private Plan plan;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datepay;
+    
+    private Long numberticket;
+    
+    private BigInteger price;
+    
+    public Payment() {
+        this.datepay = new Date();
+    }
 }

@@ -7,12 +7,7 @@ package com.inbadevs.swimmingpoolserviceusers.buisness;
 
 import com.inbadevs.swimmingpoolserviceusers.dao.ScheduleDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
-import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

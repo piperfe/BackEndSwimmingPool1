@@ -28,6 +28,10 @@ public class BaseGenericDAO<E> {
         this.getCurrentSession().delete(this.getCurrentSession().get(entityClass, id));
     }
 
+    public void delete(Long id) {
+        this.getCurrentSession().delete(this.getCurrentSession().get(entityClass, id));
+    }
+    
     public void delete(String id) {
         this.getCurrentSession().delete(this.getCurrentSession().get(entityClass, id));
     }

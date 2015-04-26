@@ -21,6 +21,7 @@ public class MyApplication extends ResourceConfig {
         register(ServiceRestSchedule.class);
         register(ServiceRestAssistance.class);
         register(ServiceRestSwimmingPoolUsers.class);
+        register(ServiceRestPayment.class);
         register(JacksonFeature.class);        
     }
 }

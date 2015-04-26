@@ -5,7 +5,9 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.service;
 
+import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPayment;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPlan;
+import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
 import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import java.util.List;
@@ -27,45 +29,43 @@ import org.springframework.stereotype.Service;
  * @author gabriellopezsalinas
  */
 
+
 @Service
-@Path("/plan")
-
-public class ServiceRestPlan {
-   
+@Path("/payment")
+public class ServiceRestPayment {
+    
     @Autowired
-    ManagerPlan buissnesLayer;
-
+    ManagerPayment buissnesLayer;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getAll")
-    public List<Plan> getAllPlan() throws BuisnessLayerException {
-        List<Plan> plan = this.buissnesLayer.getAllPlan();
-        return plan;
+    public List<Payment> getAllPayment() throws BuisnessLayerException {
+        List<Payment> payment = this.buissnesLayer.getAllPayment();
+        return payment;
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add")
-    public Response addPlan(Plan plan) throws BuisnessLayerException {
-        this.buissnesLayer.addPlan(plan);
+    public Response addPayment(Payment payment) throws BuisnessLayerException {
+        this.buissnesLayer.addPayment(payment);
         return Response.ok().build();
     }
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/modify")
-    public void modifyPlan(Plan plan) throws BuisnessLayerException {
-        this.buissnesLayer.modifyPlan(plan);
+    public void modifyPayment(Payment payment) throws BuisnessLayerException {
+        this.buissnesLayer.modifyPayment(payment);
     }
     
     
     @DELETE
     @Path("/delete/{id}")
-    public Response deletePlan(@PathParam("id") Integer id) throws BuisnessLayerException {
-        this.buissnesLayer.deletePlan(id);
+    public Response deletePayment(@PathParam("id") Long id) throws BuisnessLayerException {
+        this.buissnesLayer.deletePayment(id);
         return Response.ok().build();
 
     }
-    
 }
