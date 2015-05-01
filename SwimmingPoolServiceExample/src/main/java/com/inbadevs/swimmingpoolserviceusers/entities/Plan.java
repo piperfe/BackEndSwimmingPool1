@@ -5,15 +5,10 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  *
@@ -28,7 +23,6 @@ public class Plan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     private Integer id;
     
     private String name;

@@ -5,10 +5,11 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
-import java.io.Serializable;
+import lombok.Getter;
+
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
-import lombok.Getter;
+import java.io.Serializable;
 
 /**
  *
@@ -21,7 +22,6 @@ public class DaySectionPK implements Serializable{
   
    @ManyToOne
    Section section;
-   
  
    @ManyToOne
    Day day;

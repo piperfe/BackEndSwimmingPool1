@@ -5,13 +5,13 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
-import java.io.Serializable;
-import java.sql.Time;
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import lombok.Getter;
+import java.io.Serializable;
+import java.sql.Time;
 
 /**
  *
@@ -24,7 +24,6 @@ public class Section implements Serializable{
     
     @Id
     @GeneratedValue
-    @NotNull
     private int id;
     
     private Time start;

@@ -23,7 +23,6 @@ public class DaySection implements Serializable {
 
     @Id
     @GeneratedValue
-    @NotNull
     private Integer id;
     
     DaySectionPK daySection;

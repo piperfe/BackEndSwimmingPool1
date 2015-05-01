@@ -33,7 +33,6 @@ public class Assistance implements Serializable  {
 
     
     @Id
-    @NotNull
     @GeneratedValue
     private Integer id;
     

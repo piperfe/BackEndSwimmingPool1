@@ -26,7 +26,6 @@ public class Profile implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     private Integer id;
     
     private String description;

@@ -23,7 +23,6 @@ public class Day implements Serializable {
     
     @Id
     @GeneratedValue
-    @NotNull
     private Integer id;
     
     private String name;
