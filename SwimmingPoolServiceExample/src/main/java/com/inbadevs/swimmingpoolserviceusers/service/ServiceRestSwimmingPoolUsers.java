@@ -39,8 +39,9 @@ public class ServiceRestSwimmingPoolUsers {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("modify")
-    public void modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
+    public Response modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
         this.usersManager.modifySwimmingPoolUser(user);
+        return Response.ok().entity(new BooleanResponse(true)).build();
     }
 
     @GET

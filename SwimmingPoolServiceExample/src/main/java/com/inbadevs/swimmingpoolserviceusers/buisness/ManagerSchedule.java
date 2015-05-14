@@ -7,9 +7,10 @@ package com.inbadevs.swimmingpoolserviceusers.buisness;
 
 import com.inbadevs.swimmingpoolserviceusers.dao.ScheduleDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ManagerSchedule {
+
     @Autowired
     ScheduleDao schedule;
     

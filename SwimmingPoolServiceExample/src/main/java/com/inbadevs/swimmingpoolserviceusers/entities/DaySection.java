@@ -5,12 +5,12 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
-import java.io.Serializable;
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import lombok.Getter;
+import java.io.Serializable;
 
 /**
  *
@@ -24,7 +24,7 @@ public class DaySection implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
-    
+
     DaySectionPK daySection;
   
 }

@@ -42,6 +42,7 @@ public class BaseGenericDAO<E> {
 
     public List<E> all() {
         Criteria criteria = getCurrentSession().createCriteria(entityClass).addOrder(Order.asc("id"));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
 

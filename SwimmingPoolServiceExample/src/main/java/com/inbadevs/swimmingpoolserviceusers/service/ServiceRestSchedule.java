@@ -5,24 +5,17 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.service;
 
-import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPlan;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerSchedule;
-import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import java.util.List;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  *
@@ -36,36 +29,38 @@ public class ServiceRestSchedule {
   
     
     @Autowired
-    ManagerSchedule buissnesLayer;
+    ManagerSchedule managerSchedule;
 
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getAll")
-    public List<Schedule> getAllPlan() throws BuisnessLayerException {
-        List<Schedule> schedule = this.buissnesLayer.getAllSchedule();
+    public List<Schedule> getAllSchedule() throws BuisnessLayerException {
+        List<Schedule> schedule = this.managerSchedule.getAllSchedule();
         return schedule;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/add")
     public Response addSchedule(Schedule schedule) throws BuisnessLayerException {
-        this.buissnesLayer.addSchedule(schedule);
-        return Response.ok().build();
+        this.managerSchedule.addSchedule(schedule);
+        return Response.ok().entity(new BooleanResponse(true)).build();
     }
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/modify")
-    public void modifySchedule(Schedule schedule) throws BuisnessLayerException {
-        this.buissnesLayer.modifySchedule(schedule);
+    public Response modifySchedule(Schedule schedule) throws BuisnessLayerException {
+        this.managerSchedule.modifySchedule(schedule);
+        return Response.ok().entity(new BooleanResponse(true)).build();
     }
     
     @DELETE
     @Path("/delete/{id}")
     public Response deletePlan(@PathParam("id") Integer id) throws BuisnessLayerException {
-        this.buissnesLayer.deleteSchedule(id);
+        this.managerSchedule.deleteSchedule(id);
         return Response.ok().build();
 
     }

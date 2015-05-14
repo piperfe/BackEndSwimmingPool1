@@ -41,6 +41,7 @@ public class ServiceRestPlan {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/add")
     public Response addPlan(Plan plan) throws BuisnessLayerException {
         this.buissnesLayer.addPlan(plan);
