@@ -150,7 +150,9 @@
                         <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
                         <spring.profiles.active>local</spring.profiles.active>
                         <root.appender>consoleAppender</root.appender>
+                        <jpa>true</jpa>
                     </systemProperties>
+
                     <useTestClasspath>false</useTestClasspath>
                 </configuration>
             </plugin>

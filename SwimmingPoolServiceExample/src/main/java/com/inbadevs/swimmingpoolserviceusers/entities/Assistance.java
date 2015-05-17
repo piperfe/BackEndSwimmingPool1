@@ -5,17 +5,12 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -34,7 +29,7 @@ public class Assistance implements Serializable  {
     
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     
     @ManyToOne
     private User user;

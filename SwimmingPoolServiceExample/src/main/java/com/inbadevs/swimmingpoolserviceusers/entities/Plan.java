@@ -23,7 +23,7 @@ public class Plan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer id;
+    private Long id;
     
     private String name;
     
@@ -31,6 +31,5 @@ public class Plan implements Serializable {
     
     @ManyToOne
     private Schedule schedule;
-
    
 }

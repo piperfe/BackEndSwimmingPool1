@@ -1,9 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerUsers;
-import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
-import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
-import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Service
 @Path("users")
@@ -41,9 +37,8 @@ public class ServiceRestUsers {
 
     @DELETE
     @Path("delete/{id}")
-    public Response delete(@PathParam("id") String idUser) throws BuisnessLayerException {
+    public void delete(@PathParam("id") Long idUser) throws BuisnessLayerException {
         this.usersManager.deleteUser(idUser);
-        return Response.ok().build();
 
     }
 

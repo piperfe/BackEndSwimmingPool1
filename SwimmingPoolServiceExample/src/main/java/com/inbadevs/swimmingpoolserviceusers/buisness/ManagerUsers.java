@@ -24,15 +24,15 @@ public class ManagerUsers {
         return false;
     }
 
-    public Boolean isUserExist(String idUser) throws NotFoundException {
-        User user = this.userDao.find(idUser);
+    public Boolean isUserExist(String rut) throws NotFoundException {
+        User user = this.userDao.findBy("rut", rut);
         if(user != null){
             return true;
         }
         return false;
     }
 
-    public void deleteUser(String idUser) throws BuisnessLayerException {
+    public void deleteUser(Long idUser) throws BuisnessLayerException {
         this.userDao.delete(idUser);
     }
 }

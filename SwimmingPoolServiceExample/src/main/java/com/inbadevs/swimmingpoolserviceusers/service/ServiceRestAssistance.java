@@ -45,8 +45,7 @@ public class ServiceRestAssistance {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add")
-    public Response addAssistance(Assistance assistance) throws BuisnessLayerException {
+    public void addAssistance(Assistance assistance) throws BuisnessLayerException {
         this.buissnesLayer.addAssistance(assistance);
-        return Response.ok().build();
     }
 }

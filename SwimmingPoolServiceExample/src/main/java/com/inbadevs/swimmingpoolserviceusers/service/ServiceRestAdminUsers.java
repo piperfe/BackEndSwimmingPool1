@@ -3,13 +3,11 @@ package com.inbadevs.swimmingpoolserviceusers.service;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerAdminUsers;
 import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Service
@@ -31,9 +29,8 @@ public class ServiceRestAdminUsers {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("add")
-    public Response addAdminUser(AdminUser user) throws BuisnessLayerException {
+    public void addAdminUser(AdminUser user) throws BuisnessLayerException {
         this.managerAdminUsers.addUser(user);
-        return Response.ok().entity(new BooleanResponse(true)).build();
     }
 
     @PUT
@@ -45,9 +42,9 @@ public class ServiceRestAdminUsers {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("searchById/{id}")
-    public AdminUser searchById(@PathParam("id") String idAdminUser) throws javassist.NotFoundException {
-        return this.managerAdminUsers.searchById(idAdminUser);
+    @Path("/{id}")
+    public AdminUser search(@PathParam("id") Long idAdminUser) throws javassist.NotFoundException {
+        return this.managerAdminUsers.search(idAdminUser);
     }
 
 

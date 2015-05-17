@@ -3,13 +3,11 @@ package com.inbadevs.swimmingpoolserviceusers.service;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerSwimmingPoolUsers;
 import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Service
@@ -31,17 +29,15 @@ public class ServiceRestSwimmingPoolUsers {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("add")
-    public Response addSwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
+    public void addSwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
         this.usersManager.addUser(user);
-        return Response.ok().entity(new BooleanResponse(true)).build();
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("modify")
-    public Response modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
+    public void modifySwimmingPoolUser(SwimmingPoolUser user) throws BuisnessLayerException {
         this.usersManager.modifySwimmingPoolUser(user);
-        return Response.ok().entity(new BooleanResponse(true)).build();
     }
 
     @GET
@@ -54,9 +50,9 @@ public class ServiceRestSwimmingPoolUsers {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("searchById/{id}")
-    public SwimmingPoolUser searchById(@PathParam("id") String idSwimmingPoolUser) throws javassist.NotFoundException {
-        return this.usersManager.searchById(idSwimmingPoolUser);
+    @Path("/{id}")
+    public SwimmingPoolUser search(@PathParam("id") Long idSwimmingPoolUser) throws javassist.NotFoundException {
+        return this.usersManager.search(idSwimmingPoolUser);
     }
 
 

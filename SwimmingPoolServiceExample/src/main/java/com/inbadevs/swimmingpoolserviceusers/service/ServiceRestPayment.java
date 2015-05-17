@@ -48,9 +48,8 @@ public class ServiceRestPayment {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add")
-    public Response addPayment(Payment payment) throws BuisnessLayerException {
+    public void addPayment(Payment payment) throws BuisnessLayerException {
         this.buissnesLayer.addPayment(payment);
-        return Response.ok().build();
     }
     
     @PUT

@@ -37,7 +37,7 @@ public class ManagerSwimmingPoolUsers {
         return this.swimmingPoolUserDao.search(pattern);
     }
 
-    public SwimmingPoolUser searchById(String idSwimmingPoolUser) throws NotFoundException {
+    public SwimmingPoolUser search(Long idSwimmingPoolUser) throws NotFoundException {
         return this.swimmingPoolUserDao.find(idSwimmingPoolUser);
     }
 

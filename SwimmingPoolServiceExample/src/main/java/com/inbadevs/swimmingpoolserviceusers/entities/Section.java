@@ -24,7 +24,7 @@ public class Section implements Serializable{
     
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     
     private Time start;
     

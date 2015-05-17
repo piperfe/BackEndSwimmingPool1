@@ -32,7 +32,7 @@ public class ManagerAdminUsers {
         this.adminUserDao.update(user);
     }
 
-    public AdminUser searchById(String idAdminUser) throws NotFoundException {
+    public AdminUser search(Long idAdminUser) throws NotFoundException {
         return this.adminUserDao.find(idAdminUser);
     }
 

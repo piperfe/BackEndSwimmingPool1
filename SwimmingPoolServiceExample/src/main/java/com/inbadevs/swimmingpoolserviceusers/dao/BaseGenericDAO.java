@@ -5,6 +5,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class BaseGenericDAO<E> {
     public void delete(Long id) {
         this.getCurrentSession().delete(this.getCurrentSession().get(entityClass, id));
     }
-    
+
     public void delete(String id) {
         this.getCurrentSession().delete(this.getCurrentSession().get(entityClass, id));
     }
@@ -47,11 +48,17 @@ public class BaseGenericDAO<E> {
     }
 
     public E find(String id) throws NotFoundException {
-        E result = (E) this.getCurrentSession().get(entityClass, id);
-        if (result == null) {
-            throw new NotFoundException("not found result in dataBase");
-        }
-        return result;
+        return (E) this.getCurrentSession().get(entityClass, id);
+    }
+
+    public E find(Long id) throws NotFoundException {
+        return (E) this.getCurrentSession().get(entityClass, id);
+    }
+
+    public E findBy(String name, String value) {
+        Criteria criteria = getCurrentSession().createCriteria(entityClass)
+                .add(Restrictions.like(name, value));
+        return (E) criteria.uniqueResult();
     }
 
     protected Session getCurrentSession() {

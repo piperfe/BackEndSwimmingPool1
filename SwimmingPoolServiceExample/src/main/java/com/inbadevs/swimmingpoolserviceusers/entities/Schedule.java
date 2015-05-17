@@ -22,7 +22,7 @@ public class Schedule implements Serializable {
     
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     
     private String name;
     

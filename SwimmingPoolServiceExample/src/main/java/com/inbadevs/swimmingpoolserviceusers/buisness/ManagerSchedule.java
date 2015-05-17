@@ -32,10 +32,9 @@ public class ManagerSchedule {
     
     public void modifySchedule(Schedule schedule){
         this.schedule.update(schedule);
-    
     }
     
-    public void deleteSchedule(Integer id){
+    public void deleteSchedule(Long id){
         this.schedule.delete(id);
     
     }
