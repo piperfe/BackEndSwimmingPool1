@@ -8,9 +8,10 @@ package com.inbadevs.swimmingpoolserviceusers.buisness;
 import com.inbadevs.swimmingpoolserviceusers.dao.PlanDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *
@@ -34,7 +35,6 @@ public class ManagerPlan {
     
     public void modifyPlan(Plan plan){
         this.plan.update(plan);
-    
     }
 
     public void deletePlan(Integer id) throws BuisnessLayerException {

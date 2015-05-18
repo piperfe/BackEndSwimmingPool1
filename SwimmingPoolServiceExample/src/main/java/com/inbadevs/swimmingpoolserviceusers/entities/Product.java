@@ -7,9 +7,10 @@ package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import lombok.Getter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -18,20 +19,12 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Schedule implements Serializable {
-    
+public class Product implements Serializable {
+
     @Id
     @GeneratedValue
-    private Long id;
-    
-    private String name;
-    
-    private String description;
+    private Integer id;
 
-    @ManyToOne
-    private Plan plan;
-    
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<DaySection> daySection;
-    
+    ProductPK product;
+  
 }
