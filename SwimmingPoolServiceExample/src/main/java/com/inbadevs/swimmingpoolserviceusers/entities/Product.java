@@ -10,7 +10,9 @@ import lombok.Getter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -26,5 +28,11 @@ public class Product implements Serializable {
     private Integer id;
 
     ProductPK product;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date startValidDate;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date endValidDate;
   
 }

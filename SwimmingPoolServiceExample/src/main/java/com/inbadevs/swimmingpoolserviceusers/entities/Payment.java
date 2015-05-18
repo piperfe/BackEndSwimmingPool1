@@ -5,18 +5,12 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
-import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -37,14 +31,12 @@ public class Payment implements Serializable {
     private SwimmingPoolUser swimmingpooluser;
     
     @ManyToOne
-    private Plan plan;
+    private Product product;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date datepay;
     
-    private Long numberticket;
-    
-    private BigInteger price;
+    //private Long numberticket;
     
     public Payment() {
         this.datepay = new Date();
