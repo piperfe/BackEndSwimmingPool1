@@ -7,9 +7,11 @@ package com.inbadevs.swimmingpoolserviceusers.buisness;
 
 import com.inbadevs.swimmingpoolserviceusers.dao.ScheduleDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,5 +39,23 @@ public class ManagerSchedule {
     public void deleteSchedule(Long id){
         this.schedule.delete(id);
     
+    }
+
+    public List<Schedule> searchScheduleRestriction(int sizeRestriction) {
+        List<Schedule> schedules = this.schedule.all();
+
+        List<Schedule> scheduleFilter = new ArrayList<>();
+
+        for (Schedule schedule : schedules) {
+            if(schedule.getDaySection().size() == sizeRestriction) {
+                scheduleFilter.add(schedule);
+            }
+        }
+
+        return scheduleFilter;
+    }
+
+    public Schedule search(Long idSchedule) throws NotFoundException {
+        return this.schedule.find(idSchedule);
     }
 }

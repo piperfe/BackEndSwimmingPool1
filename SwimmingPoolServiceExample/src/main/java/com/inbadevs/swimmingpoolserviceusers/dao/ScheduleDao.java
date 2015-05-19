@@ -23,5 +23,5 @@ public class ScheduleDao extends BaseGenericDAO<Schedule>{
     public ScheduleDao(@Qualifier("sessionFactory") SessionFactory em) {
         super(Schedule.class, em);
     }
-    
+
 }

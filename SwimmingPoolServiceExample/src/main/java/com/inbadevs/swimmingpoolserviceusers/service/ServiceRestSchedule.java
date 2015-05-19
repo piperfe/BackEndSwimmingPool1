@@ -6,6 +6,7 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerSchedule;
+import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -56,8 +56,23 @@ public class ServiceRestSchedule {
     
     @DELETE
     @Path("/delete/{id}")
-    public void deletePlan(@PathParam("id") Long id) throws BuisnessLayerException {
+    public void deleteSchedule(@PathParam("id") Long id) throws BuisnessLayerException {
         this.managerSchedule.deleteSchedule(id);
 
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Schedule search(@PathParam("id") Long idSchedule) throws javassist.NotFoundException {
+        return this.managerSchedule.search(idSchedule);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("searchScheduleRestriction/{pattern}")
+    public List<Schedule> searchSchedule(@PathParam("pattern") int sizeRestriction) throws BuisnessLayerException {
+        List<Schedule> schedules = this.managerSchedule.searchScheduleRestriction(sizeRestriction);
+        return schedules;
     }
 }
