@@ -55,7 +55,7 @@ public class ServiceRestPlan {
     
     @DELETE
     @Path("/delete/{id}")
-    public void deletePlan(@PathParam("id") Integer id) throws BuisnessLayerException {
+    public void deletePlan(@PathParam("id") Long id) throws BuisnessLayerException {
         this.buissnesLayer.deletePlan(id);
 
     }

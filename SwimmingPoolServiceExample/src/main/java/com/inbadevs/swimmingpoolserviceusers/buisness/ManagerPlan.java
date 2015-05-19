@@ -38,7 +38,7 @@ public class ManagerPlan {
         this.plan.update(plan);
     }
 
-    public void deletePlan(Integer id) throws BuisnessLayerException {
+    public void deletePlan(Long id) throws BuisnessLayerException {
         this.plan.delete(id);
     }
 

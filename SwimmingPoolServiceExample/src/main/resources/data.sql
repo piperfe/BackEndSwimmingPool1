@@ -21,8 +21,7 @@ INSERT INTO swimmingpool.section (id, end, start) VALUES ('11', '18:00', '17:00'
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('12', '19:00', '18:00');
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('13', '20:00', '19:00');
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('14', '21:00', '20:00');
-INSERT INTO swimmingpool.section (id, end, start) VALUES ('15', '22:00', '21:00');
-INSERT INTO swimmingpool.section (id, end, start) VALUES ('16', '23:00', '22:00');
+
 
 
 INSERT INTO swimmingpool.day_section (day,section) (select d.id, s.id
