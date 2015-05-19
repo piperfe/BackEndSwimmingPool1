@@ -7,6 +7,7 @@ package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPlan;
 import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
+import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,13 @@ public class ServiceRestPlan {
         this.buissnesLayer.deletePlan(id);
 
     }
-    
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Plan search(@PathParam("id") Long idPlan) throws javassist.NotFoundException {
+        return this.buissnesLayer.search(idPlan);
+    }
+
+
 }

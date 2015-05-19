@@ -8,6 +8,7 @@ package com.inbadevs.swimmingpoolserviceusers.buisness;
 import com.inbadevs.swimmingpoolserviceusers.dao.PlanDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +41,8 @@ public class ManagerPlan {
     public void deletePlan(Integer id) throws BuisnessLayerException {
         this.plan.delete(id);
     }
-    
 
-    
-    
+    public Plan search(Long idPlan) throws NotFoundException {
+        return this.plan.find(idPlan);
+    }
 }
