@@ -28,7 +28,7 @@ public class Schedule implements Serializable {
     
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Plan plan;
     
     @ManyToMany(fetch = FetchType.EAGER)

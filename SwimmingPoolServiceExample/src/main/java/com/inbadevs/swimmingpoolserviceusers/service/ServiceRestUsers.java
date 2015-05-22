@@ -19,15 +19,6 @@ public class ServiceRestUsers {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("login/{idUser}/{password}")
-    public BooleanResponse loginUser(@PathParam("idUser") String idUser, @PathParam("password") String password) {
-        Boolean result =  this.usersManager.loginUser(idUser, password);
-        return new BooleanResponse(result);
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("isUserExist/{id}")
     public BooleanResponse isUserExist(@PathParam("id") String idUser) throws javassist.NotFoundException {
         Boolean result = this.usersManager.isUserExist(idUser);

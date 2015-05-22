@@ -16,13 +16,6 @@ public class ManagerUsers {
     @Autowired
     UserDao userDao;
 
-    public Boolean loginUser(String idUser, String password) {
-        User user = this.userDao.login(idUser, password);
-        if(user != null){
-            return true;
-        }
-        return false;
-    }
 
     public Boolean isUserExist(String rut) throws NotFoundException {
         User user = this.userDao.findBy("rut", rut);

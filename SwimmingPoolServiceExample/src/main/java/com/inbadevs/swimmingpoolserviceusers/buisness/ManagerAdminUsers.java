@@ -36,4 +36,12 @@ public class ManagerAdminUsers {
         return this.adminUserDao.find(idAdminUser);
     }
 
+    public AdminUser loginUser(String rut, String password) {
+        AdminUser user = this.adminUserDao.login(rut, password);
+        if(user != null){
+            return user;
+        }
+        return null;
+    }
+
 }

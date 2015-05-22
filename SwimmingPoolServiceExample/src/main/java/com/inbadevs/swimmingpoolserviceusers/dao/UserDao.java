@@ -1,10 +1,7 @@
 package com.inbadevs.swimmingpoolserviceusers.dao;
 
-import com.inbadevs.swimmingpoolserviceusers.entities.SwimmingPoolUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -19,13 +16,6 @@ public class UserDao extends BaseGenericDAO<User>{
     protected UserDao(
             @Qualifier("sessionFactory") SessionFactory em) {
         super(User.class, em);
-    }
-
-    public User login(String idUser, String password) {
-        Criteria criteria = getCurrentSession().createCriteria(SwimmingPoolUser.class)
-                .add(Restrictions.and(Restrictions.eq("rut", idUser),
-                        Restrictions.eq("password", password)));
-        return (User) criteria.uniqueResult();
     }
 
 }

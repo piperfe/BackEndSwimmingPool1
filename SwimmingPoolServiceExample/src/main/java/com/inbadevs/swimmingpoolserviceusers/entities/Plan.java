@@ -33,13 +33,4 @@ public class Plan implements Serializable {
 
     private Integer hoursPerWeek;
 
- /*   @Temporal(javax.persistence.TemporalType.DATE)
-    private Date startValidDate;
-
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date endValidDate;
-
-    @ManyToOne
-    private Schedule schedule;*/
-   
 }
