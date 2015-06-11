@@ -1,6 +1,8 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerUsers;
+import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
+import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,15 @@ public class ServiceRestUsers {
         this.usersManager.deleteUser(idUser);
 
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("login/{rut}/{password}")
+    public User loginUser(@PathParam("rut") String rut, @PathParam("password") String password) {
+        return this.usersManager.loginUser(rut, password);
+    }
+    
+    
 
 }

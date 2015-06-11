@@ -1,6 +1,7 @@
 package com.inbadevs.swimmingpoolserviceusers.buisness;
 
 import com.inbadevs.swimmingpoolserviceusers.dao.UserDao;
+import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import javassist.NotFoundException;
@@ -27,5 +28,13 @@ public class ManagerUsers {
 
     public void deleteUser(Long idUser) throws BuisnessLayerException {
         this.userDao.delete(idUser);
+    }
+    
+    public User loginUser(String rut, String password) {
+        User user = this.userDao.login(rut, password);
+        if(user != null){
+            return user;
+        }
+        return null;
     }
 }

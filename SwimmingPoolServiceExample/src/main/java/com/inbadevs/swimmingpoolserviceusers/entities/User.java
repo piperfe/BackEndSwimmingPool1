@@ -1,5 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -36,5 +37,7 @@ public class User implements Serializable {
     private String email;
 
     private String phone;
+    
+    private int id_profile=1;
 
 }

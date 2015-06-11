@@ -47,14 +47,6 @@ public class ServiceRestAdminUsers {
         return this.managerAdminUsers.search(idAdminUser);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("login/{rut}/{password}")
-    public AdminUser loginUser(@PathParam("rut") String rut, @PathParam("password") String password) {
-        return this.managerAdminUsers.loginUser(rut, password);
-    }
-
 
 
 }
