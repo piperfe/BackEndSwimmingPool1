@@ -14,7 +14,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <tomcat.version>7.0.57</tomcat.version>
-        <tomcat.port>9090</tomcat.port>
+        <tomcat.port>8080</tomcat.port>
         <application.context>SwimmingPoolServiceExample/rest</application.context>
     </properties>
 

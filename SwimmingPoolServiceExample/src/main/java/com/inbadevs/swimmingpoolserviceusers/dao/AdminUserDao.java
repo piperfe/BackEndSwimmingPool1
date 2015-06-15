@@ -20,11 +20,4 @@ public class AdminUserDao extends  BaseGenericDAO<AdminUser>{
         super(AdminUser.class, em);
     }
 
-    public AdminUser login(String rut, String password) {
-        Criteria criteria = getCurrentSession().createCriteria(AdminUser.class)
-                .add(Restrictions.and(Restrictions.eq("rut", rut),
-                        Restrictions.eq("password", password)));
-        return (AdminUser) criteria.uniqueResult();
-    }
-
 }
