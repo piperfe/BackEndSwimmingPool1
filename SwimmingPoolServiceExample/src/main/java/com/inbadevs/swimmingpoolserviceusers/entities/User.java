@@ -1,10 +1,10 @@
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -24,8 +24,8 @@ public class User implements Serializable {
 
     private String secondLastName;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date birthDate;
+    @JsonFormat(pattern = "dd/MM/yyy")
+    private String birthDate;
 
     private String address;
     

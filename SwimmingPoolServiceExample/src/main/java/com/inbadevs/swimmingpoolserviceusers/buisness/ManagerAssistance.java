@@ -6,9 +6,8 @@
 package com.inbadevs.swimmingpoolserviceusers.buisness;
 
 import com.inbadevs.swimmingpoolserviceusers.dao.AssistanceDao;
-import com.inbadevs.swimmingpoolserviceusers.dao.PlanDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.Assistance;
-import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

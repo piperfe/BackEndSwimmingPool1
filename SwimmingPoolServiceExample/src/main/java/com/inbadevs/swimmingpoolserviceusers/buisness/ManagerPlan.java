@@ -39,20 +39,19 @@ public class ManagerPlan {
         this.plan.save(plan);
     }
 
-    public void modifyPlan(Plan plan) {
-        this.plan.update(plan);
+    public List<Schedule> modifyPlan(Plan plan) {
+        List<Schedule> schedulesPlanFilter = getSchedules(plan.getId());
+
+        if (schedulesPlanFilter.size() == 0) {
+            this.plan.delete(plan.getId());
+        }
+
+        return schedulesPlanFilter;
     }
 
     public List<Schedule> deletePlan(Long id) throws BuisnessLayerException {
 
-        List<Schedule> schedules = scheduleDao.all();
-        List<Schedule> schedulesPlanFilter = new ArrayList<>();
-
-        for (Schedule schedule : schedules) {
-            if (schedule.getPlan().getId() == id) {
-                schedulesPlanFilter.add(schedule);
-            }
-        }
+        List<Schedule> schedulesPlanFilter = getSchedules(id);
 
         if (schedulesPlanFilter.size() == 0) {
             this.plan.delete(id);
@@ -62,7 +61,23 @@ public class ManagerPlan {
 
     }
 
+    private List<Schedule> getSchedules(Long id) {
+        List<Schedule> schedules = scheduleDao.all();
+        List<Schedule> schedulesPlanFilter = new ArrayList<>();
+
+        for (Schedule schedule : schedules) {
+            if (schedule.getPlan().getId() == id) {
+                schedulesPlanFilter.add(schedule);
+            }
+        }
+        return schedulesPlanFilter;
+    }
+
     public Plan search(Long idPlan) throws NotFoundException {
         return this.plan.find(idPlan);
+    }
+
+    public List<Plan> findAllPlanByTypeOfPlan(String typeOfPlan){
+        return plan.findAllPlanByTypeOfPlan(typeOfPlan);
     }
 }

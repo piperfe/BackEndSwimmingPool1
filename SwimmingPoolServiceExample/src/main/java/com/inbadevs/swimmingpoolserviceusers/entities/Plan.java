@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 @Entity
 @Getter
-
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Plan implements Serializable {
    
     @Id
@@ -31,6 +31,11 @@ public class Plan implements Serializable {
 
     private Long price;
 
+    //TODO Improve enum type of data
+    private String typeOfPlan;
+
     private Integer hoursPerWeek;
+
+    private Integer blocksPerWeek;
 
 }

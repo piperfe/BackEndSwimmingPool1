@@ -27,12 +27,13 @@ public class Product implements Serializable {
     @GeneratedValue
     private Integer id;
 
-    ProductPK product;
+    ProductPK productPK;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startValidDate;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date endValidDate;
-  
+
+
 }

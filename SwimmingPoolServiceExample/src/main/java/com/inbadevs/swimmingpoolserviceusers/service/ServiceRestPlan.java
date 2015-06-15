@@ -49,8 +49,13 @@ public class ServiceRestPlan {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/modify")
-    public void modifyPlan(Plan plan) throws BuisnessLayerException {
-        this.buissnesLayer.modifyPlan(plan);
+    public Response modifyPlan(Plan plan) throws BuisnessLayerException {
+        List<Schedule> schedules = this.buissnesLayer.deletePlan(plan.getId());
+
+        if(schedules.size() > 0){
+            return Response.ok().entity(schedules).status(Response.Status.OK).build();
+        }
+        return Response.ok().status(Response.Status.NO_CONTENT).build();
     }
     
     
@@ -70,6 +75,13 @@ public class ServiceRestPlan {
     @Path("/{id}")
     public Plan search(@PathParam("id") Long idPlan) throws javassist.NotFoundException {
         return this.buissnesLayer.search(idPlan);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("findAllPlanByTypeOfPlan/{typeOfPlan}")
+    public List<Plan> findAllPlanByTypeOfPlan(@PathParam("typeOfPlan") String typeOfPlan) throws javassist.NotFoundException {
+        return this.buissnesLayer.findAllPlanByTypeOfPlan(typeOfPlan);
     }
 
 

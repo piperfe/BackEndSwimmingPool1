@@ -8,9 +8,9 @@ package com.inbadevs.swimmingpoolserviceusers.entities;
 import lombok.Getter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+
 
 /**
  *
@@ -24,20 +24,17 @@ public class Payment implements Serializable {
     
     @Id
     @GeneratedValue
-    @NotNull
     private Long id;
     
     @ManyToOne
-    private SwimmingPoolUser swimmingpooluser;
+    private SwimmingPoolUser swimmingPoolUser;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date datepay;
-    
-    //private Long numberticket;
-    
+
     public Payment() {
         this.datepay = new Date();
     }

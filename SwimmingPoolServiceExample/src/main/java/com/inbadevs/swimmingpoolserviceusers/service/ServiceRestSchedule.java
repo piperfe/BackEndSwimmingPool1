@@ -6,7 +6,6 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerSchedule;
-import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import org.springframework.beans.factory.annotation.Autowired;

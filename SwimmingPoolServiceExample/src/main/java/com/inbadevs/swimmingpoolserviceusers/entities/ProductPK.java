@@ -18,11 +18,10 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 public class ProductPK implements Serializable{
-    
-  
+
    @ManyToOne
    Plan plan;
- 
+
    @ManyToOne
    Schedule schedule;
 
