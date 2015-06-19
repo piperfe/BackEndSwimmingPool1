@@ -5,8 +5,10 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.buisness;
 
+import com.inbadevs.swimmingpoolserviceusers.dao.PaymentDao;
 import com.inbadevs.swimmingpoolserviceusers.dao.PlanDao;
 import com.inbadevs.swimmingpoolserviceusers.dao.ScheduleDao;
+import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
 import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.entities.Schedule;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
@@ -31,6 +33,9 @@ public class ManagerPlan {
     @Autowired
     ScheduleDao scheduleDao;
 
+    @Autowired
+    PaymentDao paymentDao;
+
     public List<Plan> getAllPlan() {
         return this.plan.all();
     }
@@ -39,25 +44,29 @@ public class ManagerPlan {
         this.plan.save(plan);
     }
 
-    public List<Schedule> modifyPlan(Plan plan) {
+    public Boolean modifyPlan(Plan plan) {
         List<Schedule> schedulesPlanFilter = getSchedules(plan.getId());
+        List<Payment> paymentsPlanFilter = getPayments(plan.getId());
 
-        if (schedulesPlanFilter.size() == 0) {
-            this.plan.delete(plan.getId());
+        if (schedulesPlanFilter.size() == 0 && paymentsPlanFilter.size() == 0) {
+            this.plan.update(plan);
+            return true;
         }
 
-        return schedulesPlanFilter;
+        return false;
     }
 
-    public List<Schedule> deletePlan(Long id) throws BuisnessLayerException {
+    public Boolean deletePlan(Long id) throws BuisnessLayerException {
 
         List<Schedule> schedulesPlanFilter = getSchedules(id);
+        List<Payment> paymentsPlanFilter = getPayments(id);
 
-        if (schedulesPlanFilter.size() == 0) {
+        if (schedulesPlanFilter.size() == 0 && paymentsPlanFilter.size() == 0) {
             this.plan.delete(id);
+            return true;
         }
 
-        return schedulesPlanFilter;
+        return false;
 
     }
 
@@ -72,6 +81,19 @@ public class ManagerPlan {
         }
         return schedulesPlanFilter;
     }
+
+    private List<Payment> getPayments(Long id) {
+        List<Payment> payments = paymentDao.all();
+        List<Payment> paymentsPlanScheduleFilter = new ArrayList<>();
+
+        for (Payment payment : payments) {
+            if (payment.getProduct().getProductPK().getPlan().getId() == id) {
+                paymentsPlanScheduleFilter.add(payment);
+            }
+        }
+        return paymentsPlanScheduleFilter;
+    }
+
 
     public Plan search(Long idPlan) throws NotFoundException {
         return this.plan.find(idPlan);

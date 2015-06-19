@@ -31,9 +31,20 @@ public class Payment implements Serializable {
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date datepay;
+
+    @Column(unique = true)
+    String numberOfTicket;
+
+    String formOfPayment;
+
+    String chequeNumber;
+
+    String bank;
+
+    String observations;
 
     public Payment() {
         this.datepay = new Date();

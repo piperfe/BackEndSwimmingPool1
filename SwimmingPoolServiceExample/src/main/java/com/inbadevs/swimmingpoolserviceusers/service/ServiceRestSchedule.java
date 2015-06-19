@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -49,14 +50,24 @@ public class ServiceRestSchedule {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/modify")
-    public void modifySchedule(Schedule schedule) throws BuisnessLayerException {
-        this.managerSchedule.modifySchedule(schedule);
+    public Response modifySchedule(Schedule schedule) throws BuisnessLayerException {
+        Boolean isDeletedSchedule = this.managerSchedule.modifySchedule(schedule);
+
+        if(isDeletedSchedule){
+            return Response.ok().status(Response.Status.NO_CONTENT).build();
+        }
+        return Response.ok().entity(isDeletedSchedule).status(Response.Status.OK).build();
     }
     
     @DELETE
     @Path("/delete/{id}")
-    public void deleteSchedule(@PathParam("id") Long id) throws BuisnessLayerException {
-        this.managerSchedule.deleteSchedule(id);
+    public Response deleteSchedule(@PathParam("id") Long id) throws BuisnessLayerException {
+        Boolean isDeletedSchedule = this.managerSchedule.deleteSchedule(id);
+
+        if(isDeletedSchedule){
+            return Response.ok().status(Response.Status.NO_CONTENT).build();
+        }
+        return Response.ok().entity(isDeletedSchedule).status(Response.Status.OK).build();
 
     }
 

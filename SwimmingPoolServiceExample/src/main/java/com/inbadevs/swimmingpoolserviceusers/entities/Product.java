@@ -5,14 +5,13 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -29,11 +28,11 @@ public class Product implements Serializable {
 
     ProductPK productPK;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date startValidDate;
+    @JsonFormat(pattern = "dd/MM/yyy")
+    private String startValidDate;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date endValidDate;
+    @JsonFormat(pattern = "dd/MM/yyy")
+    private String endValidDate;
 
 
 }
