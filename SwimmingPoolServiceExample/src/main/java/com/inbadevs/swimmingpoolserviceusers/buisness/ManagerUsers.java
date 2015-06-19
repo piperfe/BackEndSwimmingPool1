@@ -37,4 +37,9 @@ public class ManagerUsers {
         }
         return null;
     }
+    
+    public void changePassUser(User user){
+        this.userDao.update(user);
+        
+    }
 }

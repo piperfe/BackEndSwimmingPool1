@@ -1,7 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerUsers;
-import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpoolserviceusers.service.entityresponse.BooleanResponse;
@@ -43,6 +42,11 @@ public class ServiceRestUsers {
         return this.usersManager.loginUser(rut, password);
     }
     
-    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("changePass")
+    public void changePassUser(User user) throws BuisnessLayerException {
+        this.usersManager.changePassUser(user);
+    }
 
 }
