@@ -7,7 +7,6 @@ package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPayment;
 import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
-import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ import java.util.List;
  */
 
 
-@Service
+@Service    
 @Path("/payment")
 public class ServiceRestPayment {
     
@@ -52,7 +51,15 @@ public class ServiceRestPayment {
         List<Payment> payment = this.buissnesLayer.getPaymentsBySwimmingPoolUser(swimmingPoolUserId);
         return payment;
     }
-
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/swimmingPoolUser/infoActive/{swimmingPoolUserId}")
+    public List<Payment> getPaymentsActiveBySwimmingPoolUser(@PathParam("swimmingPoolUserId") Long swimmingPoolUserId) throws BuisnessLayerException {
+        List<Payment> payment = this.buissnesLayer.getPaymentsActiveBySwimmingPoolUser(swimmingPoolUserId);
+        return payment;
+    }
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/numberOfTicket/{numberOfTicket}")

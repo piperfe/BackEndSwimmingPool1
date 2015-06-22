@@ -46,6 +46,11 @@ public class ManagerPayment {
         List<Payment> payments = this.payment.getPaymentsBySwimmingPoolUser(swimmingPoolUserId);
         return payments;
     }
+    
+    public List<Payment> getPaymentsActiveBySwimmingPoolUser(Long swimmingPoolUserId) {
+        List<Payment> payments = this.payment.getPaymentsActiveBySwimmingPoolUser(swimmingPoolUserId);
+        return payments;
+    }
 
     public Payment getPaymentsByNumberOfTicket(String numberOfTicket) {
         return this.payment.findBy("numberOfTicket", numberOfTicket);
