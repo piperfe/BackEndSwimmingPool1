@@ -8,19 +8,13 @@ package com.inbadevs.swimmingpoolserviceusers.service;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPayment;
 import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import java.util.List;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  *
@@ -42,7 +36,31 @@ public class ServiceRestPayment {
         List<Payment> payment = this.buissnesLayer.getAllPayment();
         return payment;
     }
-    
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{paymentId}")
+    public Payment getPaymentsById(@PathParam("paymentId") Long paymentId) throws BuisnessLayerException    , javassist.NotFoundException {
+        return this.buissnesLayer.getPaymentsById(paymentId);
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/swimmingPoolUser/{swimmingPoolUserId}")
+    public List<Payment> getPaymentsBySwimmingPoolUser(@PathParam("swimmingPoolUserId") Long swimmingPoolUserId) throws BuisnessLayerException {
+        List<Payment> payment = this.buissnesLayer.getPaymentsBySwimmingPoolUser(swimmingPoolUserId);
+        return payment;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/numberOfTicket/{numberOfTicket}")
+    public Payment getPaymentsByNumberOfTicket(@PathParam("numberOfTicket") String numberOfTicket) throws BuisnessLayerException {
+        Payment payment = this.buissnesLayer.getPaymentsByNumberOfTicket(numberOfTicket);
+        return payment;
+    }
+
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add")
