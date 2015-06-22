@@ -6,7 +6,11 @@
 package com.inbadevs.swimmingpoolserviceusers.dao;
 
 import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
+import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
+import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,4 +26,5 @@ public class PaymentDao extends BaseGenericDAO<Payment>{
     public PaymentDao(@Qualifier("sessionFactory") SessionFactory em) {
         super(Payment.class, em);
     }
+
 }

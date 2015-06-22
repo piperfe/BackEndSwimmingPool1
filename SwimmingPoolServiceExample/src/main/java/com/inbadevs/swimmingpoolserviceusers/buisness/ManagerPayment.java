@@ -38,5 +38,6 @@ public class ManagerPayment {
     public void deletePayment(Long id) throws BuisnessLayerException {
         this.payment.delete(id);
     }
+   
 
 }

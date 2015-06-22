@@ -7,6 +7,7 @@ package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerPayment;
 import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
+import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -65,4 +66,5 @@ public class ServiceRestPayment {
         return Response.ok().build();
 
     }
+
 }
