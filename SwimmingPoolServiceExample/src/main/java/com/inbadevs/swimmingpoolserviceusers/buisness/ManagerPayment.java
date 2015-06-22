@@ -8,9 +8,11 @@ package com.inbadevs.swimmingpoolserviceusers.buisness;
 import com.inbadevs.swimmingpoolserviceusers.dao.PaymentDao;
 import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
-import java.util.List;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *
@@ -40,4 +42,16 @@ public class ManagerPayment {
     }
    
 
+    public List<Payment> getPaymentsBySwimmingPoolUser(Long swimmingPoolUserId) {
+        List<Payment> payments = this.payment.getPaymentsBySwimmingPoolUser(swimmingPoolUserId);
+        return payments;
+    }
+
+    public Payment getPaymentsByNumberOfTicket(String numberOfTicket) {
+        return this.payment.findBy("numberOfTicket", numberOfTicket);
+    }
+
+    public Payment getPaymentsById(Long paymentId) throws NotFoundException {
+        return this.payment.find(paymentId);
+    }
 }
