@@ -1,7 +1,6 @@
 package com.inbadevs.swimmingpoolserviceusers.buisness;
 
 import com.inbadevs.swimmingpoolserviceusers.dao.UserDao;
-import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import javassist.NotFoundException;
@@ -38,8 +37,9 @@ public class ManagerUsers {
         return null;
     }
     
-    public void changePassUser(User user){
-        this.userDao.update(user);
+    public void changePassUser(User user) throws NotFoundException {
+        User userNewPass = this.userDao.find(user.getId());
+        userNewPass.setPassword(user.getPassword());
         
     }
 }

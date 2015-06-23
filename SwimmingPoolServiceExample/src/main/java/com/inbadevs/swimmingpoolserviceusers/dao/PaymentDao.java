@@ -6,24 +6,16 @@
 package com.inbadevs.swimmingpoolserviceusers.dao;
 
 import com.inbadevs.swimmingpoolserviceusers.entities.Payment;
-import com.inbadevs.swimmingpoolserviceusers.entities.Plan;
-import java.text.SimpleDateFormat;
-import static java.time.Instant.now;
-import java.lang.String;
-import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
-import org.hibernate.Hibernate;
-import static org.hibernate.criterion.Restrictions.sqlRestriction;
 
 /**
  *
