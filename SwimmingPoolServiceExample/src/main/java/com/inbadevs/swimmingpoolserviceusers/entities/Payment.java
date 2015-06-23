@@ -32,7 +32,7 @@ public class Payment implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date datepay;
 
     @Column(unique = true)
