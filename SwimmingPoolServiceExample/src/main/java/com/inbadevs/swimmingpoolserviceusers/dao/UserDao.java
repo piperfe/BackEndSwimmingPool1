@@ -27,4 +27,5 @@ public class UserDao extends BaseGenericDAO<User>{
                         Restrictions.eq("password", password)));
         return (User) criteria.uniqueResult();
     }
+    
 }
