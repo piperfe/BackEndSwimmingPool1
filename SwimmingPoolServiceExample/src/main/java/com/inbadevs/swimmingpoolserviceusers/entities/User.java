@@ -2,6 +2,7 @@ package com.inbadevs.swimmingpoolserviceusers.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,7 +31,8 @@ public class User implements Serializable {
     private String address;
     
     private String state;
-    
+
+    @Setter
     private String password;
    
     private String email;

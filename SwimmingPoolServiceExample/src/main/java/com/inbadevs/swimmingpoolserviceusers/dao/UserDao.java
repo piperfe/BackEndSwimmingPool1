@@ -1,6 +1,5 @@
 package com.inbadevs.swimmingpoolserviceusers.dao;
 
-import com.inbadevs.swimmingpoolserviceusers.entities.AdminUser;
 import com.inbadevs.swimmingpoolserviceusers.entities.User;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -27,4 +26,5 @@ public class UserDao extends BaseGenericDAO<User>{
                         Restrictions.eq("password", password)));
         return (User) criteria.uniqueResult();
     }
+
 }

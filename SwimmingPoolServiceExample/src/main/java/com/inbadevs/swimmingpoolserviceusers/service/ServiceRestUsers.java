@@ -45,7 +45,7 @@ public class ServiceRestUsers {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("changePass")
-    public void changePassUser(User user) throws BuisnessLayerException {
+    public void changePassUser(User user) throws BuisnessLayerException, javassist.NotFoundException {
         this.usersManager.changePassUser(user);
     }
 
