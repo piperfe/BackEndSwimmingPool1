@@ -33,14 +33,15 @@ public class User implements Serializable {
 
     private String address;
     
-    private String state;
-
     @Setter
     private String password;
    
     private String email;
 
     private String phone;
+    
+    private String phone_mobile;
+    
     
     private int id_profile=1;
 
