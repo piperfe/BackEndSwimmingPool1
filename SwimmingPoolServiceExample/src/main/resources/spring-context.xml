@@ -13,7 +13,7 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <context:component-scan base-package="com.inbadevs.swimmingpoolserviceusers"/>
+    <context:component-scan base-package="com.inbadevs.swimmingpool"/>
 
     <!-- AOP -->
     <aop:aspectj-autoproxy/>
@@ -27,7 +27,7 @@
 
     <aop:config>
         <aop:pointcut id="pcCentralRepositoryBd"
-                      expression="execution(* com.inbadevs.swimmingpoolserviceusers.buisness.*.*(..))"/>
+                      expression="execution(* com.inbadevs.swimmingpool.manager.*.*(..))"/>
         <aop:advisor advice-ref="transactionAdviceBd"
                      pointcut-ref="pcCentralRepositoryBd"/>
     </aop:config>
@@ -38,24 +38,24 @@
         <prop key="hibernate.show_sql">true</prop>
         <prop key="hibernate.auto_close_session">true</prop>
         <prop key="hibernate.default_schema">swimmingpool</prop>
-        <prop key="hibernate.hbm2ddl.auto">create</prop>
+        <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
     </util:properties>
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath:data.sql" />
     </jdbc:initialize-database>
 
-    <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"></property>
-        <property name="packagesToScan" value="com.inbadevs.swimmingpoolserviceusers.entities"/>
-        <property name="namingStrategy" ref="namingStrategy"/>
-        <property name="hibernateProperties" ref="hibernateProperties"/>
-    </bean>
-
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="packagesToScan" value="com.inbadevs.swimmingpool.entities"/>
+        <property name="namingStrategy" ref="namingStrategy"/>
+        <property name="hibernateProperties" ref="hibernateProperties"/>
     </bean>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -65,7 +65,8 @@
         <property name="user" value="root"/>
         <property name="password" value=""/>
     </bean>
-<!--
+
+    <!--
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.h2.Driver" />
@@ -74,5 +75,6 @@
         <property name="username" value="sa" />
         <property name="password" value="" />
     </bean>-->
+
 </beans>
 
