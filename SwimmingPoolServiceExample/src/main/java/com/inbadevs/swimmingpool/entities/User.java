@@ -15,7 +15,10 @@ public class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-
+   
+    @ManyToOne
+    private Commune commune;
+    
     @Column(unique = true)
     private String rut;
 
