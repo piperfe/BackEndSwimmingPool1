@@ -5,9 +5,9 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.service;
 
+import com.inbadevs.swimmingpool.entities.Region;
+import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerRegion;
-import com.inbadevs.swimmingpoolserviceusers.entities.Region;
-import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

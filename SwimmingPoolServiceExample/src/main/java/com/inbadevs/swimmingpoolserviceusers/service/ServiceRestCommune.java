@@ -7,8 +7,8 @@ package com.inbadevs.swimmingpoolserviceusers.service;
 
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerCommune;
 import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerRegion;
-import com.inbadevs.swimmingpoolserviceusers.entities.Commune;
-import com.inbadevs.swimmingpoolserviceusers.exceptions.BuisnessLayerException;
+import com.inbadevs.swimmingpool.entities.Commune;
+import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

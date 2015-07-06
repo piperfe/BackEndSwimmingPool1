@@ -7,8 +7,8 @@ package com.inbadevs.swimmingpoolserviceusers.buisness;
 
 import com.inbadevs.swimmingpoolserviceusers.dao.CommuneDao;
 import com.inbadevs.swimmingpoolserviceusers.dao.RegionDao;
-import com.inbadevs.swimmingpoolserviceusers.entities.Commune;
-import com.inbadevs.swimmingpoolserviceusers.entities.Region;
+import com.inbadevs.swimmingpool.entities.Commune;
+import com.inbadevs.swimmingpool.entities.Region;
 import java.util.List;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

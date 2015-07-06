@@ -3,26 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpoolserviceusers.dao;
+package com.inbadevs.swimmingpool.dao;
 
-import com.inbadevs.swimmingpool.dao.BaseGenericDAO;
-import com.inbadevs.swimmingpool.entities.Region;
+import com.inbadevs.swimmingpool.entities.Schedule;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * @author gabriellopezsalinas
- */
+
 
 @Component
-public class RegionDao extends  BaseGenericDAO<Region> {
-    
+public class ScheduleDao extends BaseGenericDAO<Schedule>{
+
     @Autowired
-    public RegionDao(@Qualifier("sessionFactory") SessionFactory em) {
-        super(Region.class, em);
+    public ScheduleDao(@Qualifier("sessionFactory") SessionFactory em) {
+        super(Schedule.class, em);
     }
 
 }

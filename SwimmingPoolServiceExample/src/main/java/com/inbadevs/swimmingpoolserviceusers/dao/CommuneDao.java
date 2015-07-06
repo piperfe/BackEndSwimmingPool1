@@ -5,7 +5,8 @@
  */
 package com.inbadevs.swimmingpoolserviceusers.dao;
 
-import com.inbadevs.swimmingpoolserviceusers.entities.Commune;
+import com.inbadevs.swimmingpool.dao.BaseGenericDAO;
+import com.inbadevs.swimmingpool.entities.Commune;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
