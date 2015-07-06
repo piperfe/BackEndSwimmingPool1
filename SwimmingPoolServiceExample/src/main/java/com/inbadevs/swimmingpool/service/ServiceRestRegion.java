@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpoolserviceusers.service;
+package com.inbadevs.swimmingpool.service;
 
 import com.inbadevs.swimmingpool.entities.Region;
 import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
-import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerRegion;
+import com.inbadevs.swimmingpool.manager.ManagerRegion;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

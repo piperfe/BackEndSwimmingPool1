@@ -42,7 +42,6 @@ public class User implements Serializable {
     
     private String phone_mobile;
     
-    
     private int id_profile=1;
 
 }

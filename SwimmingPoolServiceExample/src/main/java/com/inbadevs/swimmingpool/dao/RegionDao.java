@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpoolserviceusers.dao;
+package com.inbadevs.swimmingpool.dao;
 
 import com.inbadevs.swimmingpool.dao.BaseGenericDAO;
 import com.inbadevs.swimmingpool.entities.Region;

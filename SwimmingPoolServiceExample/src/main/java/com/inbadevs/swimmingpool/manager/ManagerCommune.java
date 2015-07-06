@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpoolserviceusers.buisness;
+package com.inbadevs.swimmingpool.manager;
 
-import com.inbadevs.swimmingpoolserviceusers.dao.CommuneDao;
-import com.inbadevs.swimmingpoolserviceusers.dao.RegionDao;
+import com.inbadevs.swimmingpool.dao.CommuneDao;
 import com.inbadevs.swimmingpool.entities.Commune;
-import com.inbadevs.swimmingpool.entities.Region;
+
 import java.util.List;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,6 @@
 package com.inbadevs.swimmingpool.service;
 
 import com.inbadevs.swimmingpool.service.serializers.JacksonConfig;
-import com.inbadevs.swimmingpoolserviceusers.service.ServiceRestCommune;
-import com.inbadevs.swimmingpoolserviceusers.service.ServiceRestRegion;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;

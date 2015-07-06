@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpoolserviceusers.dao;
+package com.inbadevs.swimmingpool.dao;
 
-import com.inbadevs.swimmingpool.dao.BaseGenericDAO;
 import com.inbadevs.swimmingpool.entities.Commune;
-import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *

@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpoolserviceusers.service;
+package com.inbadevs.swimmingpool.service;
 
-import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerCommune;
-import com.inbadevs.swimmingpoolserviceusers.buisness.ManagerRegion;
 import com.inbadevs.swimmingpool.entities.Commune;
 import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
-import java.util.List;
+import com.inbadevs.swimmingpool.manager.ManagerCommune;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 /**
  *
