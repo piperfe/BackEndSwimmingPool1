@@ -30,9 +30,5 @@ public class Product implements Serializable {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private String endValidDate;
-
-    public Product(long parseLong, ProductPK productPK, String startValidDate, String endValidDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
 }

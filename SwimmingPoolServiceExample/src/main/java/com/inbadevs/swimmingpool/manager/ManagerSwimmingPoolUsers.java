@@ -26,6 +26,7 @@ public class ManagerSwimmingPoolUsers {
     }
 
     public void addUser(SwimmingPoolUser user) {
+        user.setProfile(1);
         this.swimmingPoolUserDao.save(user);
     }
 

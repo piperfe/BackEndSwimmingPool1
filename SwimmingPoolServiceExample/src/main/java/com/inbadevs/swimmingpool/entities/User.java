@@ -41,7 +41,8 @@ public class User implements Serializable {
     private String phone;
     
     private String phone_mobile;
-    
-    private int id_profile=1;
+
+    @Setter
+    private int profile;
 
 }

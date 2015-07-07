@@ -25,6 +25,7 @@ public class ManagerAdminUsers {
     }
 
     public void addUser(AdminUser user) {
+        user.setProfile(2);
         this.adminUserDao.save(user);
     }
 
