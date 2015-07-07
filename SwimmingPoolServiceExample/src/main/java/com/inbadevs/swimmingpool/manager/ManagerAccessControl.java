@@ -5,7 +5,9 @@ import com.inbadevs.swimmingpool.dao.CountLeftHoursFreeHoursPlanDao;
 import com.inbadevs.swimmingpool.dao.ProductDao;
 import com.inbadevs.swimmingpool.dao.UserDao;
 import com.inbadevs.swimmingpool.entities.*;
-import com.inbadevs.swimmingpool.service.entityresponse.ControlAccessExitResponse;
+import com.inbadevs.swimmingpool.exceptions.ControlEntranceException;
+import com.inbadevs.swimmingpool.exceptions.ControlExitException;
+import com.inbadevs.swimmingpool.service.entityresponse.ControlAccessResponse;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,7 +37,7 @@ public class ManagerAccessControl {
     public ManagerAccessControl() {}
 
 
-    public void isUserAccessControlEntrance(Long userId, Long productId) throws NotFoundException {
+    public ControlAccessResponse isUserAccessControlEntrance(Long userId, Long productId) throws NotFoundException, ControlEntranceException {
 
         User user = this.userDao.find(userId);
         Product product = this.productDao.find(productId);
@@ -51,14 +53,25 @@ public class ManagerAccessControl {
             Plan plan = product.getProductPK().getPlan();
             isUserAccessControlFreeHoursPlanEntrance(user, plan, today);
 
+            final Double hours = Double.valueOf(plan.getHoursPerWeek() * 4);
+            Double hoursLeft = hours;
+
+            CountLeftHoursFreeHoursPlan countHoursLeft = countLeftHoursFreeHoursPlanDao.find(user, plan);
+
+            if(countHoursLeft != null){
+                hoursLeft = countHoursLeft.getHoursLeft();
+            }
+
+            return new ControlAccessResponse(user.getNames(), plan.getName(), hours, hoursLeft);
+
         }
         else {
-        //Exception
+            throw new ControlEntranceException("range");
         }
 
     }
 
-    public ControlAccessExitResponse isUserAccessControlExit(Long userId, Long productId) throws NotFoundException {
+    public ControlAccessResponse isUserAccessControlExit(Long userId, Long productId) throws NotFoundException, ControlExitException {
 
         User user = this.userDao.find(userId);
         Product product = this.productDao.find(productId);
@@ -68,6 +81,10 @@ public class ManagerAccessControl {
         if(plan.getTypeOfPlan().equals("typeHoursPerWeek")) {
 
             AssistanceFreeHoursPlan assistanceFreeHoursPlan = assistanceFreeHoursPlanDao.findLastEntrance(user, plan);
+
+            if(assistanceFreeHoursPlan == null){
+                throw new ControlExitException("never entrance");
+            }
 
             Long difference = today.getTime() - assistanceFreeHoursPlan.getEntranceDate().getTime();
             Double differenceHours = Double.valueOf(difference) / 3600000;
@@ -88,7 +105,7 @@ public class ManagerAccessControl {
             assistanceFreeHoursPlan.setEntrance(false);
             assistanceFreeHoursPlan.setExitDate(today);
 
-            return new ControlAccessExitResponse(user.getNames(), plan.getName(), plan.getHoursPerWeek() * 4 , hoursLeft);
+            return new ControlAccessResponse(user.getNames(), plan.getName(), Double.valueOf(plan.getHoursPerWeek() * 4) , hoursLeft);
 
         }
 
@@ -97,10 +114,14 @@ public class ManagerAccessControl {
 
 
 
-    private void isUserAccessControlFreeHoursPlanEntrance(User user, Plan plan, Date today) {
+    private void isUserAccessControlFreeHoursPlanEntrance(User user, Plan plan, Date today) throws ControlEntranceException {
 
         if(plan.getTypeOfPlan().equals("typeHoursPerWeek")) {
 
+            /*AssistanceFreeHoursPlan assistanceFreeHoursPlan = assistanceFreeHoursPlanDao.findLastEntrance(user, plan);
+            if(assistanceFreeHoursPlan != null && !assistanceFreeHoursPlan.getEntrance()){
+                throw new ControlEntranceException("not entrance never");
+            }*/
             assistanceFreeHoursPlanDao.save(new AssistanceFreeHoursPlan(user, plan));
 
         }

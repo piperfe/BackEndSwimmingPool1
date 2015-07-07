@@ -40,7 +40,7 @@ public class User implements Serializable {
 
     private String phone;
     
-    private String phone_mobile;
+    private String phoneMobile;
 
     @Setter
     private int profile;
