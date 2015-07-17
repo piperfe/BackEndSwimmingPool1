@@ -5,6 +5,7 @@
  */
 package com.inbadevs.swimmingpool.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 
 @Entity
 @Getter
+@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Plan implements Serializable {
    
@@ -33,5 +35,7 @@ public class Plan implements Serializable {
     private Integer hoursPerWeek;
 
     private Integer blocksPerWeek;
+
+
 
 }

@@ -5,6 +5,7 @@
  */
 package com.inbadevs.swimmingpool.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.Embeddable;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 
 @Embeddable
 @Getter
+@AllArgsConstructor
 public class ProductPK implements Serializable{
 
    @ManyToOne

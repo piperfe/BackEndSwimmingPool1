@@ -6,6 +6,7 @@
 package com.inbadevs.swimmingpool.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class Product implements Serializable {
 
     @Id
@@ -30,5 +32,6 @@ public class Product implements Serializable {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private String endValidDate;
-    
+
+
 }

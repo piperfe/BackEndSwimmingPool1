@@ -116,12 +116,10 @@ public class ManagerAccessControl {
 
     private void isUserAccessControlFreeHoursPlanEntrance(User user, Plan plan, Date today) throws ControlEntranceException {
 
-        if(plan.getTypeOfPlan().equals("typeHoursPerWeek")) {
+        final String typeHoursPerWeek = "typeHoursPerWeek";
 
-            /*AssistanceFreeHoursPlan assistanceFreeHoursPlan = assistanceFreeHoursPlanDao.findLastEntrance(user, plan);
-            if(assistanceFreeHoursPlan != null && !assistanceFreeHoursPlan.getEntrance()){
-                throw new ControlEntranceException("not entrance never");
-            }*/
+        if(plan.getTypeOfPlan().equals(typeHoursPerWeek)) {
+
             assistanceFreeHoursPlanDao.save(new AssistanceFreeHoursPlan(user, plan));
 
         }

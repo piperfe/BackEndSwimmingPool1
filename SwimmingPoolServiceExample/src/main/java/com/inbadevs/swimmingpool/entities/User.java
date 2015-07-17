@@ -1,6 +1,7 @@
 package com.inbadevs.swimmingpool.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Getter
+@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Serializable {
 
@@ -44,5 +46,6 @@ public class User implements Serializable {
 
     @Setter
     private int profile;
+
 
 }
