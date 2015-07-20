@@ -5,6 +5,7 @@
  */
 package com.inbadevs.swimmingpool.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import java.sql.Time;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class Section implements Serializable{
     
     @Id

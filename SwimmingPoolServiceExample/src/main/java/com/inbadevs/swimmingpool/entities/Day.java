@@ -5,6 +5,7 @@
  */
 package com.inbadevs.swimmingpool.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -15,11 +16,12 @@ import java.io.Serializable;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class Day implements Serializable {
     
     @Id
     @GeneratedValue
-        private Integer id;
+    private Integer id;
     
     private String name;
     

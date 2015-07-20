@@ -5,6 +5,7 @@
  */
 package com.inbadevs.swimmingpool.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class DaySection implements Serializable {
 
     @Id

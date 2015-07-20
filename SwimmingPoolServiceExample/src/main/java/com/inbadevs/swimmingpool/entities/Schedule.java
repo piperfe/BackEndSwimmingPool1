@@ -5,6 +5,7 @@
  */
 package com.inbadevs.swimmingpool.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class Schedule implements Serializable {
     
     @Id

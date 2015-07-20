@@ -14,15 +14,19 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,6 +48,7 @@ public class ManagerAccessControlTest {
 
     private User user;
     private Plan planTypeFreeHours;
+    private Plan planTypeBlockHours;
 
     @Before
     public void setUp() throws Exception {
@@ -52,6 +57,8 @@ public class ManagerAccessControlTest {
         user = new User(null, null, null, "userNames", null, null, null, null, null, null, null, null, 0);
         planTypeFreeHours = new Plan(Long.parseLong("1"), "name", "description", Long.parseLong("5000"),
                 "typeHoursPerWeek", 5, null);
+        planTypeBlockHours = new Plan(Long.parseLong("1"), "name", "description", Long.parseLong("5000"),
+                "typeBlocksPerWeek", 5, null);
     }
 
     private String operatesAndParseDate(Date date, int calendar, int amount){
@@ -202,4 +209,68 @@ public class ManagerAccessControlTest {
         assertThat(response.getLeftHours(), is(lessThanOrEqualTo(Double.parseDouble(String.valueOf(planTypeFreeHours.getHoursPerWeek() * 3)))));
 
     }
+
+    @Test
+    public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsValidWithTodayTime() throws Exception, ControlEntranceException {
+
+        Date today = new Date();
+        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        List<DaySection> daySectionList = new ArrayList<>();
+
+        Section section = new Section(1, new Time(0,0,0), new Time(1,0,0));
+        Day day = new Day(1, "Monday");
+        DaySectionPK daySectionPk = new DaySectionPK(section, day);
+        DaySection daySection = new DaySection(1, daySectionPk);
+        daySectionList.add(daySection);
+
+        Schedule schedule = new Schedule(Long.parseLong("1"), "horario", "description", planTypeBlockHours, daySectionList);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
+
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.set(2015, 6, 20, 0, 20);
+
+        manager.setToday(todayCal.getTime());
+
+        when(userDao.find(user.getId())).thenReturn(user);
+        when(productDao.find(product.getId())).thenReturn(product);
+
+        ControlAccessResponse response = manager.isUserAccessControlEntrance(user.getId(), product.getId());
+
+        assertNotNull(response);
+
+    }
+
+    @Test(expected = ControlEntranceException.class)
+    public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsInValidWithTodayTime() throws Exception, ControlEntranceException {
+
+        Date today = new Date();
+        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        List<DaySection> daySectionList = new ArrayList<>();
+
+        Section section = new Section(1, new Time(0,0,0), new Time(1,0,0));
+        Day day = new Day(1, "Monday");
+        DaySectionPK daySectionPk = new DaySectionPK(section, day);
+        DaySection daySection = new DaySection(1, daySectionPk);
+        daySectionList.add(daySection);
+
+        Schedule schedule = new Schedule(Long.parseLong("1"), "horario", "description", planTypeBlockHours, daySectionList);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
+
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.set(2015,6,20,1,20);
+
+        manager.setToday(todayCal.getTime());
+
+        when(userDao.find(user.getId())).thenReturn(user);
+        when(productDao.find(product.getId())).thenReturn(product);
+
+        manager.isUserAccessControlEntrance(user.getId(), product.getId());
+
+    }
+
+
 }
