@@ -7,6 +7,7 @@ package com.inbadevs.swimmingpool.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class CountLeftHoursFreeHoursPlan implements Serializable {
 
     @Id
@@ -40,7 +42,5 @@ public class CountLeftHoursFreeHoursPlan implements Serializable {
         this.plan = plan;
         this.hoursLeft = hoursLeft;
     }
-
-    public CountLeftHoursFreeHoursPlan(){}
 
 }

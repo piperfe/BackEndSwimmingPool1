@@ -17,6 +17,7 @@ public class ControlAccessResponse {
     private String nameOfPlan;
     private Double hoursOfPlan;
     private Double leftHours;
+    private Boolean schedule;
 
 
 }

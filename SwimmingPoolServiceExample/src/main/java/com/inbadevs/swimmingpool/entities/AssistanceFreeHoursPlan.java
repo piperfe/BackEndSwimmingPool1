@@ -7,6 +7,7 @@ package com.inbadevs.swimmingpool.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import java.util.Date;
 @Entity
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class AssistanceFreeHoursPlan implements Serializable {
 
     @Id
@@ -46,8 +48,6 @@ public class AssistanceFreeHoursPlan implements Serializable {
         this.entrance = true;
         this.entranceDate = new Date();
     }
-
-    public AssistanceFreeHoursPlan(){}
 
 
 }

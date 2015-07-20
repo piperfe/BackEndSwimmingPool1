@@ -1,11 +1,10 @@
-INSERT INTO swimmingpool.day (id, name) VALUES ('1', 'Lunes');
-INSERT INTO swimmingpool.day (id, name) VALUES ('2', 'Martes');
-INSERT INTO swimmingpool.day (id, name) VALUES ('3', 'Miercoles');
-INSERT INTO swimmingpool.day (id, name) VALUES ('4', 'Jueves');
-INSERT INTO swimmingpool.day (id, name) VALUES ('5', 'Viernes');
-INSERT INTO swimmingpool.day (id, name) VALUES ('6', 'Sabado');
-INSERT INTO swimmingpool.day (id, name) VALUES ('7', 'Domingo');
-
+INSERT INTO swimmingpool.day (id, name) VALUES ('1', 'Monday');
+INSERT INTO swimmingpool.day (id, name) VALUES ('2', 'Tuesday');
+INSERT INTO swimmingpool.day (id, name) VALUES ('3', 'Wednesday');
+INSERT INTO swimmingpool.day (id, name) VALUES ('4', 'Thursday');
+INSERT INTO swimmingpool.day (id, name) VALUES ('5', 'Friday');
+INSERT INTO swimmingpool.day (id, name) VALUES ('6', 'Saturday');
+INSERT INTO swimmingpool.day (id, name) VALUES ('7', 'Sunday');
 
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('1', '8:00', '7:00');
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('2', '9:00', '8:00');
