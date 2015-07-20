@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import org.hibernate.criterion.Order;
 
 /**
  *
@@ -28,7 +29,8 @@ public class CommuneDao extends BaseGenericDAO<Commune>{
     }
     public List<Commune> findAllCommuneByIdRegion(Long idRegion) {
         Criteria criteria = getCurrentSession().createCriteria(Commune.class)
-                .add(Restrictions.eq("region.id", idRegion));
+                .add(Restrictions.eq("region.id", idRegion))
+                .addOrder( Order.asc("name"));
         return criteria.list();
     }    
 }
