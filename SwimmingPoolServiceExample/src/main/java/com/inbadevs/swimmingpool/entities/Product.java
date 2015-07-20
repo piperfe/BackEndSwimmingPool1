@@ -8,6 +8,7 @@ package com.inbadevs.swimmingpool.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product implements Serializable {
 
     @Id

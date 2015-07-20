@@ -7,12 +7,14 @@ package com.inbadevs.swimmingpool.entities;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class SwimmingPoolUser extends User implements Serializable{
 
     private String medicalCertificate;

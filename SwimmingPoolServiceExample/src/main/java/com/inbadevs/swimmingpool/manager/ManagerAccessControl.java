@@ -111,7 +111,7 @@
 
                         if(todayCal.after(startCal) && todayCal.before(endCal)){
                             assistanceFreeHoursPlanDao.save(new AssistanceFreeHoursPlan(user, product.getProductPK().getPlan()));
-                            return new ControlAccessResponse(user.getNames(), schedule.getName(), null, null);
+                            return new ControlAccessResponse(user.getNames(), schedule.getName(), null, null, true);
                         }
 
                     }
@@ -136,7 +136,7 @@
                     hoursLeft = countHoursLeft.getHoursLeft();
                 }
 
-                return new ControlAccessResponse(user.getNames(), plan.getName(), hours, hoursLeft);
+                return new ControlAccessResponse(user.getNames(), plan.getName(), hours, hoursLeft, false);
             }
 
             public ControlAccessResponse isUserAccessControlExit(Long userId, Long productId) throws NotFoundException, ControlExitException {
@@ -173,7 +173,8 @@
                     assistanceFreeHoursPlan.setEntrance(false);
                     assistanceFreeHoursPlan.setExitDate(today);
 
-                    return new ControlAccessResponse(user.getNames(), plan.getName(), Double.valueOf(plan.getHoursPerWeek() * 4) , hoursLeft);
+                    return new ControlAccessResponse(user.getNames(), plan.getName(), Double.valueOf(plan.getHoursPerWeek() * 4) ,
+                            hoursLeft, false);
 
                 }
 
