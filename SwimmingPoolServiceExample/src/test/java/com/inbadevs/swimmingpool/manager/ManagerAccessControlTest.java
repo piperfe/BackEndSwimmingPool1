@@ -213,26 +213,31 @@ public class ManagerAccessControlTest {
     @Test
     public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsValidWithTodayTime() throws Exception, ControlEntranceException {
 
-        Date today = new Date();
-        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
-        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.set(2015, 6, 10, 7, 8);
+
+        String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +3);
         List<DaySection> daySectionList = new ArrayList<>();
 
         Section section = new Section(1, new Time(0,0,0), new Time(1,0,0));
         Day day = new Day(1, "Monday");
         DaySectionPK daySectionPk = new DaySectionPK(section, day);
         DaySection daySection = new DaySection(1, daySectionPk);
+
+        Section section2 = new Section(2, new Time(0,0,7), new Time(8,0,0));
+        Day day2 = new Day(2, "Friday");
+        DaySectionPK daySectionPk2 = new DaySectionPK(section2, day2);
+        DaySection daySection2 = new DaySection(2, daySectionPk2);
+
         daySectionList.add(daySection);
+        daySectionList.add(daySection2);
 
         Schedule schedule = new Schedule(Long.parseLong("1"), "horario", "description", planTypeBlockHours, daySectionList);
         Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
                 endValidDate);
 
-        Calendar todayCal = Calendar.getInstance();
-        todayCal.set(2015, 6, 20, 0, 20);
-
         manager.setToday(todayCal.getTime());
-
         when(userDao.find(user.getId())).thenReturn(user);
         when(productDao.find(product.getId())).thenReturn(product);
 
@@ -245,9 +250,10 @@ public class ManagerAccessControlTest {
     @Test(expected = ControlEntranceException.class)
     public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsInValidWithTodayTime() throws Exception, ControlEntranceException {
 
-        Date today = new Date();
-        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
-        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.set(2015,6,20,1,20);
+        String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +3);
         List<DaySection> daySectionList = new ArrayList<>();
 
         Section section = new Section(1, new Time(0,0,0), new Time(1,0,0));
@@ -260,8 +266,6 @@ public class ManagerAccessControlTest {
         Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
                 endValidDate);
 
-        Calendar todayCal = Calendar.getInstance();
-        todayCal.set(2015,6,20,1,20);
 
         manager.setToday(todayCal.getTime());
 
