@@ -27,8 +27,12 @@ public class ManagerAccessControl {
     private ProductDao productDao;
     private AssistanceFreeHoursPlanDao assistanceFreeHoursPlanDao;
     private CountLeftHoursFreeHoursPlanDao countLeftHoursFreeHoursPlanDao;
+
     @Setter
-    private Date today;
+    private Date entranceDate;
+
+    @Setter
+    private Date exitDate;
 
     @Autowired
     public ManagerAccessControl(UserDao userDao, ProductDao productDao,
@@ -52,9 +56,9 @@ public class ManagerAccessControl {
         Date startValidDate = dateFormat.parse(product.getStartValidDate(), new ParsePosition(0));
         Date endValidDate = dateFormat.parse(product.getEndValidDate(), new ParsePosition(0));
 
-        today =  (today != null) ? today: new Date();
+        entranceDate =  (entranceDate != null) ? entranceDate : new Date();
 
-        if(today.after(startValidDate) && today.before(endValidDate)){
+        if(entranceDate.after(startValidDate) && entranceDate.before(endValidDate)){
 
             Plan plan = product.getProductPK().getPlan();
 
@@ -69,7 +73,7 @@ public class ManagerAccessControl {
             }
             else if(product.getProductPK().getPlan().getTypeOfPlan().equals(typeBlocksPerWeek)){
 
-                return controlEntranceSchedule(user, product, today);
+                return controlEntranceSchedule(user, product, entranceDate);
             }
 
 
@@ -123,8 +127,8 @@ public class ManagerAccessControl {
     private ControlAccessResponse controlEntranceFreeHours(User user, Product product, Plan plan) {
 
         assistanceFreeHoursPlanDao.save(new AssistanceFreeHoursPlan(user, product.getProductPK().getPlan()));
-        final Double hours = Double.valueOf(plan.getHoursPerWeek() * 4);
-        Double hoursLeft = hours;
+        final int hours = plan.getHoursPerWeek() * 4;
+        int hoursLeft = hours;
 
         CountLeftHoursFreeHoursPlan countHoursLeft = countLeftHoursFreeHoursPlanDao.find(user, plan);
 
@@ -139,42 +143,58 @@ public class ManagerAccessControl {
 
         User user = this.userDao.find(userId);
         Product product = this.productDao.find(productId);
-        Date today = new Date();
         Plan plan = product.getProductPK().getPlan();
+
+        exitDate =  (exitDate != null) ? exitDate : new Date();
 
         if(plan.getTypeOfPlan().equals("typeHoursPerWeek")) {
 
+            final int hoursOfPlan = plan.getHoursPerWeek() * 4;
             AssistanceFreeHoursPlan assistanceFreeHoursPlan = assistanceFreeHoursPlanDao.findLastEntrance(user, plan);
 
-            if(assistanceFreeHoursPlan == null){
+            if(assistanceFreeHoursPlan == null ){
                 throw new ControlExitException("never entrance");
             }
+            else if(!assistanceFreeHoursPlan.getEntrance()){
+                throw new ControlExitException("entrance before exit");
+            }
 
-            Long difference = today.getTime() - assistanceFreeHoursPlan.getEntranceDate().getTime();
-            Double differenceHours = Double.valueOf(difference) / 3600000;
 
             CountLeftHoursFreeHoursPlan countHoursLeft = countLeftHoursFreeHoursPlanDao.find(user, plan);
-
-            Double hoursLeft;
+            Integer leftHours;
 
             if(countHoursLeft != null){
-                hoursLeft = countHoursLeft.getHoursLeft() - differenceHours;
-                countHoursLeft.setHoursLeft(hoursLeft);
+                leftHours = subtractTime(exitDate, assistanceFreeHoursPlan.getEntranceDate(), countHoursLeft.getHoursLeft());
+                countHoursLeft.setHoursLeft(leftHours);
             }
             else{
-                hoursLeft = Double.valueOf(plan.getHoursPerWeek() * 4) - differenceHours;
-                countLeftHoursFreeHoursPlanDao.save(new CountLeftHoursFreeHoursPlan(user, plan, hoursLeft));
+                leftHours = hoursOfPlan;
+                countLeftHoursFreeHoursPlanDao.save(new CountLeftHoursFreeHoursPlan(user, plan, leftHours));
             }
 
             assistanceFreeHoursPlan.setEntrance(false);
-            assistanceFreeHoursPlan.setExitDate(today);
+            assistanceFreeHoursPlan.setExitDate(exitDate);
 
-            return new ControlAccessResponse(user.getNames(), plan.getName(), Double.valueOf(plan.getHoursPerWeek() * 4) ,
-                    hoursLeft, false);
+            return new ControlAccessResponse(user.getNames(), plan.getName(), hoursOfPlan,
+                    leftHours, false);
 
         }
 
         return null;
+    }
+
+    private Integer subtractTime(Date exitDate, Date entranceDate, int totalHours) {
+
+        Long difference = exitDate.getTime() - entranceDate.getTime();
+        Long minutes = difference / (60 * 1000);
+
+        if(minutes > 20){
+            return totalHours - 1;
+        }
+        else{
+            return totalHours;
+        }
+
     }
 
 }

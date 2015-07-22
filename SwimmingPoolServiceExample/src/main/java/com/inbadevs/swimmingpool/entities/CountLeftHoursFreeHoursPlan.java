@@ -34,9 +34,9 @@ public class CountLeftHoursFreeHoursPlan implements Serializable {
     Plan plan;
 
     @Setter
-    Double hoursLeft;
+    Integer hoursLeft;
 
-    public  CountLeftHoursFreeHoursPlan(User user, Plan plan, Double hoursLeft){
+    public  CountLeftHoursFreeHoursPlan(User user, Plan plan, Integer hoursLeft){
 
         this.user = user;
         this.plan = plan;
