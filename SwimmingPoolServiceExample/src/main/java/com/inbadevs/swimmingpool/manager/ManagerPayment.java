@@ -24,6 +24,11 @@ public class ManagerPayment {
         return this.payment.all();
     }
     
+    public List<Payment> closeTurn(Long idUserAdmin) {
+        List<Payment> payments = this.payment.closeTurn(idUserAdmin);
+        return payments;
+    }
+    
     public void addPayment(Payment payment){
         this.payment.save(payment);
     }

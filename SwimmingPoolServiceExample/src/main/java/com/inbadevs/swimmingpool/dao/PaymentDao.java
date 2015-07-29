@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -26,6 +27,16 @@ public class PaymentDao extends BaseGenericDAO<Payment>{
         super(Payment.class, em);
     }
 
+    public List<Payment> closeTurn(Long idUserAdmin) {
+
+        Criteria criteria = getCurrentSession().createCriteria(Payment.class).
+                setFetchMode("adminUser", FetchMode.JOIN)
+                .add(Restrictions.eq("adminUser.id", idUserAdmin))
+                .add(Restrictions.eq("datepay", (new Date())));
+ 
+        return criteria.list();
+
+    }
 
     public List<Payment> getPaymentsBySwimmingPoolUser(Long swimmingPoolUserId) {
 

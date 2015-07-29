@@ -31,6 +31,14 @@ public class ServiceRestPayment {
         List<Payment> payment = this.buissnesLayer.getAllPayment();
         return payment;
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/closeTurn/{idUserAdmin}")
+    public List<Payment> closeTurn(@PathParam("idUserAdmin") Long idUserAdmin) throws BuisnessLayerException {
+        List<Payment> payment = this.buissnesLayer.closeTurn(idUserAdmin);
+        return payment;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
