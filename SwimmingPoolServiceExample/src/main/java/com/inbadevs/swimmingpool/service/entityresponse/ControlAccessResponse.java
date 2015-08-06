@@ -15,9 +15,12 @@ public class ControlAccessResponse {
 
     private String userName;
     private String nameOfPlan;
+
     private Integer hoursOfPlan;
     private Integer leftHours;
-    private Boolean schedule;
+
+    private Integer blocksOfPlan;
+    private Integer penaltyHours;
 
 
 }

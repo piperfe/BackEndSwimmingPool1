@@ -1,9 +1,6 @@
 package com.inbadevs.swimmingpool.manager;
 
-import com.inbadevs.swimmingpool.dao.AssistanceFreeHoursPlanDao;
-import com.inbadevs.swimmingpool.dao.CountLeftHoursFreeHoursPlanDao;
-import com.inbadevs.swimmingpool.dao.ProductDao;
-import com.inbadevs.swimmingpool.dao.UserDao;
+import com.inbadevs.swimmingpool.dao.*;
 import com.inbadevs.swimmingpool.entities.*;
 import com.inbadevs.swimmingpool.exceptions.ControlEntranceException;
 import com.inbadevs.swimmingpool.exceptions.ControlExitException;
@@ -46,6 +43,12 @@ public class ManagerAccessControlTest {
     @Mock
     private CountLeftHoursFreeHoursPlanDao countLeftHoursFreeHoursPlanDao;
 
+    @Mock
+    private AssistanceSchedulePlanDao assistanceSchedulePlanDao;
+
+    @Mock
+    private CountLeftHoursSchedulePlanDao countLeftHoursSchedulePlanDao;
+
     private User user;
     private Plan planTypeFreeHours;
     private Plan planTypeBlockHours;
@@ -53,7 +56,8 @@ public class ManagerAccessControlTest {
     @Before
     public void setUp() throws Exception {
 
-        manager = new ManagerAccessControl(userDao, productDao, assistanceFreeHoursPlanDao, countLeftHoursFreeHoursPlanDao);
+        manager = new ManagerAccessControl(userDao, productDao, assistanceFreeHoursPlanDao, countLeftHoursFreeHoursPlanDao,
+                assistanceSchedulePlanDao, countLeftHoursSchedulePlanDao);
         user = new User(null, null, null, "userNames", null, null, null, null, null, null, null, null, 0);
         planTypeFreeHours = new Plan(Long.parseLong("1"), "name", "description", Long.parseLong("5000"),
                 "typeHoursPerWeek", 5, null);

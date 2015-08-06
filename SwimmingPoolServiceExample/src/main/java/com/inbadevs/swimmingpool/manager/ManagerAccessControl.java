@@ -1,9 +1,6 @@
 package com.inbadevs.swimmingpool.manager;
 
-import com.inbadevs.swimmingpool.dao.AssistanceFreeHoursPlanDao;
-import com.inbadevs.swimmingpool.dao.CountLeftHoursFreeHoursPlanDao;
-import com.inbadevs.swimmingpool.dao.ProductDao;
-import com.inbadevs.swimmingpool.dao.UserDao;
+import com.inbadevs.swimmingpool.dao.*;
 import com.inbadevs.swimmingpool.entities.*;
 import com.inbadevs.swimmingpool.exceptions.ControlEntranceException;
 import com.inbadevs.swimmingpool.exceptions.ControlExitException;
@@ -27,16 +24,22 @@ public class ManagerAccessControl {
     private ProductDao productDao;
     private AssistanceFreeHoursPlanDao assistanceFreeHoursPlanDao;
     private CountLeftHoursFreeHoursPlanDao countLeftHoursFreeHoursPlanDao;
+    private AssistanceSchedulePlanDao assistanceSchedulePlanDao;
+    private CountLeftHoursSchedulePlanDao countLeftHoursSchedulePlanDao;
 
 
     @Autowired
     public ManagerAccessControl(UserDao userDao, ProductDao productDao,
                                 AssistanceFreeHoursPlanDao assistanceFreeHoursPlanDao,
-                                CountLeftHoursFreeHoursPlanDao countLeftHoursFreeHoursPlanDao){
+                                CountLeftHoursFreeHoursPlanDao countLeftHoursFreeHoursPlanDao,
+                                AssistanceSchedulePlanDao assistanceSchedulePlanDao,
+                                CountLeftHoursSchedulePlanDao countLeftHoursSchedulePlanDao){
         this.userDao = userDao;
         this.productDao = productDao;
         this.assistanceFreeHoursPlanDao = assistanceFreeHoursPlanDao;
         this.countLeftHoursFreeHoursPlanDao = countLeftHoursFreeHoursPlanDao;
+        this.assistanceSchedulePlanDao = assistanceSchedulePlanDao;
+        this.countLeftHoursSchedulePlanDao = countLeftHoursSchedulePlanDao;
     }
 
     public ManagerAccessControl() {}
@@ -84,6 +87,21 @@ public class ManagerAccessControl {
 
         Schedule schedule = product.getProductPK().getSchedule();
 
+       /* int totalBlocksOfSchedule = 0;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date initialScheduleDay = dateFormat.parse(product.getStartValidDate(), new ParsePosition(0));
+        Date endScheduleDay = dateFormat.parse(product.getEndValidDate(), new ParsePosition(0));
+
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.setTime(initialScheduleDay);
+        int val = todayCal.get(Calendar.DAY_OF_WEEK);
+        String dayOfWeekInitialScheduleDay = new DateFormatSymbols().getWeekdays()[val];
+
+        while(){
+
+        }*/
+
         for(DaySection daySection: schedule.getDaySection()){
 
             String day = daySection.getDaySection().getDay().getName();
@@ -110,8 +128,10 @@ public class ManagerAccessControl {
                 startCal.add(Calendar.MINUTE, TIME_ENTRANCE_DELAY);
 
                 if(todayCal.after(startCal) && todayCal.before(endCal)){
-                    assistanceFreeHoursPlanDao.save(new AssistanceFreeHoursPlan(user, product.getProductPK().getPlan()));
-                    return new ControlAccessResponse(user.getNames(), schedule.getName(), null, null, true);
+                    assistanceSchedulePlanDao.save(new AssistanceSchedulePlan(user, product.getProductPK().getSchedule()
+                    , daySection));
+                    return new ControlAccessResponse(user.getNames(), product.getProductPK().getPlan().getName(),
+                            null, null, 1,2);
                 }
 
             }
@@ -132,7 +152,7 @@ public class ManagerAccessControl {
             hoursLeft = countHoursLeft.getHoursLeft();
         }
 
-        return new ControlAccessResponse(user.getNames(), plan.getName(), hours, hoursLeft, false);
+        return new ControlAccessResponse(user.getNames(), plan.getName(), hours, hoursLeft, null, null);
     }
 
     public ControlAccessResponse isUserAccessControlExit(Long userId, Long productId, Date exitDate) throws NotFoundException, ControlExitException {
@@ -170,7 +190,7 @@ public class ManagerAccessControl {
             assistanceFreeHoursPlan.setExitDate(exitDate);
 
             return new ControlAccessResponse(user.getNames(), plan.getName(), hoursOfPlan,
-                    leftHours, false);
+                    leftHours, null, null);
 
         }
 
