@@ -20,7 +20,7 @@ public class PlanIntegrationTest extends AbstractIntegrationTest{
     public void addPlan() throws Exception {
 
         Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target(tomcat.getUrl() + "/plan/getAll");
+        WebTarget target = client.target(tomcat.getUrl() + "/users/swimmingPool/getAll");
 
         Response response = target.request().get();
 

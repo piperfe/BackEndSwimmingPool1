@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 
 
 @Service
@@ -38,7 +39,7 @@ public class ServiceRestAccessControl {
     public Response isUserAccessControlEntrance(@PathParam("userId") Long userId, @PathParam("productId")
     Long productId) throws NotFoundException, ControlEntranceException {
 
-        ControlAccessResponse controlAccessResponse = this.managerAccessControl.isUserAccessControlEntrance(userId, productId);
+        ControlAccessResponse controlAccessResponse = this.managerAccessControl.isUserAccessControlEntrance(userId, productId, new Date());
 
         if(controlAccessResponse != null) {
             return Response.ok().entity(controlAccessResponse).build();
@@ -54,7 +55,7 @@ public class ServiceRestAccessControl {
     public Response isUserAccessControlExit(@PathParam("userId") Long userId, @PathParam("productId")
     Long productId) throws NotFoundException, ControlExitException {
 
-        ControlAccessResponse controlAccessResponse = this.managerAccessControl.isUserAccessControlExit(userId, productId);
+        ControlAccessResponse controlAccessResponse = this.managerAccessControl.isUserAccessControlExit(userId, productId, new Date());
 
         if(controlAccessResponse != null) {
             return Response.ok().entity(controlAccessResponse).build();

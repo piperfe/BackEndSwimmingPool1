@@ -83,7 +83,7 @@ public class ManagerAccessControlTest {
         when(userDao.find(user.getId())).thenReturn(user);
         when(productDao.find(product.getId())).thenReturn(product);
 
-        manager.isUserAccessControlEntrance(user.getId(), product.getId());
+        manager.isUserAccessControlEntrance(user.getId(), product.getId(), today);
 
     }
 
@@ -101,7 +101,7 @@ public class ManagerAccessControlTest {
         when(productDao.find(product.getId())).thenReturn(product);
         when(countLeftHoursFreeHoursPlanDao.find(user,planTypeFreeHours)).thenReturn(null);
 
-        ControlAccessResponse controlAccessResponse = manager.isUserAccessControlEntrance(user.getId(), product.getId());
+        ControlAccessResponse controlAccessResponse = manager.isUserAccessControlEntrance(user.getId(), product.getId(), today);
 
         /*final ControlAccessResponse controlAccessResponse1 = new ControlAccessResponse(user.getNames(),
                 planTypeFreeHours.getName(),
@@ -133,7 +133,7 @@ public class ManagerAccessControlTest {
         when(countLeftHoursFreeHoursPlanDao.find(user,planTypeFreeHours)).thenReturn(new CountLeftHoursFreeHoursPlan(user,
                 planTypeFreeHours, hoursLeft));
 
-        ControlAccessResponse controlAccessResponse = manager.isUserAccessControlEntrance(user.getId(), product.getId());
+        ControlAccessResponse controlAccessResponse = manager.isUserAccessControlEntrance(user.getId(), product.getId(),today);
 
         assertThat(controlAccessResponse.getUserName(), is(equalTo("userNames")));
         assertThat(controlAccessResponse.getLeftHours(), is(equalTo(2)));
@@ -155,7 +155,7 @@ public class ManagerAccessControlTest {
         when(productDao.find(product.getId())).thenReturn(product);
         when(assistanceFreeHoursPlanDao.findLastEntrance(user, planTypeFreeHours)).thenReturn(null);
 
-        manager.isUserAccessControlExit(user.getId(), product.getId());
+        manager.isUserAccessControlExit(user.getId(), product.getId(), today);
     }
 
     @Test(expected = ControlExitException.class)
@@ -174,7 +174,7 @@ public class ManagerAccessControlTest {
         when(productDao.find(product.getId())).thenReturn(product);
         when(assistanceFreeHoursPlanDao.findLastEntrance(user, planTypeFreeHours)).thenReturn(assistanceFreeHoursPlan);
 
-        manager.isUserAccessControlExit(user.getId(), product.getId());
+        manager.isUserAccessControlExit(user.getId(), product.getId(), today);
     }
 
     @Test
@@ -196,7 +196,7 @@ public class ManagerAccessControlTest {
                 assistanceFreeHoursPlan);
         when(countLeftHoursFreeHoursPlanDao.find(user, planTypeFreeHours)).thenReturn(null);
 
-        ControlAccessResponse response = manager.isUserAccessControlExit(user.getId(), product.getId());
+        ControlAccessResponse response = manager.isUserAccessControlExit(user.getId(), product.getId(), today);
 
         assertThat(response.getLeftHours(), is(lessThanOrEqualTo(planTypeFreeHours.getHoursPerWeek() * 4)));
 
@@ -217,7 +217,7 @@ public class ManagerAccessControlTest {
         calendarExitDate.setTime(entranceDate);
         calendarExitDate.add(Calendar.MINUTE, 20);
 
-        manager.setExitDate(calendarExitDate.getTime());
+        //manager.setExitDate(calendarExitDate.getTime());
 
         final AssistanceFreeHoursPlan assistanceFreeHoursPlan = new AssistanceFreeHoursPlan(Long.parseLong("1"), user,
                 planTypeFreeHours, true, entranceDate, null);
@@ -230,7 +230,7 @@ public class ManagerAccessControlTest {
                 new CountLeftHoursFreeHoursPlan(user, planTypeFreeHours,
                         (planTypeFreeHours.getHoursPerWeek() * 4)  - 5));
 
-        ControlAccessResponse response = manager.isUserAccessControlExit(user.getId(), product.getId());
+        ControlAccessResponse response = manager.isUserAccessControlExit(user.getId(), product.getId(), calendarExitDate.getTime());
 
         assertThat(response.getLeftHours(), is(equalTo(15)));
 
@@ -251,7 +251,7 @@ public class ManagerAccessControlTest {
         calendarExitDate.setTime(entranceDate);
         calendarExitDate.add(Calendar.MINUTE, 30);
 
-        manager.setExitDate(calendarExitDate.getTime());
+        //manager.setExitDate(calendarExitDate.getTime());
 
         final AssistanceFreeHoursPlan assistanceFreeHoursPlan = new AssistanceFreeHoursPlan(Long.parseLong("1"), user,
                 planTypeFreeHours, true, entranceDate, null);
@@ -264,7 +264,7 @@ public class ManagerAccessControlTest {
                 new CountLeftHoursFreeHoursPlan(user, planTypeFreeHours,
                         (planTypeFreeHours.getHoursPerWeek() * 4)  - 5));
 
-        ControlAccessResponse response = manager.isUserAccessControlExit(user.getId(), product.getId());
+        ControlAccessResponse response = manager.isUserAccessControlExit(user.getId(), product.getId(), calendarExitDate.getTime());
 
         assertThat(response.getLeftHours(), is(equalTo(14)));
 
@@ -274,7 +274,7 @@ public class ManagerAccessControlTest {
     public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsValidWithTodayTime() throws Exception, ControlEntranceException {
 
         Calendar todayCal = Calendar.getInstance();
-        todayCal.set(2015, 6, 10, 7, 8);
+        todayCal.set(2015, 6, 10, 6, 40,1);
 
         String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -3);
         String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +3);
@@ -285,7 +285,7 @@ public class ManagerAccessControlTest {
         DaySectionPK daySectionPk = new DaySectionPK(section, day);
         DaySection daySection = new DaySection(1, daySectionPk);
 
-        Section section2 = new Section(2, new Time(0,0,7), new Time(8,0,0));
+        Section section2 = new Section(2, new Time(7,0,0), new Time(8,0,0));
         Day day2 = new Day(2, "Friday");
         DaySectionPK daySectionPk2 = new DaySectionPK(section2, day2);
         DaySection daySection2 = new DaySection(2, daySectionPk2);
@@ -297,11 +297,10 @@ public class ManagerAccessControlTest {
         Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
                 endValidDate);
 
-        manager.setEntranceDate(todayCal.getTime());
         when(userDao.find(user.getId())).thenReturn(user);
         when(productDao.find(product.getId())).thenReturn(product);
 
-        ControlAccessResponse response = manager.isUserAccessControlEntrance(user.getId(), product.getId());
+        ControlAccessResponse response = manager.isUserAccessControlEntrance(user.getId(), product.getId(), todayCal.getTime());
 
         assertNotNull(response);
 
@@ -312,6 +311,7 @@ public class ManagerAccessControlTest {
 
         Calendar todayCal = Calendar.getInstance();
         todayCal.set(2015,6,20,1,20);
+
         String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -3);
         String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +3);
         List<DaySection> daySectionList = new ArrayList<>();
@@ -326,13 +326,10 @@ public class ManagerAccessControlTest {
         Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
                 endValidDate);
 
-
-        manager.setEntranceDate(todayCal.getTime());
-
         when(userDao.find(user.getId())).thenReturn(user);
         when(productDao.find(product.getId())).thenReturn(product);
 
-        manager.isUserAccessControlEntrance(user.getId(), product.getId());
+        manager.isUserAccessControlEntrance(user.getId(), product.getId(), todayCal.getTime());
 
     }
 

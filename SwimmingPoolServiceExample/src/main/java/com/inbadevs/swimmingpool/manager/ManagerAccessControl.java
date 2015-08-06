@@ -9,7 +9,6 @@ import com.inbadevs.swimmingpool.exceptions.ControlEntranceException;
 import com.inbadevs.swimmingpool.exceptions.ControlExitException;
 import com.inbadevs.swimmingpool.service.entityresponse.ControlAccessResponse;
 import javassist.NotFoundException;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,16 +22,12 @@ import java.util.Date;
 @Component
 public class ManagerAccessControl {
 
+    public static final int TIME_ENTRANCE_DELAY = -20;
     private UserDao userDao;
     private ProductDao productDao;
     private AssistanceFreeHoursPlanDao assistanceFreeHoursPlanDao;
     private CountLeftHoursFreeHoursPlanDao countLeftHoursFreeHoursPlanDao;
 
-    @Setter
-    private Date entranceDate;
-
-    @Setter
-    private Date exitDate;
 
     @Autowired
     public ManagerAccessControl(UserDao userDao, ProductDao productDao,
@@ -47,7 +42,7 @@ public class ManagerAccessControl {
     public ManagerAccessControl() {}
 
 
-    public ControlAccessResponse isUserAccessControlEntrance(Long userId, Long productId) throws NotFoundException, ControlEntranceException {
+    public ControlAccessResponse isUserAccessControlEntrance(Long userId, Long productId, Date entranceDate) throws NotFoundException, ControlEntranceException {
 
         User user = this.userDao.find(userId);
         Product product = this.productDao.find(productId);
@@ -56,7 +51,6 @@ public class ManagerAccessControl {
         Date startValidDate = dateFormat.parse(product.getStartValidDate(), new ParsePosition(0));
         Date endValidDate = dateFormat.parse(product.getEndValidDate(), new ParsePosition(0));
 
-        entranceDate =  (entranceDate != null) ? entranceDate : new Date();
 
         if(entranceDate.after(startValidDate) && entranceDate.before(endValidDate)){
 
@@ -113,6 +107,8 @@ public class ManagerAccessControl {
                 endCal.set(Calendar.DAY_OF_YEAR, todayCal.get(Calendar.DAY_OF_YEAR));
                 endCal.set(Calendar.YEAR, todayCal.get(Calendar.YEAR));
 
+                startCal.add(Calendar.MINUTE, TIME_ENTRANCE_DELAY);
+
                 if(todayCal.after(startCal) && todayCal.before(endCal)){
                     assistanceFreeHoursPlanDao.save(new AssistanceFreeHoursPlan(user, product.getProductPK().getPlan()));
                     return new ControlAccessResponse(user.getNames(), schedule.getName(), null, null, true);
@@ -139,13 +135,11 @@ public class ManagerAccessControl {
         return new ControlAccessResponse(user.getNames(), plan.getName(), hours, hoursLeft, false);
     }
 
-    public ControlAccessResponse isUserAccessControlExit(Long userId, Long productId) throws NotFoundException, ControlExitException {
+    public ControlAccessResponse isUserAccessControlExit(Long userId, Long productId, Date exitDate) throws NotFoundException, ControlExitException {
 
         User user = this.userDao.find(userId);
         Product product = this.productDao.find(productId);
         Plan plan = product.getProductPK().getPlan();
-
-        exitDate =  (exitDate != null) ? exitDate : new Date();
 
         if(plan.getTypeOfPlan().equals("typeHoursPerWeek")) {
 

@@ -9,8 +9,9 @@ public class EmbeddedTomcat {
     private Tomcat tomcat = new Tomcat();
 
     static {
-//        System.setProperty(Constants.ROOT_APPENDER_PROP, System.getProperty(Constants.ROOT_APPENDER_PROP,"consoleAppender"));
+        System.setProperty("spring.profiles.active", "test");
     }
+
     final String context = System.getProperty("application.context", "SwimmingPool/rest");
 
     public void start() {
@@ -41,7 +42,7 @@ public class EmbeddedTomcat {
     }
 
     public void deploy(String contextName) {
-        tomcat.addWebapp(tomcat.getHost(), "/" + contextName, "src/main/webapp");
+        tomcat.addWebapp(tomcat.getHost(), "/" + contextName, "src/main/webapp").getPath();
     }
 
     public String getUrl() {
