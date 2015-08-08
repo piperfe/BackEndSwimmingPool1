@@ -52,10 +52,16 @@ public class ManagerAccessControl {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date startValidDate = dateFormat.parse(product.getStartValidDate(), new ParsePosition(0));
+
         Date endValidDate = dateFormat.parse(product.getEndValidDate(), new ParsePosition(0));
+        Calendar endValidDateCalendar = Calendar.getInstance();
+        endValidDateCalendar.setTime(endValidDate);
+        endValidDateCalendar.set(Calendar.HOUR, 23);
+        endValidDateCalendar.set(Calendar.MINUTE, 59);
+        endValidDateCalendar.set(Calendar.SECOND, 59);
 
 
-        if(entranceDate.after(startValidDate) && entranceDate.before(endValidDate)){
+        if(entranceDate.after(startValidDate) && entranceDate.before(endValidDateCalendar.getTime())){
 
             Plan plan = product.getProductPK().getPlan();
 
@@ -87,21 +93,6 @@ public class ManagerAccessControl {
 
         Schedule schedule = product.getProductPK().getSchedule();
 
-       /* int totalBlocksOfSchedule = 0;
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date initialScheduleDay = dateFormat.parse(product.getStartValidDate(), new ParsePosition(0));
-        Date endScheduleDay = dateFormat.parse(product.getEndValidDate(), new ParsePosition(0));
-
-        Calendar todayCal = Calendar.getInstance();
-        todayCal.setTime(initialScheduleDay);
-        int val = todayCal.get(Calendar.DAY_OF_WEEK);
-        String dayOfWeekInitialScheduleDay = new DateFormatSymbols().getWeekdays()[val];
-
-        while(){
-
-        }*/
-
         for(DaySection daySection: schedule.getDaySection()){
 
             String day = daySection.getDaySection().getDay().getName();
@@ -128,16 +119,85 @@ public class ManagerAccessControl {
                 startCal.add(Calendar.MINUTE, TIME_ENTRANCE_DELAY);
 
                 if(todayCal.after(startCal) && todayCal.before(endCal)){
+
                     assistanceSchedulePlanDao.save(new AssistanceSchedulePlan(user, product.getProductPK().getSchedule()
                     , daySection));
+
+                    CountLeftHoursSchedulePlan countLeftHoursSchedulePlan = countLeftHoursSchedulePlanDao.find(user, product);
+
+                    int scheduleTotalBlocks = 0;
+                    int penaltiesBlockSchedule = 0;
+
+                    if(countLeftHoursSchedulePlan == null){
+
+                        scheduleTotalBlocks = calculateBlocksOfSchedule(product, today);
+                        countLeftHoursSchedulePlanDao.save(new CountLeftHoursSchedulePlan(user, product,
+                                scheduleTotalBlocks, penaltiesBlockSchedule));
+                    }
+                    else{
+
+                        scheduleTotalBlocks = countLeftHoursSchedulePlan.getScheduleTotalBlocks();
+                        penaltiesBlockSchedule = countLeftHoursSchedulePlan.getBlocksPenalty();
+                    }
+
                     return new ControlAccessResponse(user.getNames(), product.getProductPK().getPlan().getName(),
-                            null, null, 1,2);
+                            null, null, scheduleTotalBlocks,penaltiesBlockSchedule);
                 }
 
             }
         }
 
         throw new ControlEntranceException("invalid entrance, schedule without daySection");
+    }
+
+    private int calculateBlocksOfSchedule(Product product, Date today) {
+
+        Schedule schedule = product.getProductPK().getSchedule();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date endScheduleDay = dateFormat.parse(product.getEndValidDate(), new ParsePosition(0));
+        Calendar endScheduleDayCalendar = Calendar.getInstance();
+        endScheduleDayCalendar.setTime(endScheduleDay);
+        endScheduleDayCalendar.set(Calendar.HOUR, 23);
+        endScheduleDayCalendar.set(Calendar.MINUTE, 59);
+        endScheduleDayCalendar.set(Calendar.SECOND, 59);
+
+        long diff = endScheduleDayCalendar.getTime().getTime() - today.getTime();
+        long diffDays = diff / (24 * 60 * 60 * 1000);
+        long diffHours = diff / (60 * 60 * 1000) % 24;
+
+
+        diffDays = (diffDays == 0 && diffHours > 0) ?  1 : 0;
+
+        Calendar initialScheduleDayCalendar = Calendar.getInstance();
+        initialScheduleDayCalendar.setTime(today);
+        int startVal = initialScheduleDayCalendar.get(Calendar.DAY_OF_WEEK);
+        String initialScheduleDayOfWeek = new DateFormatSymbols().getWeekdays()[startVal];
+
+        int blocksOfSchedule = 0;
+
+        for(int i = 0; i <= diffDays; i ++){
+
+            for(DaySection daySection: schedule.getDaySection()) {
+
+                String day = daySection.getDaySection().getDay().getName();
+
+                if (day.equals(initialScheduleDayOfWeek)) {
+
+                    blocksOfSchedule ++;
+                }
+            }
+
+            startVal ++;
+            if(startVal == 8){
+                startVal = 1;
+            }
+            initialScheduleDayOfWeek = new DateFormatSymbols().getWeekdays()[startVal];
+
+        }
+
+        return blocksOfSchedule;
+
     }
 
     private ControlAccessResponse controlEntranceFreeHours(User user, Product product, Plan plan) {
