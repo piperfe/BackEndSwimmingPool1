@@ -8,6 +8,10 @@ package com.inbadevs.swimmingpool.service;
 import com.inbadevs.swimmingpool.entities.Payment;
 import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpool.manager.ManagerPayment;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +38,14 @@ public class ServiceRestPayment {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/salesReportBetweenDates/{dateStart}/{dateEnd}")
+    public List<Payment> salesReportBetweenDates(@PathParam("dateStart") String dateStart,@PathParam("dateEnd") String dateEnd ) throws BuisnessLayerException, ParseException {
+        List<Payment> payment = this.buissnesLayer.salesReportBetweenDates(dateStart,dateEnd);
+        return payment;
+    }
+            
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/closeTurn/{idUserAdmin}")
     public List<Payment> closeTurn(@PathParam("idUserAdmin") Long idUserAdmin) throws BuisnessLayerException {
         List<Payment> payment = this.buissnesLayer.closeTurn(idUserAdmin);
@@ -54,6 +66,7 @@ public class ServiceRestPayment {
         List<Payment> payment = this.buissnesLayer.getPaymentsBySwimmingPoolUser(swimmingPoolUserId);
         return payment;
     }
+    
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)

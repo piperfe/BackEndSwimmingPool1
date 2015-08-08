@@ -6,6 +6,8 @@
 package com.inbadevs.swimmingpool.dao;
 
 import com.inbadevs.swimmingpool.entities.Payment;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
@@ -38,6 +40,26 @@ public class PaymentDao extends BaseGenericDAO<Payment>{
 
     }
 
+    public List<Payment> salesReportBetweenDates(String dateStart, String dateEnd) throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        
+        //String[] dtStart = dateStart.split("_");
+        //String datePrueba = dtStart[0]+"/"+dtStart[1]+"/"+dtStart[2];
+        Date dStart = dateFormat.parse(dateStart, new ParsePosition(0));
+        
+        Date dEnd = dateFormat.parse(dateEnd, new ParsePosition(0));
+        
+        Criteria criteria = getCurrentSession().createCriteria(Payment.class).
+                setFetchMode("adminUser", FetchMode.JOIN)
+                .add(Restrictions.ge("datepay", dStart))
+                .add(Restrictions.le("datepay", dEnd))
+                ;
+ 
+        return criteria.list();
+
+    }
+    
     public List<Payment> getPaymentsBySwimmingPoolUser(Long swimmingPoolUserId) {
 
         Criteria criteria = getCurrentSession().createCriteria(Payment.class).

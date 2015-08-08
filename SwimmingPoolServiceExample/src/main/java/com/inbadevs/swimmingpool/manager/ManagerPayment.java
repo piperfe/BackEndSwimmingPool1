@@ -8,6 +8,8 @@ package com.inbadevs.swimmingpool.manager;
 import com.inbadevs.swimmingpool.dao.PaymentDao;
 import com.inbadevs.swimmingpool.entities.Payment;
 import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
+import java.sql.Date;
+import java.text.ParseException;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,11 @@ public class ManagerPayment {
     
     public List<Payment> closeTurn(Long idUserAdmin) {
         List<Payment> payments = this.payment.closeTurn(idUserAdmin);
+        return payments;
+    }
+    
+    public List<Payment> salesReportBetweenDates(String dateStart, String dateEnd) throws ParseException {
+        List<Payment> payments = this.payment.salesReportBetweenDates(dateStart,dateEnd);
         return payments;
     }
     
