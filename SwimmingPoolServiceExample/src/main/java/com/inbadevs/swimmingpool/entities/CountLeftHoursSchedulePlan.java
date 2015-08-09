@@ -33,6 +33,7 @@ public class CountLeftHoursSchedulePlan implements Serializable {
     @OneToOne
     Product product;
 
+    @Setter
     Integer blocksPenalty;
 
     Integer scheduleTotalBlocks;

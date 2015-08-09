@@ -4,6 +4,7 @@ import com.inbadevs.swimmingpool.dao.AssistanceSchedulePlanDao;
 import com.inbadevs.swimmingpool.dao.CountLeftHoursSchedulePlanDao;
 import com.inbadevs.swimmingpool.entities.*;
 import com.inbadevs.swimmingpool.exceptions.ControlEntranceException;
+import com.inbadevs.swimmingpool.exceptions.ControlExitException;
 import com.inbadevs.swimmingpool.service.entityresponse.ControlAccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -65,11 +66,11 @@ public class ScheduleAccess implements Access{
                 if(todayCal.after(startCal) && todayCal.before(endCal)){
 
                     assistanceSchedulePlanDao.save(new AssistanceSchedulePlan(user, product.getProductPK().getSchedule()
-                            , daySection));
+                            , daySection, today, true));
 
                     CountLeftHoursSchedulePlan countLeftHoursSchedulePlan = countLeftHoursSchedulePlanDao.find(user, product);
 
-                    int scheduleTotalBlocks = 0;
+                    int scheduleTotalBlocks;
                     int penaltiesBlockSchedule = 0;
 
                     if(countLeftHoursSchedulePlan == null){
@@ -94,9 +95,52 @@ public class ScheduleAccess implements Access{
         throw new ControlEntranceException("invalid entrance, schedule without daySection");
     }
 
-    @Override
-    public ControlAccessResponse controlExit(User user, Product product, Date exitDate) {
-        return null;
+
+    public ControlAccessResponse controlExit(User user, Product product, Date exitDate) throws ControlExitException {
+
+        Plan plan = product.getProductPK().getPlan();
+        AssistanceSchedulePlan assistanceSchedulePlan = assistanceSchedulePlanDao.findLastEntrance(user, plan);
+
+        if(assistanceSchedulePlan == null ){
+            throw new ControlExitException("never entrance");
+        }
+        else if(!assistanceSchedulePlan.getEntrance()){
+            throw new ControlExitException("entrance before exit");
+        }
+
+        CountLeftHoursSchedulePlan countLeftHoursSchedulePlan = countLeftHoursSchedulePlanDao.find(user, product);
+
+        int penaltyHours = hasPenalty(exitDate, assistanceSchedulePlan.getEntranceDate());
+        countLeftHoursSchedulePlan.setBlocksPenalty(penaltyHours);
+        assistanceSchedulePlan.setEntrance(false);
+        assistanceSchedulePlan.setExitDate(exitDate);
+
+        return new ControlAccessResponse(user.getNames(), plan.getName(),
+                null, null, countLeftHoursSchedulePlan.getScheduleTotalBlocks(), countLeftHoursSchedulePlan.getBlocksPenalty());
+    }
+
+    private Integer hasPenalty(Date exitDate, Date entranceDate) {
+
+        Long difference = exitDate.getTime() - entranceDate.getTime();
+        Long minutes = difference / (60 * 1000);
+
+        if(minutes <= 100){
+            return 0;
+        }
+
+        int penaltyMinutes = 100;
+        int i = 0;
+
+        while (penaltyMinutes < minutes){
+
+            if(minutes > penaltyMinutes){
+                i++;
+            }
+            penaltyMinutes = penaltyMinutes + 60;
+        }
+
+        return  i;
+
     }
 
     private int calculateBlocksOfSchedule(Product product, Date today) {

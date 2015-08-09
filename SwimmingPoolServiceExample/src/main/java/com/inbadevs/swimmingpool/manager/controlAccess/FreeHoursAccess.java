@@ -85,11 +85,20 @@ public class FreeHoursAccess implements Access{
         Long minutes = difference / (60 * 1000);
 
         if(minutes > 20){
-            return totalHours - 1;
+            totalHours --;
         }
-        else{
-            return totalHours;
+
+        int penaltyMinutes = 100;
+
+        while (penaltyMinutes < minutes){
+
+            if(minutes > penaltyMinutes){
+                totalHours --;
+            }
+            penaltyMinutes = penaltyMinutes + 60;
         }
+
+        return  totalHours;
 
     }
 }
