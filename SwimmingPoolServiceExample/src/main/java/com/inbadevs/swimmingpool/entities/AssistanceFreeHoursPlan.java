@@ -41,12 +41,12 @@ public class AssistanceFreeHoursPlan implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date exitDate;
 
-    public AssistanceFreeHoursPlan(User user, Plan plan){
+    public AssistanceFreeHoursPlan(User user, Plan plan, Date entranceDate){
 
         this.user = user;
         this.plan = plan;
         this.entrance = true;
-        this.entranceDate = new Date();
+        this.entranceDate = entranceDate;
     }
 
 
