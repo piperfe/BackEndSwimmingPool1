@@ -23,6 +23,9 @@ public class Payment implements Serializable {
     
     @ManyToOne
     private SwimmingPoolUser swimmingPoolUser;
+
+    @ManyToOne
+    private AdminUser adminUser;
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
