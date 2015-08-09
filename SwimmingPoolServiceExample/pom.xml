@@ -259,7 +259,7 @@
                     <path>${application.context}</path>
                     <systemProperties>
                         <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
-                        <spring.profiles.active>test</spring.profiles.active>
+                        <spring.profiles.active>prod</spring.profiles.active>
                         <root.appender>consoleAppender</root.appender>
                         <jpa>true</jpa>
                     </systemProperties>

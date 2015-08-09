@@ -99,7 +99,8 @@ public class ScheduleAccess implements Access{
     public ControlAccessResponse controlExit(User user, Product product, Date exitDate) throws ControlExitException {
 
         Plan plan = product.getProductPK().getPlan();
-        AssistanceSchedulePlan assistanceSchedulePlan = assistanceSchedulePlanDao.findLastEntrance(user, plan);
+        Schedule schedule = product.getProductPK().getSchedule();
+        AssistanceSchedulePlan assistanceSchedulePlan = assistanceSchedulePlanDao.findLastEntrance(user, schedule);
 
         if(assistanceSchedulePlan == null ){
             throw new ControlExitException("never entrance");

@@ -175,7 +175,7 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
                 endValidDate);
 
         when(productDao.find(product.getId())).thenReturn(product);
-        when(assistanceSchedulePlanDao.findLastEntrance(user, planTypeBlockHours)).thenReturn(null);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(null);
 
         manager.controlExit(user, product, today);
     }
@@ -193,7 +193,7 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
                 user, schedule, null, null, false);
 
         when(productDao.find(product.getId())).thenReturn(product);
-        when(assistanceSchedulePlanDao.findLastEntrance(user, planTypeBlockHours)).thenReturn(assistanceSchedulePlan);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
 
         manager.controlExit(user, product, today);
     }
@@ -221,7 +221,7 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
                 user, schedule, null, entranceDate, true);
 
         when(productDao.find(product.getId())).thenReturn(product);
-        when(assistanceSchedulePlanDao.findLastEntrance(user, planTypeBlockHours)).thenReturn(assistanceSchedulePlan);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
         when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
                 new CountLeftHoursSchedulePlan(user, product, 3, 0));
 
@@ -252,7 +252,7 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
                 user, schedule, null, entranceDate, true);
 
         when(productDao.find(product.getId())).thenReturn(product);
-        when(assistanceSchedulePlanDao.findLastEntrance(user, planTypeBlockHours)).thenReturn(assistanceSchedulePlan);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
         when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
                 new CountLeftHoursSchedulePlan(user, product, 3, 0));
 
@@ -283,7 +283,7 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
                 user, schedule, null, entranceDate, true);
 
         when(productDao.find(product.getId())).thenReturn(product);
-        when(assistanceSchedulePlanDao.findLastEntrance(user, planTypeBlockHours)).thenReturn(assistanceSchedulePlan);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule  )).thenReturn(assistanceSchedulePlan);
         when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
                 new CountLeftHoursSchedulePlan(user, product, 3, 0));
 

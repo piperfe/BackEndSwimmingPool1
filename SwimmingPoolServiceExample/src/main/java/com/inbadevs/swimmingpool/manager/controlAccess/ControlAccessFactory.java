@@ -24,11 +24,11 @@ public class ControlAccessFactory {
 
         if(typeOfPlan.equals(TYPE_HOURS_PER_WEEK)){
 
-            return context.getBean("FreeHourAccess", Access.class);
+            return context.getBean("freeHoursAccess", Access.class);
         }
         else if (typeOfPlan.equals(TYPE_BLOCKS_PER_WEEK)) {
 
-            return context.getBean("ScheduleAccess", Access.class);
+            return context.getBean("scheduleAccess", Access.class);
         }
 
         return null;

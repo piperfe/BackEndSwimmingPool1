@@ -6,7 +6,7 @@
 package com.inbadevs.swimmingpool.dao;
 
 import com.inbadevs.swimmingpool.entities.AssistanceSchedulePlan;
-import com.inbadevs.swimmingpool.entities.Plan;
+import com.inbadevs.swimmingpool.entities.Schedule;
 import com.inbadevs.swimmingpool.entities.User;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -32,10 +32,10 @@ public class AssistanceSchedulePlanDao extends BaseGenericDAO<AssistanceSchedule
         super(AssistanceSchedulePlan.class, em);
     }
 
-    public AssistanceSchedulePlan findLastEntrance(User user, Plan plan) {
+    public AssistanceSchedulePlan findLastEntrance(User user, Schedule schedule) {
         Criteria criteria = getCurrentSession().createCriteria(AssistanceSchedulePlan.class)
                 .add(Restrictions.and(Restrictions.eq("user", user),
-                        Restrictions.eq("plan", plan))).addOrder(Order.desc("entranceDate"));
+                        Restrictions.eq("schedule", schedule))).addOrder(Order.desc("entranceDate"));
 
         List<AssistanceSchedulePlan> assistanceFreeHoursPlanList = (List<AssistanceSchedulePlan>) criteria.list();
 

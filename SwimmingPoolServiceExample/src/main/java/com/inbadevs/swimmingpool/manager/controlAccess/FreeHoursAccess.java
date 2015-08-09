@@ -40,6 +40,9 @@ public class FreeHoursAccess implements Access{
         if (countHoursLeft != null) {
             hoursLeft = countHoursLeft.getHoursLeft();
         }
+        else{
+            countLeftHoursFreeHoursPlanDao.save(new CountLeftHoursFreeHoursPlan(user, plan, hours));
+        }
 
         return new ControlAccessResponse(user.getNames(), plan.getName(), hours, hoursLeft, null, null);
     }
@@ -58,18 +61,10 @@ public class FreeHoursAccess implements Access{
             throw new ControlExitException("entrance before exit");
         }
 
-
         CountLeftHoursFreeHoursPlan countHoursLeft = countLeftHoursFreeHoursPlanDao.find(user, plan);
-        Integer leftHours;
 
-        if(countHoursLeft != null){
-            leftHours = subtractTime(exitDate, assistanceFreeHoursPlan.getEntranceDate(), countHoursLeft.getHoursLeft());
-            countHoursLeft.setHoursLeft(leftHours);
-        }
-        else{
-            leftHours = hoursOfPlan;
-            countLeftHoursFreeHoursPlanDao.save(new CountLeftHoursFreeHoursPlan(user, plan, leftHours));
-        }
+        int leftHours = subtractTime(exitDate, assistanceFreeHoursPlan.getEntranceDate(), countHoursLeft.getHoursLeft());
+        countHoursLeft.setHoursLeft(leftHours);
 
         assistanceFreeHoursPlan.setEntrance(false);
         assistanceFreeHoursPlan.setExitDate(exitDate);

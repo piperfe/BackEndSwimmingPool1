@@ -1,6 +1,7 @@
 package com.inbadevs.swimmingpool.manager;
 
-import com.inbadevs.swimmingpool.dao.*;
+import com.inbadevs.swimmingpool.dao.AssistanceFreeHoursPlanDao;
+import com.inbadevs.swimmingpool.dao.CountLeftHoursFreeHoursPlanDao;
 import com.inbadevs.swimmingpool.entities.*;
 import com.inbadevs.swimmingpool.exceptions.ControlEntranceException;
 import com.inbadevs.swimmingpool.exceptions.ControlExitException;
@@ -18,7 +19,6 @@ import java.util.Date;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.mockito.Mockito.when;
 
 /**
@@ -64,12 +64,7 @@ public class FreeHoursAccessTest extends ControlAccessAbstract {
 
         ControlAccessResponse controlAccessResponse = manager.controlEntrance(user, product, today);
 
-        /*final ControlAccessResponse controlAccessResponse1 = new ControlAccessResponse(user.getNames(),
-                planTypeFreeHours.getName(),
-                Double.valueOf((planTypeFreeHours.getHoursPerWeek() * 4)),
-                Double.valueOf(planTypeFreeHours.getHoursPerWeek() * 4));*/
 
-        //TODO verify assertions object to object
         assertThat(controlAccessResponse.getUserName(), is(equalTo("userNames")));
         assertThat(controlAccessResponse.getLeftHours(), is(equalTo(20)));
 
@@ -137,30 +132,6 @@ public class FreeHoursAccessTest extends ControlAccessAbstract {
         manager.controlExit(user, product, today);
     }
 
-    @Test
-    public void testExitWhenCountLeftHoursFreeHoursPlanIsNullFirstExit() throws Exception, ControlExitException {
-
-        Date today = new Date();
-        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
-        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
-        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeFreeHours, null), startValidDate,
-                endValidDate);
-
-        final Date entranceDate = new Date();
-
-        final AssistanceFreeHoursPlan assistanceFreeHoursPlan = new AssistanceFreeHoursPlan(Long.parseLong("1"), user, planTypeFreeHours, true, entranceDate, null);
-
-        when(userDao.find(user.getId())).thenReturn(user);
-        when(productDao.find(product.getId())).thenReturn(product);
-        when(assistanceFreeHoursPlanDao.findLastEntrance(user, planTypeFreeHours)).thenReturn(
-                assistanceFreeHoursPlan);
-        when(countLeftHoursFreeHoursPlanDao.find(user, planTypeFreeHours)).thenReturn(null);
-
-        ControlAccessResponse response = manager.controlExit(user, product, today);
-
-        assertThat(response.getLeftHours(), is(lessThanOrEqualTo(planTypeFreeHours.getHoursPerWeek() * 4)));
-
-    }
 
     @Test
     public void testExitWhenCountLeftHoursFreeHoursPlanAndExitBefore20Minutes() throws Exception, ControlExitException {
