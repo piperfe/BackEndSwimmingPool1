@@ -41,13 +41,8 @@ public class PaymentDao extends BaseGenericDAO<Payment>{
     }
 
     public List<Payment> salesReportBetweenDates(String dateStart, String dateEnd) throws ParseException {
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        
-        //String[] dtStart = dateStart.split("_");
-        //String datePrueba = dtStart[0]+"/"+dtStart[1]+"/"+dtStart[2];
         Date dStart = dateFormat.parse(dateStart, new ParsePosition(0));
-        
         Date dEnd = dateFormat.parse(dateEnd, new ParsePosition(0));
         
         Criteria criteria = getCurrentSession().createCriteria(Payment.class).
