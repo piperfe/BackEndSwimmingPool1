@@ -46,7 +46,7 @@ public class EmbeddedTomcat {
     }
 
     public String getUrl() {
-        return String.format("http://%s:%d/%s", getHost(), getPort(), context);
+            return String.format("http://%s:%d/%s", getHost(), getPort(), context);
     }
 
     public String getHost() {

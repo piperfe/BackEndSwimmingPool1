@@ -44,13 +44,14 @@ public class AssistanceSchedulePlan implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date exitDate;
 
-    public AssistanceSchedulePlan(User user, Schedule schedule, DaySection daySectionEntrance){
+    public AssistanceSchedulePlan(User user, Schedule schedule, DaySection daySectionEntrance, Date entranceDate,
+                                  Boolean entrance){
 
         this.user = user;
         this.schedule = schedule;
         this.daySectionEntrance = daySectionEntrance;
-        this.entrance = true;
-        this.entranceDate = new Date();
+        this.entrance = entrance;
+        this.entranceDate = entranceDate;
     }
 
 

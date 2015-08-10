@@ -4,6 +4,7 @@ import com.inbadevs.swimmingpool.dao.AssistanceSchedulePlanDao;
 import com.inbadevs.swimmingpool.dao.CountLeftHoursSchedulePlanDao;
 import com.inbadevs.swimmingpool.entities.*;
 import com.inbadevs.swimmingpool.exceptions.ControlEntranceException;
+import com.inbadevs.swimmingpool.exceptions.ControlExitException;
 import com.inbadevs.swimmingpool.manager.controlAccess.ScheduleAccess;
 import com.inbadevs.swimmingpool.service.entityresponse.ControlAccessResponse;
 import org.junit.Before;
@@ -16,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -38,6 +40,8 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
     private CountLeftHoursSchedulePlanDao countLeftHoursSchedulePlanDao;
 
     private Plan planTypeBlockHours;
+    private List<DaySection> daySectionList;
+    private Schedule schedule;
 
     @Before
     public void setUp() throws Exception {
@@ -47,17 +51,9 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
         planTypeBlockHours = new Plan(Long.parseLong("1"), "name", "description", Long.parseLong("5000"),
                 "typeBlocksPerWeek", 5, null);
 
-    }
+        daySectionList = new ArrayList<>();
+        schedule = new Schedule(Long.parseLong("1"), "horario", "description", planTypeBlockHours, daySectionList);
 
-    @Test
-    public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsValidWithTodayTimeAndFirstEntrance() throws Exception, ControlEntranceException {
-
-        Calendar todayCal = Calendar.getInstance();
-        todayCal.set(2015, 6, 10, 6, 40,1); //
-
-        String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -7);
-        String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +7);
-        List<DaySection> daySectionList = new ArrayList<>();
 
         Section section = new Section(1, new Time(0,0,0), new Time(1,0,0));
         Day day = new Day(1, "Monday");
@@ -72,7 +68,18 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
         daySectionList.add(daySection);
         daySectionList.add(daySection2);
 
-        Schedule schedule = new Schedule(Long.parseLong("1"), "horario", "description", planTypeBlockHours, daySectionList);
+    }
+
+    @Test
+    public void testDaySectionIsValidWithTodayTimeAndFirstEntrance() throws Exception, ControlEntranceException {
+
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.set(2015, 6, 10, 6, 40,1); //
+
+        String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -7);
+        String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +7);
+
+
         Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
                 endValidDate);
 
@@ -88,30 +95,40 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
     }
 
     @Test
-    @Ignore
-    public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsValidWithTodayTimeAndFirstEntranceAndLastBlock() throws Exception, ControlEntranceException {
+    public void testDaySectionIsValidWithTodayTimeAndSecondEntrance() throws Exception, ControlEntranceException {
 
         Calendar todayCal = Calendar.getInstance();
         todayCal.set(2015, 6, 10, 6, 40,1); //
 
         String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -7);
         String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +7);
-        List<DaySection> daySectionList = new ArrayList<>();
 
-        Section section = new Section(1, new Time(0,0,0), new Time(1,0,0));
-        Day day = new Day(1, "Monday");
-        DaySectionPK daySectionPk = new DaySectionPK(section, day);
-        DaySection daySection = new DaySection(1, daySectionPk);
 
-        Section section2 = new Section(2, new Time(7,0,0), new Time(8,0,0));
-        Day day2 = new Day(2, "Friday");
-        DaySectionPK daySectionPk2 = new DaySectionPK(section2, day2);
-        DaySection daySection2 = new DaySection(2, daySectionPk2);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
 
-        daySectionList.add(daySection);
-        daySectionList.add(daySection2);
+        when(userDao.find(user.getId())).thenReturn(user);
+        when(productDao.find(product.getId())).thenReturn(product);
+        when(countLeftHoursSchedulePlanDao.find(user, product)).
+                thenReturn(new CountLeftHoursSchedulePlan(user, product, 1, 0));
 
-        Schedule schedule = new Schedule(Long.parseLong("1"), "horario", "description", planTypeBlockHours, daySectionList);
+        ControlAccessResponse response = manager.controlEntrance(user, product, todayCal.getTime());
+
+        assertThat(response.getBlocksOfPlan(), is(equalTo(1)));
+        assertThat(response.getPenaltyHours(), is(equalTo(0)));
+
+    }
+
+    @Test
+    @Ignore
+    public void testDaySectionIsValidWithTodayTimeAndFirstEntranceAndLastBlock() throws Exception, ControlEntranceException {
+
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.set(2015, 6, 10, 6, 40,1); //
+
+        String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -7);
+        String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +7);
+
         Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
                 endValidDate);
 
@@ -132,19 +149,11 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
     public void testIsUserAccessControlEntranceWhenSchedulePlanAndDaySectionIsInValidWithTodayTime() throws Exception, ControlEntranceException {
 
         Calendar todayCal = Calendar.getInstance();
-        todayCal.set(2015,6,20,1,20);
+        todayCal.set(2015, 6, 20, 1, 20);
 
         String startValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, -3);
         String endValidDate = operatesAndParseDate(todayCal.getTime(), Calendar.DAY_OF_MONTH, +3);
-        List<DaySection> daySectionList = new ArrayList<>();
 
-        Section section = new Section(1, new Time(0,0,0), new Time(1,0,0));
-        Day day = new Day(1, "Monday");
-        DaySectionPK daySectionPk = new DaySectionPK(section, day);
-        DaySection daySection = new DaySection(1, daySectionPk);
-        daySectionList.add(daySection);
-
-        Schedule schedule = new Schedule(Long.parseLong("1"), "horario", "description", planTypeBlockHours, daySectionList);
         Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
                 endValidDate);
 
@@ -152,6 +161,136 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
         when(productDao.find(product.getId())).thenReturn(product);
 
         ControlAccessResponse response = manager.controlEntrance(user, product, todayCal.getTime());
+
+    }
+
+
+    @Test(expected = ControlExitException.class)
+    public void testExitWhenUserNeverEntrance() throws Exception, ControlExitException {
+
+        Date today = new Date();
+        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
+
+        when(productDao.find(product.getId())).thenReturn(product);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(null);
+
+        manager.controlExit(user, product, today);
+    }
+
+    @Test(expected = ControlExitException.class)
+    public void testExitWhenUserExitBeforeEntrance() throws Exception, ControlExitException {
+
+        Date today = new Date();
+        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
+
+        final AssistanceSchedulePlan assistanceSchedulePlan = new AssistanceSchedulePlan(
+                user, schedule, null, null, false);
+
+        when(productDao.find(product.getId())).thenReturn(product);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
+
+        manager.controlExit(user, product, today);
+    }
+
+
+
+
+    @Test
+    public void testExitWhenExitBefore20Minutes() throws Exception, ControlExitException {
+
+        Date today = new Date();
+        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
+
+        final Date entranceDate = new Date();
+
+        Calendar calendarExitDate = Calendar.getInstance();
+        calendarExitDate.setTime(entranceDate);
+        calendarExitDate.add(Calendar.MINUTE, 20);
+
+
+        final AssistanceSchedulePlan assistanceSchedulePlan = new AssistanceSchedulePlan(
+                user, schedule, null, entranceDate, true);
+
+        when(productDao.find(product.getId())).thenReturn(product);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
+        when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
+                new CountLeftHoursSchedulePlan(user, product, 3, 0));
+
+        ControlAccessResponse response = manager.controlExit(user, product, calendarExitDate.getTime());
+
+        assertThat(response.getBlocksOfPlan(), is(equalTo(3)));
+        assertThat(response.getPenaltyHours(), is(equalTo(0)));
+
+    }
+
+    @Test
+    public void testExitWhenExitAfter100Minutes() throws Exception, ControlExitException {
+
+        Date today = new Date();
+        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
+
+        final Date entranceDate = new Date();
+
+        Calendar calendarExitDate = Calendar.getInstance();
+        calendarExitDate.setTime(entranceDate);
+        calendarExitDate.add(Calendar.MINUTE, 101);
+
+
+        final AssistanceSchedulePlan assistanceSchedulePlan = new AssistanceSchedulePlan(
+                user, schedule, null, entranceDate, true);
+
+        when(productDao.find(product.getId())).thenReturn(product);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
+        when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
+                new CountLeftHoursSchedulePlan(user, product, 3, 0));
+
+        ControlAccessResponse response = manager.controlExit(user, product, calendarExitDate.getTime());
+
+        assertThat(response.getBlocksOfPlan(), is(equalTo(3)));
+        assertThat(response.getPenaltyHours(), is(equalTo(1)));
+
+    }
+
+    @Test
+    public void testExitWhenExitAfter160Minutes() throws Exception, ControlExitException {
+
+        Date today = new Date();
+        String startValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, -3);
+        String endValidDate = operatesAndParseDate(today, Calendar.DAY_OF_MONTH, +3);
+        Product product = new Product(Long.parseLong("1"), new ProductPK(planTypeBlockHours, schedule), startValidDate,
+                endValidDate);
+
+        final Date entranceDate = new Date();
+
+        Calendar calendarExitDate = Calendar.getInstance();
+        calendarExitDate.setTime(entranceDate);
+        calendarExitDate.add(Calendar.MINUTE, 161);
+
+
+        final AssistanceSchedulePlan assistanceSchedulePlan = new AssistanceSchedulePlan(
+                user, schedule, null, entranceDate, true);
+
+        when(productDao.find(product.getId())).thenReturn(product);
+        when(assistanceSchedulePlanDao.findLastEntrance(user, schedule  )).thenReturn(assistanceSchedulePlan);
+        when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
+                new CountLeftHoursSchedulePlan(user, product, 3, 0));
+
+        ControlAccessResponse response = manager.controlExit(user, product, calendarExitDate.getTime());
+
+        assertThat(response.getBlocksOfPlan(), is(equalTo(3)));
+        assertThat(response.getPenaltyHours(), is(equalTo(2)));
 
     }
 
