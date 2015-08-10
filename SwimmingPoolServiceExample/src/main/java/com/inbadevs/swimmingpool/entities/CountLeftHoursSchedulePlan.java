@@ -36,13 +36,17 @@ public class CountLeftHoursSchedulePlan implements Serializable {
     @Setter
     Integer blocksPenalty;
 
+    @Setter
+    Integer leftHours;
+
     Integer scheduleTotalBlocks;
 
-    public CountLeftHoursSchedulePlan(User user, Product product, Integer scheduleTotalBlocks, Integer blocksPenalty){
+    public CountLeftHoursSchedulePlan(User user, Product product, Integer scheduleTotalBlocks, Integer leftHours, Integer blocksPenalty){
 
         this.user = user;
         this.product = product;
         this.scheduleTotalBlocks = scheduleTotalBlocks;
+        this.leftHours = leftHours;
         this.blocksPenalty = blocksPenalty;
     }
 

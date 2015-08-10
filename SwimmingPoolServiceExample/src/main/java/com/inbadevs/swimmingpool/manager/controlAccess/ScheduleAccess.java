@@ -72,21 +72,24 @@ public class ScheduleAccess implements Access{
 
                     int scheduleTotalBlocks;
                     int penaltiesBlockSchedule = 0;
+                    int leftHours = 0;
 
                     if(countLeftHoursSchedulePlan == null){
 
                         scheduleTotalBlocks = calculateBlocksOfSchedule(product, today);
+                        leftHours = scheduleTotalBlocks;
                         countLeftHoursSchedulePlanDao.save(new CountLeftHoursSchedulePlan(user, product,
-                                scheduleTotalBlocks, penaltiesBlockSchedule));
+                                scheduleTotalBlocks, leftHours, penaltiesBlockSchedule));
                     }
                     else{
 
                         scheduleTotalBlocks = countLeftHoursSchedulePlan.getScheduleTotalBlocks();
                         penaltiesBlockSchedule = countLeftHoursSchedulePlan.getBlocksPenalty();
+                        leftHours = countLeftHoursSchedulePlan.getLeftHours();
                     }
 
                     return new ControlAccessResponse(user.getNames(), product.getProductPK().getPlan().getName(),
-                            null, null, scheduleTotalBlocks,penaltiesBlockSchedule);
+                            null, leftHours, scheduleTotalBlocks,penaltiesBlockSchedule);
                 }
 
             }
@@ -113,11 +116,13 @@ public class ScheduleAccess implements Access{
 
         int penaltyHours = hasPenalty(exitDate, assistanceSchedulePlan.getEntranceDate());
         countLeftHoursSchedulePlan.setBlocksPenalty(penaltyHours);
+        countLeftHoursSchedulePlan.setLeftHours(countLeftHoursSchedulePlan.getLeftHours()
+                - penaltyHours - 1);
         assistanceSchedulePlan.setEntrance(false);
         assistanceSchedulePlan.setExitDate(exitDate);
 
         return new ControlAccessResponse(user.getNames(), plan.getName(),
-                null, null, countLeftHoursSchedulePlan.getScheduleTotalBlocks(), countLeftHoursSchedulePlan.getBlocksPenalty());
+                null, countLeftHoursSchedulePlan.getLeftHours(), countLeftHoursSchedulePlan.getScheduleTotalBlocks(), countLeftHoursSchedulePlan.getBlocksPenalty());
     }
 
     private Integer hasPenalty(Date exitDate, Date entranceDate) {

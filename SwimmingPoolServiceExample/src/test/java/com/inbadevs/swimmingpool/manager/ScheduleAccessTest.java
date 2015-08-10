@@ -110,11 +110,12 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
         when(userDao.find(user.getId())).thenReturn(user);
         when(productDao.find(product.getId())).thenReturn(product);
         when(countLeftHoursSchedulePlanDao.find(user, product)).
-                thenReturn(new CountLeftHoursSchedulePlan(user, product, 1, 0));
+                thenReturn(new CountLeftHoursSchedulePlan(user, product, 2,1, 0));
 
         ControlAccessResponse response = manager.controlEntrance(user, product, todayCal.getTime());
 
-        assertThat(response.getBlocksOfPlan(), is(equalTo(1)));
+        assertThat(response.getBlocksOfPlan(), is(equalTo(2)));
+        assertThat(response.getLeftHours(), is(equalTo(1)));
         assertThat(response.getPenaltyHours(), is(equalTo(0)));
 
     }
@@ -223,11 +224,12 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
         when(productDao.find(product.getId())).thenReturn(product);
         when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
         when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
-                new CountLeftHoursSchedulePlan(user, product, 3, 0));
+                new CountLeftHoursSchedulePlan(user, product, 3, 2, 0));
 
         ControlAccessResponse response = manager.controlExit(user, product, calendarExitDate.getTime());
 
         assertThat(response.getBlocksOfPlan(), is(equalTo(3)));
+        assertThat(response.getLeftHours(), is(equalTo(1)));
         assertThat(response.getPenaltyHours(), is(equalTo(0)));
 
     }
@@ -254,11 +256,12 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
         when(productDao.find(product.getId())).thenReturn(product);
         when(assistanceSchedulePlanDao.findLastEntrance(user, schedule)).thenReturn(assistanceSchedulePlan);
         when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
-                new CountLeftHoursSchedulePlan(user, product, 3, 0));
+                new CountLeftHoursSchedulePlan(user, product, 5, 4, 0));
 
         ControlAccessResponse response = manager.controlExit(user, product, calendarExitDate.getTime());
 
-        assertThat(response.getBlocksOfPlan(), is(equalTo(3)));
+        assertThat(response.getBlocksOfPlan(), is(equalTo(5)));
+        assertThat(response.getLeftHours(), is(equalTo(2)));
         assertThat(response.getPenaltyHours(), is(equalTo(1)));
 
     }
@@ -285,11 +288,12 @@ public class ScheduleAccessTest extends ControlAccessAbstract {
         when(productDao.find(product.getId())).thenReturn(product);
         when(assistanceSchedulePlanDao.findLastEntrance(user, schedule  )).thenReturn(assistanceSchedulePlan);
         when(countLeftHoursSchedulePlanDao.find(user, product)).thenReturn(
-                new CountLeftHoursSchedulePlan(user, product, 3, 0));
+                new CountLeftHoursSchedulePlan(user, product, 5, 4,0));
 
         ControlAccessResponse response = manager.controlExit(user, product, calendarExitDate.getTime());
 
-        assertThat(response.getBlocksOfPlan(), is(equalTo(3)));
+        assertThat(response.getBlocksOfPlan(), is(equalTo(5)));
+        assertThat(response.getLeftHours(), is(equalTo(1)));
         assertThat(response.getPenaltyHours(), is(equalTo(2)));
 
     }
