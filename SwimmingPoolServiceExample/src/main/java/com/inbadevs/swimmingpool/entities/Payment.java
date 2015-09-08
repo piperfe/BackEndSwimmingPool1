@@ -9,6 +9,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -30,8 +31,7 @@ public class Payment implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
 
-    @Temporal(TemporalType.DATE)
-    private Date datepay;
+    private String datepay;
 
     @Column(unique = true)
     String numberOfTicket;
@@ -45,6 +45,7 @@ public class Payment implements Serializable {
     String observations;
 
     public Payment() {
-        this.datepay = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        this.datepay = dateFormat.format(new Date());
     }
 }

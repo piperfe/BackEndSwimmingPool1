@@ -4,7 +4,6 @@ INSERT INTO swimmingpool.day (id, name) VALUES ('3', 'Wednesday');
 INSERT INTO swimmingpool.day (id, name) VALUES ('4', 'Thursday');
 INSERT INTO swimmingpool.day (id, name) VALUES ('5', 'Friday');
 INSERT INTO swimmingpool.day (id, name) VALUES ('6', 'Saturday');
-INSERT INTO swimmingpool.day (id, name) VALUES ('7', 'Sunday');
 
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('1', '8:00:00', '7:00:00');
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('2', '9:00:00', '8:00:00');
