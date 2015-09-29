@@ -30,11 +30,11 @@ public class PaymentDao extends BaseGenericDAO<Payment>{
     }
 
     public List<Payment> closeTurn(Long idUserAdmin) {
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Criteria criteria = getCurrentSession().createCriteria(Payment.class).
                 setFetchMode("adminUser", FetchMode.JOIN)
                 .add(Restrictions.eq("adminUser.id", idUserAdmin))
-                .add(Restrictions.eq("datepay", (new Date())));
+                .add(Restrictions.eq("datepay", (dateFormat.format(new Date()))));
  
         return criteria.list();
 
