@@ -33,5 +33,13 @@ public class Schedule implements Serializable {
     
     @ManyToMany(fetch = FetchType.EAGER)
     private List<DaySection> daySection;
+
+    public void setName(String name) {
+        this.name = name.toUpperCase();
+    }
+
+    public void setDescription(String description) {
+        this.description = description.toUpperCase();
+    }
     
 }

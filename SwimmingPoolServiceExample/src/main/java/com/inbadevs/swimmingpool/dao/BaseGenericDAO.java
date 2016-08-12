@@ -42,7 +42,7 @@ public class BaseGenericDAO<E> {
     }
 
     public List<E> all() {
-        Criteria criteria = getCurrentSession().createCriteria(entityClass).addOrder(Order.asc("id"));
+        Criteria criteria = getCurrentSession().createCriteria(entityClass).addOrder(Order.asc("name"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
@@ -61,6 +61,19 @@ public class BaseGenericDAO<E> {
         return (E) criteria.uniqueResult();
     }
 
+    public List<E> findBy(String name, Long value) {
+        Criteria criteria = getCurrentSession().createCriteria(entityClass)
+                .add(Restrictions.like(name, value));
+        return criteria.list();
+    }
+    
+    public List<E> allOrderName() {
+        Criteria criteria = getCurrentSession().createCriteria(entityClass).addOrder(Order.asc("name"));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return criteria.list();
+    }
+    
+    
     protected Session getCurrentSession() {
         return this.sessionFactory.getCurrentSession();
     }

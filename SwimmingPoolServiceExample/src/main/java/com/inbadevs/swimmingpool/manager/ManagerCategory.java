@@ -30,7 +30,7 @@ public class ManagerCategory {
         this.categoryDao.update(category);
     }
     
-    public void deleteCategory(String id){
+    public void deleteCategory(Long id){
         this.categoryDao.delete(id);
     }
     
@@ -38,7 +38,7 @@ public class ManagerCategory {
         return this.categoryDao.all();
     }
     
-    public Category getOne(String id) throws NotFoundException{
+    public Category find(Long id) throws NotFoundException{
         return this.categoryDao.find(id);
     }
     

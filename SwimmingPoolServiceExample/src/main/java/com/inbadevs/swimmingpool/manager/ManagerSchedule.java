@@ -9,7 +9,6 @@ import com.inbadevs.swimmingpool.dao.PaymentDao;
 import com.inbadevs.swimmingpool.dao.ScheduleDao;
 import com.inbadevs.swimmingpool.entities.Payment;
 import com.inbadevs.swimmingpool.entities.Schedule;
-import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,6 +32,10 @@ public class ManagerSchedule {
         return this.schedule.all();
     }
     
+    public List<Schedule> getAllForName() {
+        return this.schedule.allOrderName();
+    }
+    
     public void addSchedule(Schedule schedule){
         this.schedule.save(schedule);
     }
@@ -41,7 +44,7 @@ public class ManagerSchedule {
 
         List<Payment> paymentsPlanFilter = getPayments(schedule.getId());
 
-        if (paymentsPlanFilter.size() == 0) {
+        if (paymentsPlanFilter.isEmpty()) {
             this.schedule.update(schedule);
             return true;
         }
@@ -50,17 +53,17 @@ public class ManagerSchedule {
     }
 
 
-    public Boolean deleteSchedule(Long id) throws BuisnessLayerException {
-
+    public Boolean deleteSchedule(Long id) {
+        
+        
         List<Payment> paymentsPlanFilter = getPayments(id);
 
-        if (paymentsPlanFilter.size() == 0) {
+        if (paymentsPlanFilter.isEmpty()) {
             this.schedule.delete(id);
             return true;
         }
-
         return false;
-
+        
     }
 
     private List<Payment> getPayments(Long id) {

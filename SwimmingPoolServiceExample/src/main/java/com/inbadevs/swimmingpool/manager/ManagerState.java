@@ -3,25 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpool.dao;
+package com.inbadevs.swimmingpool.manager;
 
-import com.inbadevs.swimmingpool.entities.Category;
-import org.hibernate.SessionFactory;
+import com.inbadevs.swimmingpool.dao.StateDao;
+import com.inbadevs.swimmingpool.entities.State;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author gabriellopezsalinas
  */
+
 @Component
-public class CategoryDao extends BaseGenericDAO<Category>{
+public class ManagerState {
+    
     
     @Autowired
-    public CategoryDao(
-            @Qualifier("sessionFactory") SessionFactory em) {
-        super(Category.class, em);
-    }
+    StateDao state;
     
+    public List<State> getAllState() {
+        return this.state.all();
+    }
 }

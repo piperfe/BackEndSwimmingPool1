@@ -40,7 +40,7 @@ public class FreeHoursAccessTest extends ControlAccessAbstract {
     @Before
     public void setUp() throws Exception {
 
-        user = new User(null, null, null, "userNames", null, null, null, null, null, null, null, null, 0);
+        user = new User(null, null, null, "userNames", null, null, null, null, null, null, null, null, null, 0);
         manager = new FreeHoursAccess(assistanceFreeHoursPlanDao, countLeftHoursFreeHoursPlanDao);
         planTypeFreeHours = new Plan(Long.parseLong("1"), "name", "description", Long.parseLong("5000"),
                 "typeBlocksPerWeek", 5, null);

@@ -35,11 +35,11 @@ public class ManagerItem {
         this.item.update(item);
     }
     
-    public void deleteItem(String id){
+    public void deleteItem(Long id){
         this.item.delete(id);
     }
     
-    public Item getOne(String id) throws NotFoundException{
+    public Item getOne(Long id) throws NotFoundException{
         return this.item.find(id);
     }
     

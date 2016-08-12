@@ -19,6 +19,7 @@ public class MyApplication extends ResourceConfig {
     public MyApplication() {
         register(RequestContextFilter.class);
         register(ServiceRestItem.class);
+        register(ServiceRestState.class);
         register(ServiceRestCategory.class);
         register(ServiceRestUsers.class);
         register(ServiceRestPlan.class);

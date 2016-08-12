@@ -31,7 +31,7 @@ public class ControlAccessAbstract {
 
     @Before
     public void setUp() throws Exception {
-        user = new User(null, null, null, "userNames", null, null, null, null, null, null, null, null, 0);
+        user = new User(null, null, null, "userNames", null, null, null, null, null, null, null, null, null, 0);
     }
 
     public String operatesAndParseDate(Date date, int calendar, int amount){

@@ -38,4 +38,13 @@ public class Category implements Serializable{
     
     @ManyToOne(cascade = CascadeType.PERSIST)
     private State state;
+    
+    public void setName(String name) {
+        this.name = name.toUpperCase();
+    }
+
+    public void setDescription(String description) {
+        this.description = description.toUpperCase();
+    }
+    
 }

@@ -2,6 +2,7 @@ package com.inbadevs.swimmingpool.service;
 
 import com.inbadevs.swimmingpool.entities.User;
 import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
+import com.inbadevs.swimmingpool.manager.ManagerHistoryConnection;
 import com.inbadevs.swimmingpool.manager.ManagerUsers;
 import com.inbadevs.swimmingpool.service.entityresponse.BooleanResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ServiceRestUsers {
 
     @Autowired
     ManagerUsers usersManager;
+    
+    @Autowired
+    ManagerHistoryConnection connectionManager;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,7 +43,14 @@ public class ServiceRestUsers {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("login/{rut}/{password}")
     public User loginUser(@PathParam("rut") String rut, @PathParam("password") String password) {
-        return this.usersManager.loginUser(rut, password);
+        if(this.usersManager.loginUser(rut, password)!=null)
+        {
+            User user = this.usersManager.loginUser(rut, password);
+            this.connectionManager.addHistoryConnection(user);
+            return this.usersManager.loginUser(rut, password);
+        }
+        else 
+            return null;
     }
     
     @PUT

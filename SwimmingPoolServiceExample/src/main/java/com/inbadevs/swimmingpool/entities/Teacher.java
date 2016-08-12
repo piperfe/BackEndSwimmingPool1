@@ -9,6 +9,7 @@ import lombok.Getter;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
+import javafx.scene.text.Text;
 
 
 @Entity
@@ -17,7 +18,11 @@ public class Teacher extends User implements Serializable{
     
     private String comments;
 
-    public Teacher(Long id, Commune commune, String rut, String names, String firstLastName, String secondLastName, String birthDate, String address, String password, String email, String phone, String phoneMobile, int profile) {
-        super(id, commune, rut, names, firstLastName, secondLastName, birthDate, address, password, email, phone, phoneMobile, profile);
+    public Teacher(Long id, Commune commune, String rut, String names, String firstLastName, String secondLastName, String birthDate, String address, String password, String email, String phone, String phoneMobile, String fingerPrint, int profile) {
+        super(id, commune, rut, names, firstLastName, secondLastName, birthDate, address, password, email, phone, phoneMobile, fingerPrint, profile);
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments.toUpperCase();
     }
 }

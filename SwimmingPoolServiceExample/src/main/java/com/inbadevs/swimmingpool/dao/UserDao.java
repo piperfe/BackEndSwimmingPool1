@@ -22,6 +22,7 @@ public class UserDao extends BaseGenericDAO<User>{
         Criteria criteria = getCurrentSession().createCriteria(User.class)
                 .add(Restrictions.and(Restrictions.eq("rut", rut),
                         Restrictions.eq("password", password)));
+        
         return (User) criteria.uniqueResult();
     }
     

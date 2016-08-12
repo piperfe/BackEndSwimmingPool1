@@ -19,6 +19,7 @@ INSERT INTO swimmingpool.section (id, end, start) VALUES ('11', '18:00:00', '17:
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('12', '19:00:00', '18:00:00');
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('13', '20:00:00', '19:00:00');
 INSERT INTO swimmingpool.section (id, end, start) VALUES ('14', '21:00:00', '20:00:00');
+-- INSERT INTO swimmingpool.section (id, end, start) VALUES ('14', '22:00:00', '21:00:00');
 
 INSERT INTO swimmingpool.day_section (day,section) (select d.id, s.id
 	from swimmingpool.section as s, swimmingpool.day as d);
@@ -390,26 +391,6 @@ INSERT INTO `swimmingpool`.`commune` (`id`, `name`, `region`) VALUES ('346','Pe�
 
 
 
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('2', '14 de Julio 116', '06/05/1989', 'Lopez', 'Gabriel Bernardo', 'clave', '25921590', '95348106', '2', '17151206-9', 'Salinas', '346');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('2');
 
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('3', 'direccion', '18/08/1944', 'Meriño', 'Florentino', '512474', '25921590', '95348106', '2', '5124749-3', 'Figueroa', '326');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('3');
-
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('9', 'Laguna Verde Oriente #24, Cond. Los Laureles', '07/04/1967', 'Candia', 'Andres Mauricio', '105588', '25921591', '68485608', '2', '10558821-6', 'Riquelme', '313');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('9');
-
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('4', 'direccion', '04/05/1959', 'Raynaud', 'Mónica', '835086', '25921590', '96883195', '4', '8350867-1', 'Torres', '314');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('4');
-
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('5', 'direccion', '26/10/1984', 'Riquelme', 'Carolina', '158554', '25359655', '96883195', '3', '15855422-4', 'Ceballos', '314');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('5');
-
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('6', 'direccion', '19/03/1970', 'Iturra', 'Michelle', '116333', '25921590', '93444258', '3', '11633373-2', 'Balladares', '324');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('6');
-
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('7', 'direccion', '17/06/1989', 'Manríquez', 'Daphne', '169788', '25921590', '66812974', '5', '16978856-1', 'Gonzalez', '324');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('7');
-
-INSERT INTO `swimmingpool`.`user` (`id`, `address`, `birth_date`, `first_last_name`, `names`, `password`, `phone`, `phone_mobile`, `profile`, `rut`, `second_last_name`, `commune`) VALUES ('8', 'direccion', '20/04/1986', 'Romero', 'Francesca', '162888', '25921590', '73632003', '5', '16288854-4', 'Zuñiga', '314');
-INSERT INTO `swimmingpool`.`admin_user` (`id`) VALUES ('8');
+INSERT INTO `swimmingpool`.`state` (`id`, `description`, `name`) VALUES ('1', 'Con este estado estara activo en el sistema', 'Activo');
+INSERT INTO `swimmingpool`.`state` (`id`, `description`, `name`) VALUES ('2', 'Con este estado no se mostrara', 'Desactivar');

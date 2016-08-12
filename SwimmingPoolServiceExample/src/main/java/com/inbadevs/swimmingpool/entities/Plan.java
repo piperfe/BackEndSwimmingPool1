@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 
 @Entity
@@ -38,6 +39,12 @@ public class Plan implements Serializable {
 
     private Integer blocksPerWeek;
 
+    public void setName(String name) {
+        this.name = name.toUpperCase();
+    }
 
+    public void setDescription(String description) {
+        this.description = description.toUpperCase();
+    }
 
 }

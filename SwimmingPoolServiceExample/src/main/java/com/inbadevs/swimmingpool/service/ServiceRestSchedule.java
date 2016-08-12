@@ -8,6 +8,7 @@ package com.inbadevs.swimmingpool.service;
 import com.inbadevs.swimmingpool.entities.Schedule;
 import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpool.manager.ManagerSchedule;
+import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class ServiceRestSchedule {
     ManagerSchedule managerSchedule;
 
     
+            
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getAll")
@@ -39,6 +41,14 @@ public class ServiceRestSchedule {
         return schedule;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllForName")
+    public List<Schedule> getAllScheduleForName() throws BuisnessLayerException {
+        List<Schedule> schedule = this.managerSchedule.getAllForName();
+        return schedule;
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,7 +60,7 @@ public class ServiceRestSchedule {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/modify")
-    public Response modifySchedule(Schedule schedule) throws BuisnessLayerException {
+    public Response modifySchedule(Schedule schedule) {
         Boolean isDeletedSchedule = this.managerSchedule.modifySchedule(schedule);
 
         if(isDeletedSchedule){
@@ -61,8 +71,8 @@ public class ServiceRestSchedule {
     
     @DELETE
     @Path("/delete/{id}")
-    public Response deleteSchedule(@PathParam("id") Long id) throws BuisnessLayerException {
-        Boolean isDeletedSchedule = this.managerSchedule.deleteSchedule(id);
+    public Response deleteSchedule(@PathParam("id") Long id){ 
+        Boolean isDeletedSchedule =  this.managerSchedule.deleteSchedule(id);
 
         if(isDeletedSchedule){
             return Response.ok().status(Response.Status.NO_CONTENT).build();

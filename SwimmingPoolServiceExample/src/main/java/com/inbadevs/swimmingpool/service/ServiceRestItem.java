@@ -12,6 +12,7 @@ import com.inbadevs.swimmingpool.manager.ManagerItem;
 import java.util.List;
 import javassist.NotFoundException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -46,7 +47,7 @@ public class ServiceRestItem {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("getOne/{id}")
-    public Item getOneItem(@PathParam("id") String id) throws javassist.NotFoundException {
+    public Item getOneItem(@PathParam("id") Long id) throws javassist.NotFoundException {
         return this.managerItem.getOne(id);
     }
     
@@ -62,6 +63,12 @@ public class ServiceRestItem {
     @Path("modify")
     public void modifyItem(Item item) throws BuisnessLayerException{
         this.managerItem.updateItem(item);
+    }
+    
+    @DELETE
+    @Path("/delete/{id}")
+    public void deleteSchedule(@PathParam("id") Long id) throws BuisnessLayerException {
+        this.managerItem.deleteItem(id);
     }
     
 }

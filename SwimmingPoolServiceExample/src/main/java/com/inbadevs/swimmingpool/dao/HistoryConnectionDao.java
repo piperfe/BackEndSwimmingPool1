@@ -5,7 +5,8 @@
  */
 package com.inbadevs.swimmingpool.dao;
 
-import com.inbadevs.swimmingpool.entities.Category;
+import com.inbadevs.swimmingpool.entities.HistoryConnection;
+import com.inbadevs.swimmingpool.entities.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,13 +16,20 @@ import org.springframework.stereotype.Component;
  *
  * @author gabriellopezsalinas
  */
+
 @Component
-public class CategoryDao extends BaseGenericDAO<Category>{
+public class HistoryConnectionDao extends BaseGenericDAO<HistoryConnection>{
     
-    @Autowired
-    public CategoryDao(
-            @Qualifier("sessionFactory") SessionFactory em) {
-        super(Category.class, em);
+     @Autowired
+    public HistoryConnectionDao(@Qualifier("sessionFactory") SessionFactory em) {
+        super(HistoryConnection.class, em);
     }
     
+    public void insert(User user)
+    {
+        HistoryConnection history = new HistoryConnection();
+        history.setUser(user);
+        this.save(history);
+        
+    }
 }

@@ -48,4 +48,17 @@ public class Payment implements Serializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         this.datepay = dateFormat.format(new Date());
     }
+
+    public void setFormOfPayment(String formOfPayment) {
+        this.formOfPayment = formOfPayment.toUpperCase();
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank.toUpperCase();
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations.toUpperCase();
+    }
+    
 }

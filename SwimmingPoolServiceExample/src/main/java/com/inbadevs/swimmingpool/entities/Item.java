@@ -38,10 +38,26 @@ public class Item implements Serializable{
     
     private String unitMeasure;
     
+    private Integer quantity;
+    
+    private Integer minQuantity;
+    
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Category category;
     
     @ManyToOne(cascade = CascadeType.PERSIST)
     private State state;
+
+    public void setName(String name) {
+        this.name = name.toUpperCase();
+    }
+
+    public void setDescription(String description) {
+        this.description = description.toUpperCase();
+    }
+
+    public void setUnitMeasure(String unitMeasure) {
+        this.unitMeasure = unitMeasure.toUpperCase();
+    }
     
 }

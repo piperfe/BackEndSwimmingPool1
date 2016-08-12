@@ -37,6 +37,10 @@ public class ManagerPlan {
         return this.plan.all();
     }
 
+    public List<Plan> getAllForName() {
+        return this.plan.allOrderName();
+    }
+    
     public void addPlan(Plan plan) {
         this.plan.save(plan);
     }
@@ -45,7 +49,7 @@ public class ManagerPlan {
         List<Schedule> schedulesPlanFilter = getSchedules(plan.getId());
         List<Payment> paymentsPlanFilter = getPayments(plan.getId());
 
-        if (schedulesPlanFilter.size() == 0 && paymentsPlanFilter.size() == 0) {
+        if (schedulesPlanFilter.isEmpty() && paymentsPlanFilter.isEmpty()) {
             this.plan.update(plan);
             return true;
         }
@@ -58,7 +62,7 @@ public class ManagerPlan {
         List<Schedule> schedulesPlanFilter = getSchedules(id);
         List<Payment> paymentsPlanFilter = getPayments(id);
 
-        if (schedulesPlanFilter.size() == 0 && paymentsPlanFilter.size() == 0) {
+        if (schedulesPlanFilter.isEmpty() && paymentsPlanFilter.isEmpty()) {
             this.plan.delete(id);
             return true;
         }

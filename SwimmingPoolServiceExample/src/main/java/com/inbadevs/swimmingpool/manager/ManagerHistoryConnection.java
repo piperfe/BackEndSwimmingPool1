@@ -3,25 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.inbadevs.swimmingpool.dao;
+package com.inbadevs.swimmingpool.manager;
 
-import com.inbadevs.swimmingpool.entities.Category;
-import org.hibernate.SessionFactory;
+import com.inbadevs.swimmingpool.dao.HistoryConnectionDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import com.inbadevs.swimmingpool.entities.User;
 
 /**
  *
  * @author gabriellopezsalinas
  */
 @Component
-public class CategoryDao extends BaseGenericDAO<Category>{
+public class ManagerHistoryConnection {
     
     @Autowired
-    public CategoryDao(
-            @Qualifier("sessionFactory") SessionFactory em) {
-        super(Category.class, em);
+    HistoryConnectionDao HistoryConnectionDao;
+    
+    public void addHistoryConnection (User user){
+        this.HistoryConnectionDao.insert(user);
     }
     
 }

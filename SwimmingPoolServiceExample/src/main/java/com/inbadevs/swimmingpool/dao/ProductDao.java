@@ -14,5 +14,6 @@ public class ProductDao extends BaseGenericDAO<Product>{
     public ProductDao(@Qualifier("sessionFactory") SessionFactory em) {
         super(Product.class, em);
     }
-
+    
+   
 }

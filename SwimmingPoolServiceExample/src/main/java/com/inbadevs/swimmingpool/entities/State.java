@@ -32,7 +32,17 @@ public class State implements Serializable{
     private Long id;
     
     private String name;
-    
+
     private String description;
+    
+    public void setName(String name) {
+        this.name = name.toUpperCase();
+    }
+
+    public void setDescription(String description) {
+        this.description = description.toUpperCase();
+    }
+    
+    
     
 }

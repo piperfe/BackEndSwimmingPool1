@@ -14,7 +14,7 @@ public class ManagerUsers {
 
     @Autowired
     UserDao userDao;
-
+    
 
     public Boolean isUserExist(String rut) throws NotFoundException {
         User user = this.userDao.findBy("rut", rut);

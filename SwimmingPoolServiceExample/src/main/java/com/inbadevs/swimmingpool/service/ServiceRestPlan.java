@@ -6,6 +6,7 @@
 package com.inbadevs.swimmingpool.service;
 
 import com.inbadevs.swimmingpool.entities.Plan;
+import com.inbadevs.swimmingpool.entities.Schedule;
 import com.inbadevs.swimmingpool.exceptions.BuisnessLayerException;
 import com.inbadevs.swimmingpool.manager.ManagerPlan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,13 @@ public class ServiceRestPlan {
         return plan;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllForName")
+    public List<Plan> getAllScheduleForName() throws BuisnessLayerException {
+        List<Plan> plan = this.buissnesLayer.getAllForName();
+        return plan;
+    }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add")

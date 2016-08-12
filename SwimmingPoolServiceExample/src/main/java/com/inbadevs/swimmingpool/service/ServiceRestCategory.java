@@ -32,8 +32,8 @@ public class ServiceRestCategory {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("getOne/{id}")
-    public Category getOneCategory(@PathParam("id") String id) throws javassist.NotFoundException {
-        return this.categoryManager.getOne(id);
+    public Category getOneCategory(@PathParam("id") Long id) throws javassist.NotFoundException {
+        return this.categoryManager.find(id);
     }
     
     @POST
@@ -48,6 +48,12 @@ public class ServiceRestCategory {
     @Path("modify")
     public void modifyCategory(Category category) throws BuisnessLayerException{
         this.categoryManager.updateCategory(category);
+    }
+    
+    @DELETE
+    @Path("/delete/{id}")
+    public void deleteSchedule(@PathParam("id") Long id) throws BuisnessLayerException {
+        this.categoryManager.deleteCategory(id);
     }
     
     
